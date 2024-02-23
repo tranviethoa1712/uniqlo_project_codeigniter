@@ -1,0 +1,280 @@
+.header {
+    border-bottom: 1px solid #dadada;
+    height: 100%;
+    width: 100%;
+    min-width: calc(1232px + 2 * 20px);
+    padding-inline: 312px;
+}
+
+.header-wrapper {
+    padding: 40px 20px 15px 20px;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    min-width: calc(1232px + 2 * 20px);
+    padding-inline: 5%;
+    margin-top: 100px;
+}
+
+.layer {
+    width: 100%;
+    border: 1px solid #dadada;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    display: flex;
+}
+
+.login-wrapper{
+    padding: 28px 20px;
+    width: 50%;
+    border-right: 1px solid #dadada;
+}
+
+.login-title__wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.login-title__h2 {
+    font-size: 35px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.login-title__emphasis {
+    padding-right: 1em;
+    color: #378694;
+    font-size: 14px;
+    text-align: right;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    line-height: 1.154;
+    width: 51px;
+    height: 42px;
+}
+
+/*login*/
+.note-wrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22px;
+}
+
+.wrapper-input {
+    margin-top: 15px;
+}
+
+.wrapper-input > input{
+    background-color: #f7f7f7;
+    border: none;
+}
+
+.label {
+    width: 30%;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.input {
+    margin-top: 10px;
+    width: 100%;
+    height: 48.53px;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.require-note {
+    color: #7d7d7d;
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    line-height: 1.154;
+}
+
+.check-showpass {
+    margin-top: 18px;
+}
+
+.wrapper-linkag {
+    margin-top: 25px;
+}
+
+.wrapper-linkag  a{
+    width: 100%;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.wrapper-linkag div {
+    margin-top: 8px;
+}
+
+.wrapper-loginbtn {
+    margin-top: 25px;
+    margin-bottom: 8px;
+}
+
+
+.btn {
+    width: 50%;
+    min-height: 45px;
+    padding: 9px 4.5px;
+    font-size: 18px;
+    letter-spacing: 0.01em;
+    line-height: 1.222223;
+    text-transform: uppercase;
+    border: 1px solid black;
+    -webkit-tap-highlight-color: rgba(0,0,0,0.25);
+    background: #1b1b1b;
+    border-color: #1b1b1b;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+}
+
+.craete-accbtn {
+    margin-top: 22px;
+}
+.craete-accbtn a {
+    color: #fff;
+}
+
+
+.link__forget-pwd a{
+    width: 100%;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/*end login*/
+
+/* create account*/
+.create-acc-wrapper {
+    padding: 28px 20px;
+    width: 50%;
+}
+
+.create-acc-wrapper h2{
+    font-size: 35px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+/* end create account*/
+
+.contained {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.end-page {
+    font-size: 14px;
+    letter-spacing: 0.35;
+    line-height: 0.875rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+#tooltip-email {
+    width: 100%;
+    background: #fff;
+    border: solid 1px red;
+    padding: 16px 4%;
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+#tooltipText-email {
+    font-weight: normal;
+    letter-spacing: .01em;
+    line-height: 1.2;
+} 
+
+#tooltip-email::before {
+    border: 15px solid red;
+    border-color: transparent red red transparent;
+} 
+
+#tooltip-email::before {
+    content: "";
+    background: #fff;
+    border-bottom: solid 1px red;
+    border-right: solid 1px red;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    position: absolute;
+    z-index: 3;
+    display: block;
+    height: 16px;
+    bottom: -33%;
+    left: 10px;
+    -webkit-transform: rotate(45deg) skew(-8deg, -8deg);
+    transform: rotate(45deg) skew(-8deg, -8deg);
+    width: 16px;
+} 
+
+
+
+#tooltip-pwd {
+    width: 100%;
+    background: #fff;
+    border: solid 1px red;
+    padding: 16px 4%;
+    position: relative;
+    z-index: 2;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+#tooltipText-pwd {
+    font-weight: normal;
+    letter-spacing: .01em;
+    line-height: 1.2;
+} 
+
+#tooltip-pwd::before {
+    border: 15px solid red;
+    border-color: transparent red red transparent;
+} 
+
+#tooltip-pwd::before {
+    content: "";
+    background: #fff;
+    border-bottom: solid 1px red;
+    border-right: solid 1px red;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.2);
+    position: absolute;
+    z-index: 3;
+    display: block;
+    height: 16px;
+    bottom: -33%;
+    left: 10px;
+    -webkit-transform: rotate(45deg) skew(-8deg, -8deg);
+    transform: rotate(45deg) skew(-8deg, -8deg);
+    width: 16px;
+} 
+
+.hide {
+    display: none;
+}
+
