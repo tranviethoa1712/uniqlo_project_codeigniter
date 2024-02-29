@@ -66,7 +66,9 @@
 
       </div>
     </div>
-
+    <div class="row">
+      <?= $pager->links('default', 'custom_pagination') ?>
+    </div>
   </div><!-- /.container-fluid -->
 </section>
   <!-- /.content -->

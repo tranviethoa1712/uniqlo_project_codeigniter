@@ -3,7 +3,8 @@
   <div class="container-fluid">
 
     <table class="table table-bordered">
-      <form method="post" class="form-inline">
+      <form method="post" action="<?= base_url('admin/doUpdateOrder') ?>" class="form-inline">
+        <?= view('massages/massage') ?>
         <?php foreach($data['order'] as $item) { ?>
         <tr>
           <td>Họ và tên</td>

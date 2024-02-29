@@ -8,7 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Poppins:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="views/endUser/customers/css/reset.css" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/reset.css') ?>" />
 
     <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/base.css') ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/home.css') ?>" />

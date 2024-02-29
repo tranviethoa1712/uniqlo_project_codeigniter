@@ -662,9 +662,11 @@
 <div class="dropdown_menu">
   <ul>
     <li>
-      <button class="menu-tools__search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
+      <a href="<?= base_url('user/logout') ?>">
+        <button class="menu-tools__search">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </button>
+      </a>
     </li>
     <li>
       <a href="<?php if (isset($_SESSION['customer_login'])) {
@@ -774,24 +776,17 @@
     <nav class="contents-cards__tabs-holder">
       <section class="contents-cards__tabs-content active">
         <div class="contents-cards___products-grid">
-          <?php foreach ($productGender as $row) :
-          ?>
+          <?php foreach ($productGender as $row) : ?>
 
             <div class="contents-cards__prd">
-              <a href="<?php echo base_url('user/detailProduct?idsanpham') . $row['product_id'] ?>&sku=<?php echo $row['sku']; ?>&colorUnit=1">
+              <a href="<?php echo base_url('user/detailProduct?idsanpham=') . $row['product_id'] ?>&sku=<?= $row['sku']; ?>&gioitinh=<?= $row['gender'] ?>&colorUnit=1">
                 <?php
-                $dataThumbnail = (array)json_decode($row['thumbnail']);
-                foreach ($dataThumbnail as $key => $value) {
-                  if (is_array($value) || is_object($value)) {
-                    foreach ($value as $item => $e) {
-                      if ($key == "name") {
-                        if ($item == 0) {
-                          echo "<img src='". $urlImage . $e . "' class='contents-cards__prd-img' alt='product'>";
-                        }
-                      }
-                    }
-                  }
-                }
+                $dataThumbnail = json_decode($row['thumbnail']);
+                foreach ((array)$dataThumbnail as $key => $value) :
+                  if($key == 0):
+                          echo "<img src='". $urlImage . $value . "' class='contents-cards__prd-img' alt='product'>";
+                  endif;
+                endforeach;
                 ?>
                 <div class="contents-cards__prd-colors">
                 </div>
@@ -870,23 +865,16 @@
     <section class="contents-cards__tabs-content active">
       <h3 class="spe-price__title-detail">Giảm từ 980K còn 784K</h3>
       <div class="contents-cards___products-grid swipper-horizonal">
-        <?php foreach ($products as $row) :
-        ?>
+        <?php foreach ($products as $row) : ?>
           <div class="contents-cards__prd">
-            <a href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $row['product_id'] ?>&sku=<?php echo $row['sku']; ?>&colorUnit=1">
+            <a href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $row['product_id'] ?>&sku=<?php echo $row['sku']; ?>&gioitinh=<?= $row['gender'] ?>&colorUnit=1">
               <?php
-              $dataThumbnail = (array)json_decode($row['thumbnail']);
-              foreach ($dataThumbnail as $key => $value) {
-                if (is_array($value) || is_object($value)) {
-                  foreach ($value as $item => $e) {
-                    if ($key == "name") {
-                      if ($item == 0) {
-                        echo "<img src='<?= $urlImage ?>" . $e . "' class='contents-cards__prd-img' alt='product'>";
-                      }
-                    }
-                  }
-                }
-              }
+              $dataThumbnail = json_decode($row['thumbnail']);
+              foreach ((array)$dataThumbnail as $key => $value) :
+                if($key == 0):
+                  echo "<img src='". $urlImage . $value . "' class='contents-cards__prd-img' alt='product'>";
+                endif;
+              endforeach;
               ?>
               <div class="contents-cards__prd-colors">
                 <div class="prd-colors-brown"></div>

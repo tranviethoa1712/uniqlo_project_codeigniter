@@ -1,7 +1,7 @@
 <section class="content">
     <div class="container-fluid">
-        <?= view('massages/massage') ?>
         <form method="post" action="<?php echo base_url('admin/updateProcessing') ?>">
+            <?= view('massages/massage') ?>
             <?php foreach ($user as $row) : ?>
                 <div class="card card-primary">
                     <div class="card-header">

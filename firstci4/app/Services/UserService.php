@@ -39,12 +39,10 @@ class UserService extends BaseService{
         }
     } 
 
-    // public function RegisterCustomer($checkSubmit ,$emailPost, $pwdPost, $dobPost, $genderPost) 
-    // {
-    //     if(isset($checkSubmit)){
-    //         return $this->customerModel->RegisterCustomer($checkSubmit ,$emailPost, $pwdPost, $dobPost, $genderPost);        
-    //     }
-    // } 
+    public function logOutCustomer (){
+        $session = session();
+        $session->remove('customer_login');
+    }
 
     public function submitOrder($checkSubmit, $fullname, $address, $phoneNumber, $totalPrice, $customer_login, $cart)
      {
@@ -58,9 +56,9 @@ class UserService extends BaseService{
         return $this->customerModel->getProductsId($idsanpham);
     } 
 
-    public function getUnitColorProduct($skuProduct) 
+    public function getUnitColorProduct($skuProduct, $gender) 
     {
-        return $this->customerModel->getUnitColorProduct($skuProduct); 
+        return $this->customerModel->getUnitColorProduct($skuProduct, $gender); 
     } 
 
     public function getProductAttributeId($idsanpham) 
@@ -76,10 +74,8 @@ class UserService extends BaseService{
         return $this->customerModel->getProductAttribute();
     } 
 
-    public function addToCart($checkSubmit, $color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham) {
-        if(isset($checkSubmit)){
-            $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham);
-        }    
+    public function addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham) {
+        return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham);
     } 
  
     public function RegisterCustomer($requestData)

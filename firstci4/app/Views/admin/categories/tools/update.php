@@ -3,10 +3,11 @@
     <div class="container-fluid">
 
         <table>
-            <form method="post" action="<?php echo base_url('admin/updateCategory') ?>" class="form-inline">
+            <form method="post" action="<?php echo base_url('admin/doUpdateCategory') ?>" class="form-inline">
+                <?= view('massages/massage') ?>
                 <?php
                 foreach ($category as $row) {
-                ?>
+                ?> 
                     <tr>
                         <td>Tiêu đề</td>
                         <td><input type="text" class="form-control" value="<?php echo $row['title'] ?>" name="title_update"></td>

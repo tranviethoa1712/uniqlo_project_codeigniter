@@ -35,9 +35,9 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ÁO") {
                     ?>
-                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
-                      } 
+                      }
                     }
                     ?>
                   </ul>
@@ -47,7 +47,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "SPORT UTILITY WEAR") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -61,7 +61,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC TRONG & ĐỒ LÓT") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -73,7 +73,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "Đồ mặc ngoài") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -85,7 +85,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐẦM & CHÂN VÁY") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -99,7 +99,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "QUẦN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -113,7 +113,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC NHÀ") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -125,7 +125,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "PHỤ KIỆN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=woman'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -188,7 +188,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ÁO") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -200,7 +200,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "SPORT UTILITY WEAR") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -214,7 +214,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC TRONG & ĐỒ LÓT") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -226,7 +226,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "Đồ mặc ngoài") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -238,7 +238,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐẦM & CHÂN VÁY") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -252,7 +252,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "QUẦN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -266,7 +266,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC NHÀ") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -278,7 +278,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "PHỤ KIỆN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=man'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -340,8 +340,8 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ÁO") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
-                    <?php 
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
+                    <?php
                       }
                     }
                     ?>
@@ -352,7 +352,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "SPORT UTILITY WEAR") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -366,7 +366,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC TRONG & ĐỒ LÓT") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -378,7 +378,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "Đồ mặc ngoài") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -390,7 +390,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐẦM & CHÂN VÁY") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -404,7 +404,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "QUẦN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -418,7 +418,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC NHÀ") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -430,7 +430,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "PHỤ KIỆN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=baby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -492,7 +492,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ÁO") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -504,7 +504,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "SPORT UTILITY WEAR") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -518,7 +518,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC TRONG & ĐỒ LÓT") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -530,7 +530,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "Đồ mặc ngoài") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -542,7 +542,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐẦM & CHÂN VÁY") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -556,7 +556,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "QUẦN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -570,7 +570,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "ĐỒ MẶC NHÀ") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -582,7 +582,7 @@
                     foreach ($categories as $key => $value) {
                       if ($value['title'] == "PHỤ KIỆN") {
                     ?>
-                        <li class="dropdown-list__item"><?=anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']);?></li>
+                        <li class="dropdown-list__item"><?= anchor(base_url('user/listProducts?iddanhmuc=' . $value['category_id'] . '&gioitinh=nonbaby'), $value['name']); ?></li>
                     <?php
                       }
                     }
@@ -704,45 +704,34 @@
 
               foreach ($products as $col) {
                 $dataImages = (array)json_decode($col['images']);
-                foreach ($dataImages as $key => $value) {
-                  if (is_array($value) || is_object($value)) {
-                    if ($key == "name") {
-                      $location = 1;
-                      foreach ($value as $item) {
+                $location = 1;
+                foreach ($dataImages as $key) {
               ?>
-                        <button class="thumnail-image ">
-                          <img class='dot cursor' src='<?= $urlImage . $item ?>' height='100px' width='100px' onclick='currentSlide(<?php echo $location; ?>)'>
-                        </button>
+                  <button class="thumnail-image ">
+                    <img class='dot cursor' src='<?= $urlImage . $key ?>' height='100px' width='100px' onclick='currentSlide(<?= $location; ?>)'>
+                  </button>
               <?php
-                        $location++;
-                      }
-                    }
+                    $location++;
                   }
                 }
-              }
               ?>
             </div>
           </div>
           <div class="layout-main-image">
             <?php foreach ($products as $col) {
               $i = 0;
-              $dataImages = (array)json_decode($col['thumbnail']);
-              foreach ($dataImages as $key => $value) {
-                if (is_array($value) || is_object($value)) {
-                  foreach ($value as $item) {
-                    if ($key == "name") {
+              $dataImages = json_decode($col['thumbnail']);
+              foreach ((array)$dataImages as $key) {
                       $i++;
             ?>
-                      <div class="mySlides">
-                        <img src="<?= $urlImage . $item ?>">
-                        <div class="numbertext"><?php echo $i; ?> / 11</div>
-                      </div>
+                <div class="mySlides">
+                  <img src="<?= $urlImage . $key ?>">
+                  <div class="numbertext"><?php echo $i; ?> / 11</div>
+                </div>
             <?php
-                    }
-                  }
                 }
               }
-            } ?>
+            ?>
             <a class="prev cursor" onclick="plusSlides(-1)">❮</a>
             <a class="next cursor" onclick="plusSlides(1)">❯</a>
           </div>
@@ -1121,7 +1110,7 @@
         <div class="wrapper-selection__color">
           <div class="title">màu sắc:
             <?php
-            foreach ($unit as $row) :
+            foreach ($unitColor as $row) :
               foreach ($row as $item) {
                 echo $item['unit'] . ' ';
               }
@@ -1129,20 +1118,18 @@
             ?>
           </div>
           <!-- form -->
-          <form method="post">
+          <form method="post" action="<?= base_url('user/addToCart') ?>">
 
             <div class="color-group">
               <?php
-              foreach ($unit as $row) :
+              foreach ($unitColor as $row) :
                 foreach ($row as $item) {
               ?>
-                  <input type="radio" name="color_prd" id="color-<?php echo $item['unit'] ?>" class="radio-color acitve" value="<?php echo $item['unit'] ?>" <?php if ($item['unit'] == $_GET['colorUnit']) {
+                  <input type="radio" name="color_prd" id="color-<?php echo $item['unit'] ?>" class="radio-color acitve" value="<?php echo $item['unit'] ?>" <?php if ($item['product_id'] == $id_prd) {
                                                                                                                                                                 echo " checked";
                                                                                                                                                               } ?> />
-                  <a href="<?php echo base_url('user/detailProduct?idsanpham=') . $item['product_id'] ?>&sku=<?php echo $_GET['sku'] ?>&colorUnit=<?php echo $item['unit'] ?>" class="color-label bg-color-<?php echo $item['unit'] ?>" name="tab-color-<?php echo $item['unit'] ?>"><?php echo " "; ?></a>
-                  <label for="color-
-<?php
-                  echo $item['unit'] ?>" hidden>
+                  <a href="<?php echo base_url('user/detailProduct?idsanpham=') . $item['product_id'] ?>&sku=<?php echo $_GET['sku'] ?>&gioitinh=<?= $item['gender'] ?>&colorUnit=<?php echo $item['unit'] ?>" class="color-label bg-color-<?php echo $item['unit'] ?>" name="tab-color-<?php echo $item['unit'] ?>"><?php echo " "; ?></a>
+                  <label for="color- <?php echo $item['unit'] ?>" hidden>
                   </label>
               <?php
                 }
@@ -1193,6 +1180,7 @@
           <div class="title">số lượng</div>
           <div class="btn-dropdown__quantity" name="dropdown-quantity" onclick="DropdownQuantity(this)">
             <input type="text" id="quantity" name="quantity_prd" value="1">
+            <input type="hidden" id="quantity" name="id_prd" value="<?= $id_prd ?>">
             <div class="icon-arrow"><i class="fa-solid fa-caret-down"></i></div>
           </div>
           <ul id="dropdown-quantity" style="display: none;">

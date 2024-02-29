@@ -7,7 +7,8 @@
         <h3 class="card-title">Thêm danh mục</h3>
       </div>
 
-      <form method="post" class="form-horizontal">
+      <form method="post" action="<?= base_url('admin/doAddAttribute') ?>" class="form-horizontal">
+        <?= view('massages/massage') ?>
         <div class="card-body">
           <div class="form-group row">
             <label for="nameatt" class="col-sm-2 col-form-label">Tên</label>

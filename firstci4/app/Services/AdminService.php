@@ -8,25 +8,96 @@ use Exception;
 class AdminService extends BaseService{
 
     protected $adminModel;
-
+ 
     function __construct()
     {
         parent::__construct();
         $this->adminModel = model(AdminModel::class);  
     }
 
-    public function addCategoryModel($submitPost, $titlePost, $namePost) {
-        return $this->adminModel->addCategoryModel($submitPost, $titlePost, $namePost);
+    public function addCategoryModel($requestData) {
+        $validate = $this->validateAddCategory($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost(); 
+        
+        $checkData = $this->adminModel->hasCategoryInfo($dataSave['title_category'], $dataSave['name_category']);
+        if($checkData === true) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => 'Danh mục đã tồn tại'] , 
+            ];
+        }
+
+        try {
+            $this->adminModel->addCategoryModel($dataSave['title_category'], $dataSave['name_category']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
     } 
+
+
+    private function validateAddCategory($requestData) 
+    {
+        $rules = [
+            'title_category' => 'required|max_length[300]',
+            'name_category' => 'required|max_length[200]|is_unique[categories.name]',
+        ];
+
+        $messages = [
+            'title_category' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+            'name_category' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+                'is_unique' => 'Tên danh mục đã tồn tại!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
     public function getCategory($iddanhmuc) {
         return $this->adminModel->getCategory($iddanhmuc);
-    } 
-
-    public function updateCategoryModel($updatePost, $titlePost, $namePost, $iddanhmucPost) {
-        if(isset($updatePost)){
-            return $this->adminModel->updateCategoryModel($titlePost, $namePost, $iddanhmucPost);
-        }
     } 
 
     public function deleteCategoryModel($iddanhmuc) {
@@ -41,28 +112,310 @@ class AdminService extends BaseService{
         return $this->adminModel->getProductCategory();
     } 
     
-    public function addProductModel($addProductPost, $categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $imagesProductPost, $genderProductPost, $descriptionProductPost, $statusProductPost) {
-        if(isset($addProductPost)){
-            return $this->adminModel->addProductModel($categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $imagesProductPost, $genderProductPost, $descriptionProductPost, $statusProductPost);
+
+    public function addProductModel($requestData)
+    {
+        $validate = $this->validateAddProduct($requestData);
+ 
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        // $dataSave['thumbnails'] = $requestData->getFiles('thumbnails');
+        // $dataSave['images'] = $requestData->getFiles('images');
+        
+        try {
+            $this->adminModel->addProductModel($dataSave['category_id'], $dataSave['title_product'], $dataSave['title_product'], $dataSave['price_product'], $requestData->getFiles('thumbnails'), $dataSave['description_product'], $requestData->getFiles('images'), $dataSave['gender_product'], $dataSave['status_product']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+    }
+
+    public function updateProductModel($requestData) {
+
+        $validate = $this->validateUpdateProduct($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        // $dataSave['thumbnails'] = $requestData->getFiles('thumbnails');
+        // $dataSave['images'] = $requestData->getFiles('images');
+        
+        try {
+            $this->adminModel->updateProductModel($dataSave['category_id'], $dataSave['title_product'], $dataSave['title_product'], $dataSave['price_product'], $requestData->getFiles('thumbnails'), $dataSave['description_product'], $requestData->getFiles('images'), $dataSave['gender_product'], $dataSave['status_product'], $dataSave['product_id']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
         }
     } 
+
+    private function validateAddProduct($requestData) 
+    {
+        $rules = [
+            'category_id' => 'required',
+            'title_product' => 'required|max_length[300]',
+            'price_product' => 'required|max_length[200]',
+            'description_product' => 'required|max_length[500]',
+            'gender_product' => 'required',
+            'status_product' => 'required|max_length[11]',
+        ];
+
+        $messages = [
+            'category_id' => [
+                'required' => 'Không được để trống!',
+            ],
+            'title_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+            'price_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tên quá dài, vui lòng nhập {param} ký tự!',
+            ],
+            'description_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+            'gender_product' => [
+                'required' => 'Không được để trống!',
+            ],
+            'status_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+    private function validateUpdateProduct($requestData) 
+    {
+        $rules = [
+            'category_id' => 'required',
+            'title_product' => 'required|max_length[300]',
+            'price_product' => 'required|max_length[200]',
+            'description_product' => 'required|max_length[500]',
+            'gender_product' => 'required',
+            'status_product' => 'required|max_length[11]',
+        ];
+
+        $messages = [
+            'category_id' => [
+                'required' => 'Không được để trống!',
+            ],
+            'title_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+            'price_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tên quá dài, vui lòng nhập {param} ký tự!',
+            ],
+            'description_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+            'gender_product' => [
+                'required' => 'Không được để trống!',
+            ],
+            'status_product' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function getProductId($idsanpham) {
         return $this->adminModel->getProductId($idsanpham);
     } 
 
-    public function updateProductModel($updateProduct, $categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $imagesProductPost, $genderProductPost, $descriptionProductPost, $statusProductPost, $idsanpham) {
-        if(isset($updateProduct)) {
-            return $this->adminModel->updateProductModel($categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $imagesProductPost, $genderProductPost, $descriptionProductPost, $statusProductPost, $idsanpham);
-        }
-    } 
     public function deleteProductModel($idsanpham) {
         return $this->adminModel->deleteProductModel($idsanpham);
     } 
+
     public function getProducts() {
         return $this->adminModel->getProducts();
     } 
+    
 
+    public function addAttributeModel($requestData)
+    {
+        $validate = $this->validateAddAttribute($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->addAttributeModel($dataSave['name_attribute'], $dataSave['code_attribute'], $dataSave['unit_attribute']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+    }
+
+    private function validateAddAttribute($requestData) 
+    {
+        $rules = [
+            'name_attribute' => 'required|max_length[50]',
+            'code_attribute' => 'required|max_length[20]|is_unique[attributes.attribute_sku]',
+            'unit_attribute' => 'required|max_length[50]',
+        ];
+
+        $messages = [
+            'name_attribute' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tên quá dài, vui lòng nhập {param} ký tự!',
+            ],
+            'code_attribute' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+                'is_unique' => 'Mã sku đã tồn tại!'
+            ],
+            'unit_attribute' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Pagination Data
+
+    // framework
+    public function getCategoryPaginationData() {
+        return $this->adminModel->getCategoryPaginationData();
+    }  
+    
+    public function getProductPaginationData() {
+        return $this->adminModel->getProductPaginationData();
+    } 
+
+    public function getAttributePaginationData() {
+        return $this->adminModel->getAttributePaginationData();
+    } 
+    
+    public function getOrderPaginationData() {
+        return $this->adminModel->getOrderPaginationData();
+    } 
+    
+    public function getCustomerPaginationData() {
+        return $this->adminModel->getCustomerPaginationData();
+    } 
+    
+    public function getPagerCategories() {
+        return $this->adminModel->pagerCategories();
+    }
+    
+    public function getPagerProducts() {
+        return $this->adminModel->pagerProducts();
+    }
+    
+    public function getPagerAttributes() {
+        return $this->adminModel->pagerAttributes();
+    }
+    
+    public function getPagerOrders() {
+        return $this->adminModel->pagerOrders();
+    }
+    
+    public function getPagerCustomers() {
+        return $this->adminModel->pagerCustomers();
+    }
+
+    // module
     public function productFilter($filterSubmit, $containerInputFilter, $page) {
         return $this->adminModel->productFilter($filterSubmit, $containerInputFilter, $page);
     } 
@@ -71,25 +424,194 @@ class AdminService extends BaseService{
         return $this->adminModel->paginationProducts($page);
     } 
 
-    public function addAttributeModel($addAttPost, $name_attribute, $code_attribute, $unit_attribute) {
-        if(isset($addAttPost)){
-            return $this->adminModel->addAttributeModel($name_attribute, $code_attribute, $unit_attribute);
-        } 
-    } 
-
-    public function pagination() {
-        return $this->adminModel->pagination();
-    } 
-
-    public function getAttribute() {
-        return $this->adminModel->getAttribute();
+    public function paginationProductAtt($pageGet) {
+        return $this->adminModel->paginationProductAtt($pageGet);
+    }
+    
+    // end Pagination
+    
+    public function getAttribute($id) {
+        return $this->adminModel->getAttribute($id);
     }
 
-    public function updateAttributeModel($updateAttribute, $namePost, $code_update, $unit_update, $idAtt) {
-        if(isset($updateAttribute)) {
-            return $this->adminModel->updateAttributeModel($namePost, $code_update, $unit_update, $idAtt);
+    public function updateAttributeModel($requestData)
+    {
+        $validate = $this->validateUpdateAttribute($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->updateAttributeModel($dataSave['name_update'], $dataSave['code_update'], $dataSave['unit_update'], $dataSave['attribute_id']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+    }
+
+    private function validateUpdateAttribute($requestData) 
+    {
+        $rules = [
+            'name_update' => 'required|max_length[50]',
+            'code_update' => 'required|max_length[20]',
+            'unit_update' => 'required|max_length[50]',
+        ];
+
+        $messages = [
+            'name_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tên quá dài, vui lòng nhập {param} ký tự!',
+            ],
+            'code_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+            'unit_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+    public function updateProductAttributeModel($requestData) {
+
+        $validate = $this->validateUpdateProductAttribute($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->updateProductAttributeModel($dataSave['product_id'], $dataSave['attribute_id'], $dataSave['id']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+
+    }
+
+
+    private function validateUpdateProductAttribute($requestData) 
+    {
+        $rules = [
+            'product_id' => 'required',
+            'attribute_id' => 'required',
+        ];
+
+        $messages = [
+            'product_id' => [
+                'required' => 'Không được để trống!',
+            ],
+            'attribute_id' => [
+                'required' => 'Không được để trống!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+    public function updateCategoryModel($requestData) {
+        $validate = $this->validateUpdateCategory($requestData);
+
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->updateCategoryModel($dataSave['title_update'], $dataSave['name_update'], $dataSave['id_update']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
         }
     } 
+
+
+    private function validateUpdateCategory($requestData) 
+    {
+        $rules = [
+            'title_update' => 'required|max_length[300]',
+            'name_update' => 'required|max_length[200]|is_unique[categories.name,category_id,'.$requestData->getPost()['id_update'] . ']',
+        ];
+
+        $messages = [
+            'title_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+            'name_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+                'is_unique' => 'Tên danh mục đã tồn tại!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
 
     public function deleteAttributeModel($idAtt) {
         return $this->adminModel->deleteAttributeModel($idAtt);
@@ -99,17 +621,87 @@ class AdminService extends BaseService{
         return $this->adminModel->getAttributes();
     }
     
-    public function addAttributeProductModel($checkSubmit, $product_id, $attribute_id) {
-        if(isset($checkSubmit)){
-            return $this->adminModel->addAttributeProductModel($product_id, $attribute_id);
+    public function addAttributeProductModel($requestData) {
+
+        
+        $validate = $this->validateLinkProductAttribute($requestData);
+        
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
         }
-    }
         
-    public function paginationProductAtt($pageGet) {
-        return $this->adminModel->paginationProductAtt($pageGet);
-    }
-    
+        $dataSave = $requestData->getPost();
+
+        $checkLink = $this->adminModel->hasAttPrdInfo($dataSave['product_id'], $dataSave['attribute_id']);
+        if($checkLink === true){
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => 'Liên kết đã bị trùng'], 
+            ];               
+        }
         
+        try {
+            $this->adminModel->addAttributeProductModel($dataSave['product_id'], $dataSave['attribute_id']);
+
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+
+    }
+
+
+    private function validateLinkProductAttribute($requestData) 
+    {
+        $rules = [
+            'product_id' => 'required',
+            'attribute_id' => 'required',
+        ];
+
+        $messages = [
+            'product_id' => [
+                'required' => 'Không được để trống!',
+            ],
+            'attribute_id' => [
+                'required' => 'Không được để trống!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function getProductAttribute() {
         return $this->adminModel->getProductAttribute();
     }
@@ -117,12 +709,7 @@ class AdminService extends BaseService{
     public function getProductAttributeId($idPrdAtt) {
         return $this->adminModel->getProductAttributeId($idPrdAtt);
     }
-        
-    public function updateProductAttributeModel($checkSubmit, $product_id, $attribute_id, $idPrdAtt) {
-        if(isset($checkSubmit)){
-            return $this->adminModel->updateProductAttributeModel($product_id, $attribute_id, $idPrdAtt);
-        }
-    }
+    
         
     public function deleteProductAttributeModel($idPrdAtt) {
         return $this->adminModel->deleteProductAttributeModel($idPrdAtt);
@@ -135,10 +722,87 @@ class AdminService extends BaseService{
     public function getOrder($idUpdate) {
         return $this->adminModel->getOrder($idUpdate);
     }
+
+    public function updateOrderModel($requestData) {
         
-    public function updateOrderModel() {
-        return $this->adminModel->updateOrderModel();
+        $validate = $this->validateUpdateOrder($requestData);
+        
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
+        
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->updateOrderModel($dataSave['fullname'], $dataSave['address'], $dataSave['phone_number'], $dataSave['total_price'], $dataSave['status'],);
+
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
+
     }
+
+
+    private function validateUpdateOrder($requestData) 
+    {
+        $rules = [
+            'fullname' => 'required|max_length[200]',
+            'address' => 'required',
+            'phone_number' => 'required|max_length[13]|min_length[11]',
+            'total_price' => 'required|max_length[50]',
+            'status' => 'required|max_length[11]',
+        ];
+
+        $messages = [
+            'fullname' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+            'address' => [
+                'required' => 'Không được để trống!',
+            ],
+            'phone_number' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+                'min_length' => 'Tối thiểu là {param} ký tự!',
+            ],
+            'total_price' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+            'status' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+
+
+
+
+
         
     public function deleteOrderModel($idUpdate) {
         return $this->adminModel->deleteOrderModel($idUpdate);

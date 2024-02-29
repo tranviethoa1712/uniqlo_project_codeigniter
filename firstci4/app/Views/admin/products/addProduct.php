@@ -7,7 +7,8 @@
         <h3 class="card-title">Thêm sản phẩm</h3>
       </div>
 
-      <form method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form method="post" action="<?= base_url('admin/doAddProduct') ?>" enctype="multipart/form-data" class="form-horizontal">
+      <?= view('massages/massage') ?>
         <div class="card-body">
           <div class="form-group row">
             <label for="idcategory" class="col-sm-2 col-form-label">Danh mục</label>
@@ -17,12 +18,6 @@
                   <option value="<?php echo $col['category_id'] ?>"><?php echo $col['title'] . " - " . $col['name'] . " - " ?></option>
                 <?php } ?>
               </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="skuproduct" class="col-sm-2 col-form-label">Tên danh mục</label>
-            <div class="col-sm-10">
-              <input type="text" name="code_product" id="skuproduct" class="form-control" placeholder="Nhập mã sản phẩm">
             </div>
           </div>
           <div class="form-group row">

@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        
+
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Danh sách danh mục</h3>
@@ -35,7 +35,7 @@
                 $urleDeleteString = base_url('admin/deleteCategory/');
                 $i = 0;
                 if (count($categories) > 0) {
-                    foreach($categories as $row):
+                  foreach ($categories as $row) :
                     $i++;
                 ?>
                     <tr>
@@ -49,7 +49,7 @@
                       </td>
                     </tr>
                 <?php
-                    endforeach;
+                  endforeach;
                 } else {
                   echo "<h1>" . "Danh mục rỗng" . "</h1>";
                 }
@@ -62,15 +62,18 @@
 
       </div>
     </div>
+    <div class="row">
+      <?= $pager->links('default', 'custom_pagination') ?>
+    </div>
 
   </div><!-- /.container-fluid -->
 </section>
-  <!-- /.content -->
-  </div>
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+<!-- /.content -->
+</div>
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->

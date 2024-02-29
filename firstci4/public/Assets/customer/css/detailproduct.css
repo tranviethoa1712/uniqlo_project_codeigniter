@@ -546,6 +546,9 @@ background-color: rgba(0, 0, 0, 0.8);
 .bg-color-black {
     background-color: #000;
 }
+.bg-color-olive {
+    background-color: olive;
+}
 
 .color-group {
     display: flex;

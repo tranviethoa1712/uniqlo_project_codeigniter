@@ -6,7 +6,8 @@
       <div class="card-header">
         <h3 class="card-title">Thêm danh mục</h3>
       </div> 
-      <form action="<?php echo base_url('admin/addCategoryView') ?>" method="post" class="form-horizontal">
+      <form action="<?php echo base_url('admin/doAddCategory') ?>" method="post" class="form-horizontal">
+        <?= view('massages/massage') ?>
         <div class="card-body">
           <div class="form-group row">
             <label for="titlecate" class="col-sm-2 col-form-label">Tiêu đề</label>

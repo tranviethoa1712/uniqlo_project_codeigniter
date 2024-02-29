@@ -193,18 +193,17 @@ class CustomerModel extends Model
         return $result;
     }
 
-    public function getUnitColorProduct($skuProduct)
+    public function getUnitColorProduct($skuProduct, $gender)
     {
-
         $sql = "SELECT product_id FROM products 
-        WHERE sku = '$skuProduct'
+        WHERE sku = '$skuProduct' AND gender = '$gender'
         ";
         $result = $this->db->query($sql);
         $data = [];
 
         foreach ($result->getResultArray() as $row => $val) {
             foreach ($val as $item) {
-                $sqlUnit = "SELECT attributes.unit, products.product_id
+                $sqlUnit = "SELECT attributes.unit, products.product_id, products.gender
                 FROM products, attributes, product_attribute
                 WHERE products.product_id = $item
                 AND attributes.name = 'color'
@@ -232,10 +231,11 @@ class CustomerModel extends Model
     }
 
     //add to cart
-    public function addToCart($color_prd, $size_prd, $quantity_prd, $checkLogin, $idsanpham)
+    public function addToCart($color_prd, $size_prd, $quantity_prd, $sessionLogin, $idsanpham)
     {
         if (isset($color_prd)  && isset($size_prd) && isset($quantity_prd)) {
-            if (isset($checkLogin)) {
+            if (isset($sessionLogin)) { 
+                $session = session();
                 $db = $this->db;
                 $builder = $db->table('products');
                 $builder->select('*');
@@ -243,6 +243,15 @@ class CustomerModel extends Model
                 $result = $builder->get(1)->getResultArray();
 
                 foreach ($result as $row) {
+                    // $array = [
+                    //     $idsanpham => [
+                    //         'sku' => $row['sku'],
+                    //         'title' => $row['title'],
+                    //         'price' => $row['price'],
+                    //         'thumbnail' => $row['thumbnail'],
+                    //         ]
+                    //     ];
+                    //     $session->set('cart', 'some_value');
                     $_SESSION['cart'][$idsanpham]['sku'] = $row['sku'];
                     $_SESSION['cart'][$idsanpham]['title'] = $row['title'];
                     $_SESSION['cart'][$idsanpham]['price'] = $row['price'];
@@ -253,7 +262,6 @@ class CustomerModel extends Model
                 $_SESSION['cart'][$idsanpham]['size'] = $_POST['size_prd'];
                 $_SESSION['cart'][$idsanpham]['quantity'] = $_POST['quantity_prd'];
 
-                $session = session();
                 $item = $_SESSION['cart'];
                 $session->set($item);
                 $session->close();

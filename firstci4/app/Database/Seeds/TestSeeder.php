@@ -8,6 +8,7 @@ class TestSeeder extends Seeder
 {
     public function run()
     {
-        $this->call('AdminSeeder');
+        // $this->call('AdminSeeder');
+        $this->call('ContactsSeeder');
     }
 }

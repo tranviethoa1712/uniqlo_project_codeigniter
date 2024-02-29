@@ -1,7 +1,6 @@
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -24,12 +23,11 @@
               <thead>
                 <tr>
                   <th>STT</th>
-                  <th>ID sản phẩm</th>
                   <th>Tên sản phẩm</th>
                   <th>Mã sẩn phẩm</th>
-                  <th>ID thuộc Tính</th>
                   <th>Tên thuộc Tính</th>
                   <th>Mã thuộc tính</th>
+                  <th>Unit</th>
                   <th>Giới tính</th>
                   <th>Tools</th>
                 </tr>
@@ -37,22 +35,21 @@
               <tbody>
                 <?php
                 $i = 0;
-                if (count($pagigation['result']) > 0) {
-                  foreach($pagigation['result'] as $row):
+                if (count($productAttribute['result']) > 0) {
+                  foreach ($productAttribute['result'] as $row) :
                     $i++;
                 ?>
                     <tr>
                       <td><?php echo $i; ?></td>
-                      <td><?php echo $row['product_id'] ?></td>
                       <td><?php echo $row['title'] ?></td>
                       <td><?php echo $row['sku'] ?></td>
-                      <td><?php echo $row['attribute_id'] ?></td>
                       <td><?php echo $row['name'] ?></td>
                       <td><?php echo $row['attribute_sku'] ?></td>
+                      <td><?php echo $row['unit'] ?></td>
                       <td><?php echo $row['gender'] ?></td>
                       <?php
-                      $urlUpdate = base_url('admin/updatePalink?idthuoctinhsanpham=');
-                      $urlDelete = base_url('admin/deletePalink?idthuoctinhsanpham=');
+                      $urlUpdate = base_url('admin/updatePalink/');
+                      $urlDelete = base_url('admin/deletePalink/');
                       ?>
                       <td><a href="<?php echo $urlUpdate . $row['id'] ?>">Sửa</a>
                         &nbsp; | &nbsp;
@@ -79,29 +76,35 @@
       <div class="col-sm-12 col-md-7">
         <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
           <ul class="pagination">
-            <li class="paginate_button page-item previous" id="example2_previous">
-              <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-            </li>
-            <!-- <li class="paginate_button page-item active">
-              <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a>
-            </li> -->
+            <?php if ($page > '1') : ?>
+              <li class="paginate_button page-item previous" id="example2_previous">
+                <?php $previous = $page - 1 ?>
+                <a href="<?= base_url('admin/showPalink') . '?page=' . $previous ?>" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+              </li>
+            <?php endif; ?>
+
             <?php
-            for ($page = 1; $page <= $pagigation['numberOfPage']; $page++) {
+            for ($pageIndex = 1; $pageIndex <= $productAttribute['numberOfPage']; $pageIndex++) {
             ?>
-              <li class="paginate_button page-item ">
+              <li class="paginate_button page-item <?= $pageIndex == $page ? " active" : "" ?>">
                 <?php
-                $urlListPrdAtt = base_url('admin/showPalink?page=');
-                echo '<a href = "' . $urlListPrdAtt . $page . '" aria-controls="example2" data-dt-idx="' . $page . '" tabindex="0" class="page-link">' . $page . ' </a>';
+                echo '<a  href = "' . base_url('admin/showPalink') . '?page=' . $pageIndex . '" aria-controls="example2" data-dt-idx="' . $pageIndex . '" tabindex="0" class="page-link">' . $pageIndex . ' </a>';
                 ?>
               </li>
             <?php
             }
             ?>
-            <li class="paginate_button page-item next" id="example2_next"><a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a></li>
+
+            <?php if ($page < $productAttribute['numberOfPage']) : ?>
+              <li class="paginate_button page-item next" id="example2_next">
+                <?php $next =  $page + 1; ?>
+                <a href="<?= base_url('admin/showPalink') . '?page=' . $next ?>" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+              </li>
+            <?php endif; ?>
+
           </ul>
         </div>
       </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>
-

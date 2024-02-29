@@ -42,27 +42,13 @@ class HomeAdminController extends BaseControllerAdmin{
         return $this->viewAdmin('home', $data);
     }
 
-    public function register() {
-        $data = [
-            'pageTitle' => 'Đăng ký quản trị',
-            'dashboard' => 'Đăng ký',
-        ];
-        $checkSubmit = $this->request->getPost('registerAdmin');
-        $name = $this->request->getPost('name');
-        $emailAddress = $this->request->getPost('emailAddress');
-        $password = $this->request->getPost('password');
-        
-        $this->service->RegisterAdmin($checkSubmit, $name, $emailAddress, $password);
-        
-        return $this->viewAdmin('manager/register', $data);
-    }
-
-    public function userList() {
-
+    public function userList() 
+    {
         $data = [
             'pageTitle' => 'Quản lý khách hàng',
             'dashboard' => 'Danh sách khách hàng',
-            'users' => $this->service->getUSers(),
+            'users' => $this->service->getCustomerPaginationData(),
+            'pager' => $this->service->getPagerCustomers(),
         ];
 
         return $this->viewAdmin('users/userList', $data);
@@ -76,7 +62,7 @@ class HomeAdminController extends BaseControllerAdmin{
             'dashboard' => 'Cập nhật người dùng',
             'user' => $dataUser,
             'idUser' => $idUser,
-        ];
+        ]; 
         
         return $this->viewAdmin('users/tools/updateUser', $data);
     }

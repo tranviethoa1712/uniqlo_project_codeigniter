@@ -52,20 +52,27 @@ class HomeCustomerController extends BaseControllerUser{
         $data = [];
         $urlMemberDetail = base_url('user/aboutAccount');
         
-        
+        if(isset($this->session->customer_login)) {
+            return redirect($urlMemberDetail);          
+        }
+
+        return $this->viewCustomer('customer-login', 'baseLogin', $data);
+    } 
+    
+    public function doLogin () {
         $checkRequest = $_SERVER['REQUEST_METHOD'];
         $checkSubmit = $this->request->getPost('submitLogin');
         $emaillogin = $this->request->getPost('emaillogin');
         $pwdlogin = $this->request->getPost('pwdlogin');
-
-        if(isset($this->session->customer_login)) {
-            header("location: ".$urlMemberDetail);           
-        }
-
+    
         $this->service->checkLoginCusomer($checkRequest, $checkSubmit, $emaillogin, $pwdlogin);
+    }
 
-        return $this->viewCustomer('customer-login', 'baseLogin', $data);
-    } 
+    public function logOutCustomer () {
+        $this->logOutCustomer();
+
+        return redirect('user/userLogin');
+    }
 
     public function register()
     {
@@ -93,11 +100,26 @@ class HomeCustomerController extends BaseControllerUser{
 
     public function cart() { 
         $dataCategories = $this->service->getCategories();
+        $sessionLogin = $this->session->customer_login;
+        $sessionCart = $this->session->cart;
         $data = [
             'categories' => $dataCategories,
+            'sessionLogin' => $sessionLogin,
+            'sessionCart' => $sessionCart
         ];
 
         return $this->viewCustomer('cart', 'baseCart', $data);
+    }
+
+    public function addToCart() {
+        $color_prd = $this->request->getPost('color_prd');
+        $size_prd = $this->request->getPost('size_prd');
+        $quantity_prd = $this->request->getPost('quantity_prd');
+        $id_prd = $this->request->getPost('id_prd');
+        $sessionLogin = $this->session->customer_login;
+        $this->service->addToCart($color_prd, $size_prd, $quantity_prd, $sessionLogin, $id_prd);
+
+        return redirect('user/myCart');
     }
 
     public function order() {

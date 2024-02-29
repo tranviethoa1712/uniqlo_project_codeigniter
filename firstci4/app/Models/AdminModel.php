@@ -7,52 +7,31 @@ use CodeIgniter\Database\Query;
 
 class AdminModel extends Model
 {
+    protected $table = 'products';
+
     //category data 
-    public function addCategoryModel($submitPost, $titlePost, $namePost)
+    public function addCategoryModel($titlePost, $namePost)
     {
-        if (isset($submitPost)) {
-            if (isset($titlePost) && isset($namePost)) {
+        if (isset($titlePost) && isset($namePost))  {
 
-                $checkTitle = $titlePost;
-                $checkName = $namePost;
+            $db = $this->db;
 
-                $title_category = "";
-                $name_category = "";
+            // Prepare the Query
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('categories')->insert([
+                    'name'    => 'x',
+                    'title'   => 'y',
+                ]);
+            });
 
-                $db = db_connect();
+            // Run the Query
+            $pQuery->execute($namePost, $titlePost);
 
-                $checkCategory = $db->query("SELECT * FROM categories WHERE title = '$checkTitle' AND name = '$checkName'");
-                // $resultCategory =  $checkCategory->getResult();
-                $countResult = $checkCategory->getNumRows();
-
-
-                //check title and name whether exists?
-                if (($countResult) > 0) {
-                    // echo "<br/>" . "Email is already used";
-                } else {
-                    // Prepare the Query
-                    $pQuery = $db->prepare(static function ($db) {
-                        return $db->table('categories')->insert([
-                            'name'    => 'x',
-                            'title'   => 'y',
-                        ]);
-                    });
-
-                    // Collect the Data
-                    $title_category = $titlePost;
-                    $name_category = $namePost;
-
-                    // Run the Query
-                    $pQuery->execute($name_category, $title_category);
-
-                    // Close out the prepared statement
-                    $pQuery->close();
-
-                    // return $result;
-                }
-            }
+            // Close out the prepared statement
+            $pQuery->close();
         }
     }
+
 
     public function updateCategoryModel($titlePost, $namePost, $iddanhmuc)
     {
@@ -128,7 +107,6 @@ class AdminModel extends Model
 
     public function deleteAttributeModel($idAtt)
     {
-
         $db = $this->db;
 
         // Prepare the Query
@@ -142,8 +120,6 @@ class AdminModel extends Model
         $pQuery->execute($idAtt);
         // Close out the prepared statement
         $pQuery->close();
-
-        header('Location: indexAdmin.php?controller=CategoriesAdminController&action=listAttributes');
     }
 
     public function deleteProductAttributeModel($idPrdAtt)
@@ -166,12 +142,12 @@ class AdminModel extends Model
 
 
     //product data
-    public function addProductModel($category_id, $code_product, $title_product, $price_product, $thumbnails, $images, $gender_product, $description_product, $status_product)
+    public function addProductModel($category_id, $code_product, $title_product, $price_product, $thumbnails , $description_product, $images, $gender_product, $status_product)
     {
         if (isset($category_id)  && isset($code_product) && isset($title_product) && isset($price_product) && isset($thumbnails)  && isset($images) && isset($gender_product) && isset($description_product) && isset($status_product)) {
 
             $db = $this->db;
-
+            $code_product = url_title($code_product, '-', true);
             // Prepare the Query
             $pQuery = $db->prepare(static function ($db) {
                 return $db->table('products')->insert([
@@ -187,17 +163,17 @@ class AdminModel extends Model
                 ]);
             });
 
-
+ 
             //lấy name paths
             foreach ($thumbnails['images'] as $key) {
-                $containerFileNameThumnails[] = $key->getRandomName();
+                $containerFileNameThumnails[] = $key->getClientName();
             }
 
             $containerFileNameThumnails = json_encode($containerFileNameThumnails);
 
             //lấy name paths
             foreach ($images['images'] as $key) {
-                $containerFileNameImages[] = $key->getRandomName();
+                $containerFileNameImages[] = $key->getClientName();
             }
 
             $containerFileNameImages = json_encode($containerFileNameImages);
@@ -209,7 +185,7 @@ class AdminModel extends Model
         }
     }
 
-    public function updateProductModel($categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $imagesProductPost, $genderProductPost, $descriptionProductPost, $statusProductPost, $product_id)
+    public function updateProductModel($categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $thumbnailsProductPost, $descriptionProductPost, $imagesProductPost, $genderProductPost, $statusProductPost, $product_id)
     {
         if (isset($categoryIdPost)  && isset($codeProductPost) && isset($titleProductPost) && isset($priceProductPost) && isset($thumbnailsProductPost)  && isset($imagesProductPost) && isset($genderProductPost) && isset($descriptionProductPost) && isset($statusProductPost)) {
 
@@ -271,19 +247,6 @@ class AdminModel extends Model
         return $query;
     }
 
-    public function getProductCategory()
-    {
-        $db = $this->db;
-
-        $query = $db->query('SELECT products.product_id, products.title, products.sku, products.gender 
-        FROM products, categories
-        WHERE products.category_id = categories.category_id');
-        $result =  $query->getResultArray();
-
-        return $result;
-    }
-
-
     //attribute data
 
     public function addAttributeModel($name_attribute, $code_attribute, $unit_attribute)
@@ -339,11 +302,9 @@ class AdminModel extends Model
         return $query;
     }
 
-    public function getAttribute()
+    public function getAttribute($id_attribute)
     {
         $db = $this->db;
-        $id_attribute = $_GET['idthuoctinh'];
-
         $builder = $db->table('attributes');
         $builder->select('*');
         $builder->where('attribute_id', $id_attribute);
@@ -352,29 +313,55 @@ class AdminModel extends Model
         return $query;
     }
 
+    public function hasAttPrdInfo($product_id, $attribute_id)
+    {
+        //check trùng liên kết
+
+        $query = "SELECT * FROM product_attribute WHERE product_id = $product_id AND attribute_id = $attribute_id";
+        $result = $this->db->query($query);
+        $number_of_result = $result->getNumRows();
+
+        if ($number_of_result > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function hasCategoryInfo($title_category, $name_category)
+    {
+        //check category
+        $sql = "SELECT * FROM categories WHERE title = ? AND name = ?";
+
+        $result = $this->db->query($sql, array($title_category, $name_category));
+        $number_of_result = $result->getNumRows();
+
+        if ($number_of_result > 0) {
+            return true;
+        }
+        return false;
+    }
+
 
     public function addAttributeProductModel($product_id, $attribute_id)
     {
-        if (isset($_POST['addProductAttribute'])) {
-            if (isset($product_id)  && isset($attribute_id)) {
+        if (isset($product_id)  && isset($attribute_id)) {
 
-                $db = $this->db;
+            $db = $this->db;
 
-                // Prepare the Query
-                $pQuery = $db->prepare(static function ($db) {
-                    return $db->table('product_attribute')->insert([
-                        'product_id'    => 'x',
-                        'attribute_id'   => 'y',
-                    ]);
-                });
+            // Prepare the Query
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('product_attribute')->insert([
+                    'product_id'    => 'x',
+                    'attribute_id'   => 'y',
+                ]);
+            });
 
-                // Run the Query
-                $results = $pQuery->execute($product_id, $attribute_id);
+            // Run the Query
+            $results = $pQuery->execute($product_id, $attribute_id);
 
-                // Close out the prepared statement
-                $pQuery->close();
-                return $results;
-            }
+            // Close out the prepared statement
+            $pQuery->close();
+            return $results;
         }
     }
 
@@ -407,44 +394,79 @@ class AdminModel extends Model
         return $query;
     }
 
-
-    public function pagination()
+    // Pagination Attributes 
+    public function getCategoryPaginationData()
     {
-        $db = $this->db;
-
-        //define total number of results you want per page  
-        $results_per_page = 10;
-
-        //find the total number of results stored in the database  
-        $query = $db->query('SELECT * FROM attributes');
-        $number_of_result = $query->getNumRows();
-        $query->freeResult();
-        //determine the total number of pages available  
-        $number_of_page = ceil($number_of_result / $results_per_page);
-
-        //determine which page number visitor is currently on  
-        if (!isset($_GET['page'])) {
-            $page = 1;
-        } else {
-            $page = $_GET['page'];
-        }
-
-        //determine the sql LIMIT starting number for the results on the displaying page  
-        $page_first_result = ($page - 1) * $results_per_page;
-
-        //retrieve the selected results from database   
-        $query = $db->query('SELECT * FROM attributes LIMIT ' . $page_first_result . ',' . $results_per_page);
-        $result = $query->getResultArray();
-
-        $data = [];
-        $data['result'] = $result;
-        $data['numberOfPage'] =  $number_of_page;
-        return $data;
+        $this->table = 'categories';
+        return $this->orderBy('category_id', 'DESC')->paginate(10);
     }
 
+    public function getProductPaginationData()
+    {
+        $this->table = 'products';
+        return $this->orderBy('product_id', 'DESC')->paginate(10);
+    }
+
+    public function getAttributePaginationData()
+    {
+        $this->table = 'attributes';
+        return $this->orderBy('attribute_id', 'DESC')->paginate(10);
+    }
+
+
+    public function getOrderPaginationData()
+    {
+        $this->table = 'orders';
+        return $this->orderBy('order_id', 'DESC')->paginate(10);
+    }
+
+    public function getCustomerPaginationData()
+    {
+        $this->table = 'customers';
+        return $this->orderBy('customer_id', 'DESC')->paginate(10);
+    }
+
+    public function pagerCategories()
+    {
+        $this->table = 'categories';
+        return $this->pager;
+    }
+
+    public function pagerProducts()
+    {
+        $this->table = 'products';
+        return $this->pager;
+    }
+
+    public function pagerAttributes()
+    {
+        $this->table = 'attributes';
+        return $this->pager;
+    }
+
+    public function pagerOrders()
+    {
+        $this->table = 'orders';
+        return $this->pager;
+    }
+ 
+    public function pagerCustomers()
+    {
+        $this->table = 'customers';
+        return $this->pager;
+    }
+ 
+    public function pagerAttributeProducts()
+    {
+        $this->table = 'product_attribute';
+        return $this->pager;
+    }
+
+
+    // pagination
     public function paginationProducts($pageCurrent)
     {
-
+ 
         //define total number of results you want per page  
         $results_per_page = 10;
 
@@ -476,19 +498,39 @@ class AdminModel extends Model
         return $data;
     }
 
+
+    public function getAttributeProductPaginationData (?int $perPage = null) {
+        $this->table('product_attribute');
+        $perPage = 10;
+
+        $this->builder('product_attribute')
+        ->select('product_attribute.*')
+        ->select('products.title, products.sku, products.gender')
+        ->select('attributes.name, attributes.attribute_sku, attributes.unit')
+        ->join('attributes', 'attributes.attribute_id = product_attribute.attribute_id', 'LEFT')
+        ->join('products', 'products.product_id = product_attribute.product_id', 'LEFT')
+        ->orderBy('product_attribute.id' ,'DESC');
+        
+        return [
+            'ProductAtrributePaginationData'  => $this->paginate($perPage),
+            'pager' => $this->pager,
+        ];
+
+    }
+
     public function paginationProductAtt($pageGet)
     {
         //define total number of results you want per page  
         $results_per_page = 10;
 
         //find the total number of results stored in the database  
-        $query = "SELECT products.product_id, products.title, products.sku, 
-        attributes.attribute_id, attributes.name, attributes.attribute_sku, 
+        $query = "SELECT products.title, products.sku, 
+        attributes.name, attributes.attribute_sku, 
         products.gender, product_attribute.id
         FROM products, attributes, product_attribute
         WHERE product_attribute.product_id = products.product_id
         AND product_attribute.attribute_id = attributes.attribute_id
-        ";
+        "; 
 
         $result = $this->db->query($query);
         $number_of_result = $result->getNumRows();
@@ -507,8 +549,8 @@ class AdminModel extends Model
         $page_first_result = ($page - 1) * $results_per_page;
 
         //retrieve the selected results from database   
-        $query = "SELECT products.product_id, products.title, products.sku, 
-        attributes.attribute_id, attributes.name, attributes.attribute_sku, 
+        $query = "SELECT products.title, products.sku, 
+        attributes.name, attributes.attribute_sku, attributes.unit,
         products.gender, product_attribute.id
         FROM products, attributes, product_attribute
         WHERE product_attribute.product_id = products.product_id
@@ -614,46 +656,30 @@ class AdminModel extends Model
 
     public function updateOrderModel()
     {
-        if (isset($_POST['updateOrder'])) {
-            if (isset($_POST['fullname']) && isset($_POST['address']) && isset($_POST['phone_number']) && isset($_POST['total_price']) && isset($_POST['status'])) {
-
-                $fullname = "";
-                $address = "";
-                $phone_number = "";
-                $total_price = "";
-                $status = "";
-                $order_id = "";
-
-                $db = $this->db;
-
-                // Prepare the Query
-                $pQuery = $db->prepare(static function ($db) {
-                    return $db->table('orders')->update([
-                        'fullname'    => 'x',
-                        'address'   => 'y',
-                        'phone_number'   => 'z',
-                        'total_price'   => 'a',
-                        'status'   => 'b',
-                    ]);
-                });
-
-                $order_id = $_GET['idOrder'];
-                $db->table('product_attribute')->where('order_id', $order_id);
+        if (isset($fullname) && isset($address) && isset($phone_number) && isset($total_price) && isset($status)) {
 
 
-                $fullname = $_POST['fullname'];
-                $address = $_POST['address'];
-                $phone_number = $_POST['phone_number'];
-                $total_price = $_POST['total_price'];
-                $status = $_POST['status'];
+            $db = $this->db;
 
-                // Run the Query
-                $pQuery->execute($fullname, $address, $phone_number, $total_price, $status);
-                // Close out the prepared statement
-                $pQuery->close();
+            // Prepare the Query
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('orders')->update([
+                    'fullname'    => 'x',
+                    'address'   => 'y',
+                    'phone_number'   => 'z',
+                    'total_price'   => 'a',
+                    'status'   => 'b',
+                ]);
+            });
 
-                header('Location: indexAdmin.php?controller=ProductsAdminController&action=orders');
-            }
+            $order_id = $_GET['idOrder'];
+            $db->table('product_attribute')->where('order_id', $order_id);
+
+
+            // Run the Query
+            $pQuery->execute($fullname, $address, $phone_number, $total_price, $status);
+            // Close out the prepared statement
+            $pQuery->close();
         }
     }
 

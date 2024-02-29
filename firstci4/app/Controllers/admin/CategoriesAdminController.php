@@ -36,55 +36,47 @@ class CategoriesAdminController extends BaseControllerAdmin{
     }
     
     public function add() {
-        // helper('form');
-
-        // if (! $this->request->is('post')) {
-        //     return $this->response->setStatusCode(405)->setBody('Method Not Allowed');
-        // }
-
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Thêm danh mục',
         ]; 
-        $submitPost = $this->request->getPost('addCategory');
-        $titlePost = $this->request->getPost('title_category');
-        $namePost = $this->request->getPost('name_category');
-        if(isset($submitPost)){
-            $this->service->addCategoryModel($submitPost, $titlePost, $namePost);
-        }
-    
 
         return view($this->pathViewLayout.'header', $data)
         . view($this->pathViewLayout.'sidebar')
         . view($this->pathViewLayout.'breadcrumb')
         . view($this->pathView . 'addCategories')
         . view($this->pathViewLayout.'footer');
-    }        
+    }     
+     
+    public function doAddCategory () {
+        $result = $this->service->addCategoryModel($this->request);
+
+        return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
+    }
     
 
     public function update($id) {
-        $iddanhmucPost = $this->request->getPost('id_update');
-        $dataCategory = $this->service->getCategory($id);
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Cập nhật Danh Mục',
-            'category' => $dataCategory,
+            'category' => $this->service->getCategory($id),
             'iddanhmuc' => $id,
         ];
 
-        $updatePost = $this->request->getPost('updateCategory');
-        $titlePost = $this->request->getPost('title_update');
-        $namePost = $this->request->getPost('name_update');
-
-        $this->service->updateCategoryModel($updatePost, $titlePost, $namePost, $iddanhmucPost);
-
+        
         return view($this->pathViewLayout.'header', $data)
         . view($this->pathViewLayout.'sidebar')
         . view($this->pathViewLayout.'breadcrumb')
         . view($this->pathView . 'tools/update')
         . view($this->pathViewLayout.'footer');
-
+        
     }
+    
+    public function doUpdateCategory () {
+        $result = $this->service->updateCategoryModel($this->request);
+
+        return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
+    } 
     
     public function delete($iddanhmuc) {
         $result = $this->service->deleteCategoryModel($iddanhmuc);
@@ -92,26 +84,15 @@ class CategoriesAdminController extends BaseControllerAdmin{
             return redirect('errors/404');
         }
 
-        $dataCategories = $this->service->getCategories();
-        $data = [
-            'pageTitle' => $this->pageTitle,
-            'dashboard' => 'Danh Mục sản phẩm',
-            'categories' => $dataCategories,
-        ];
-
-        return view($this->pathViewLayout.'header', $data)
-        . view($this->pathViewLayout.'sidebar')
-        . view($this->pathViewLayout.'breadcrumb', $data)
-        . view($this->pathView . 'listCategories', $data)
-        . view($this->pathViewLayout.'footer');
+       return redirect('admin/showCategories');
     }
 
     public function listCategories() {
-        $dataCategories = $this->service->getCategories();
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Danh Mục sản phẩm',
-            'categories' => $dataCategories,
+            'categories' => $this->service->getCategoryPaginationData(),
+            'pager' => $this->service->getPagerCategories(),
         ];
 
         return view($this->pathViewLayout.'header', $data)

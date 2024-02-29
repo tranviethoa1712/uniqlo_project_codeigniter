@@ -702,6 +702,7 @@
               $i = 0;
               $total = 0;
               $shippingCost = 50000;
+              var_dump($_SESSION['cart']);
               foreach ($cart as $id => $row) {
                 $i++;
           ?>
@@ -712,19 +713,14 @@
                         <a href="#">
                           <div class="product-image">
                             <?php
-                            $dataThumbnail = (array)json_decode($row['thumbnail']);
-                            foreach ($dataThumbnail as $key => $value) {
-                              if (is_array($value) || is_object($value)) {
-                                foreach ($value as $item => $img) {
-                                  if ($key == "name") {
-                                    if ($item == 0) {
+                            $dataThumbnail = json_decode($row['thumbnail']);
+                            foreach ((array)$dataThumbnail as $key) :
+                                  if ($key == 0) :
                                       $urlImage = base_url('assets/uploads/');
                                       echo "<img src='" . $urlImage  . $img . "' class='thumb-img' alt='product'>";
-                                    }
-                                  }
-                                }
-                              }
-                            }
+                                  endif;
+                            endforeach;
+              
                             ?>
                           </div>
                         </a>
@@ -891,6 +887,8 @@
         </div>
     <?php
             }
+          } else {
+            echo "<h1>Hiện tại bạn chưa đăng nhập</h1>";
           }
     ?>
       </div>

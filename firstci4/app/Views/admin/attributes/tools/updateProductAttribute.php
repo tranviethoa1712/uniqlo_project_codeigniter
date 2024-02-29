@@ -3,12 +3,14 @@
   <div class="container-fluid">
 
   <table class="table table-bordered">
-      <form method="post" class="form-inline">
+      <form method="post" action="<?= base_url('admin/doUpdateProductAttribute') ?>" class="form-inline">
+        <?= view('massages/massage') ?>
+        <input type="hidden" class="form-control" value="<?php echo $id ?>" name="id">
         <tr>
           <td>ID Sản Phẩm</td>
           <td>
             <select class="form-control" name="product_id">
-              <?php foreach($products as $item){ ?>
+              <?php foreach($products as $item): ?>
                 
                 <option value="<?php echo $item['product_id'] ?>"
                 <?php
@@ -20,7 +22,7 @@
                 ?>
                 ><?php echo $item['title']." (Mã sản phẩm: ". $item['sku'] . ";   Giới tính: ". $item['gender'] . ")" ?></option>
                 
-              <?php } ?>
+              <?php endforeach; ?>
             </select>
           </td>
         </tr>

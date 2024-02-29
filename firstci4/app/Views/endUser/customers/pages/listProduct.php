@@ -697,16 +697,16 @@
       <ul class="banner-tabs">
         <li class="banner-tabs__item <?php if ($gioitinh == "woman") {
                                         echo " active";
-                                      } ?>"><a href="2&gioitinh=woman">nữ</a></li>
+                                      } ?>"><a href="<?= base_url('user/listProducts') . '?iddanhmuc=' . $category_id . '&gioitinh=woman' ?>">nữ</a></li>
         <li class="banner-tabs__item <?php if ($gioitinh == "man") {
                                         echo " active";
-                                      } ?>"><a href="2&gioitinh=man">nam</a></li>
+                                      } ?>"><a href="<?= base_url('user/listProducts') . '?iddanhmuc=' . $category_id . '&gioitinh=man' ?>">nam</a></li>
         <li class="banner-tabs__item <?php if ($gioitinh == "baby") {
                                         echo " active";
-                                      } ?>"><a href="2&gioitinh=baby">trẻ em</a></li>
+                                      } ?>"><a href="<?= base_url('user/listProducts') . '?iddanhmuc=' . $category_id . '&gioitinh=baby' ?>">trẻ em</a></li>
         <li class="banner-tabs__item <?php if ($gioitinh == "nonbaby") {
                                         echo " active";
-                                      } ?>"><a href="2&gioitinh=nonbaby">trẻ sơ sinh</a></li>
+                                      } ?>"><a href="<?= base_url('user/listProducts') . '?iddanhmuc=' . $category_id . '&gioitinh=nonbaby' ?>">trẻ sơ sinh</a></li>
       </ul>
       <div class="banner-img">
         <img src="<?= $urlImage ?>banner-w.jpg" alt="">
@@ -925,21 +925,15 @@
             <?php foreach ($products as $col) {
             ?>
               <div class="contents-cards__prd">
-                <a class="link-prd" href="index.php?controller=ProductCustomerController&action=detailProduct&idsanpham=<?php echo $col['product_id']; ?>&sku=<?php echo $col['sku']; ?>&colorUnit=1">
+                <a class="link-prd" href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
 
                   <?php
-                  $dataThumbnail = (array)json_decode($col['thumbnail']);
-                  foreach ($dataThumbnail as $key => $value) {
-                    if (is_array($value) || is_object($value)) {
-                      foreach ($value as $item => $e) {
-                        if ($key == "name") {
-                          if ($item == 0) {
-                            echo "<img src='" . $urlImage . $e . "' class='contents-cards__prd-img' alt='product'>";
-                          }
-                        }
-                      }
-                    }
-                  }
+                  $dataThumbnail = json_decode($col['thumbnail']);
+                  foreach ((array)$dataThumbnail as $key => $value) :
+                    if($key == 0):
+                            echo "<img src='". $urlImage . $value . "' class='contents-cards__prd-img' alt='product'>";
+                    endif;
+                  endforeach; 
                   ?>
 
                   <div class="contents-cards__prd-colors">
@@ -955,7 +949,7 @@
                             foreach ($arrayUnit as $item) {
                       ?>
                               <div class='prd-colors-brown' style='background-color: <?php echo $item ?>'></div>
-                    <?
+                      <?php
                             }
                           }
                         }

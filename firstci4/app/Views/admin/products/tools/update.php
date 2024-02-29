@@ -3,7 +3,8 @@
   <div class="container-fluid">
 
     <table class="table table-bordered">
-      <form method="post" class="form-inline" enctype="multipart/form-data">
+      <form method="post" action="<?= base_url('admin/doUpdateProduct') ?>" class="form-inline" enctype="multipart/form-data">
+        <?= view('massages/massage') ?>
         <tr>
           <td>Danh mục</td>
           <td>
@@ -19,10 +20,6 @@
           </td>
         </tr>
         <?php foreach($product as $item) { ?>
-        <tr>
-          <td>Mã sản phẩm</td>
-          <td><input class="form-control" type="text" name="code_product" value="<?php echo $item['sku'] ?>"></td>
-        </tr>
         <tr>
           <td>Tiêu đề</td>
           <td><input class="form-control" type="text" name="title_product" value="<?php echo $item['title'] ?>"></td>

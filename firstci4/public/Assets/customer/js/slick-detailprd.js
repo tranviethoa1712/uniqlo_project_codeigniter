@@ -115,3 +115,5 @@ function tabHolderClicked(paramater) {
     displayTabHolder.classList.add('p-active');
 }
 //end change model of product
+
+document.getElementById("myBtn").addEventListener("click", displayDate);

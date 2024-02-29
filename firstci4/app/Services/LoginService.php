@@ -27,7 +27,7 @@ class LoginService extends BaseService
                 'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
                 'massages' => $validate->getErrors(),
             ];
-        }
+        } 
 
         $dataSave = $requestData->getPost();
 

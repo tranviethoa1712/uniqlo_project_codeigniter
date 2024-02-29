@@ -35,34 +35,39 @@ class ProductCustomerController extends BaseControllerUser{
     public function detailProduct() { 
         $idsanpham = $this->request->getGet('idsanpham');    
         $skuProduct = $this->request->getGet('sku');
+        $gender = $this->request->getGet('gioitinh');
 
         //collect data
         $dataCategories = $this->service->getCategories();
         $dataProductsId = $this->service->getProductsId($idsanpham);
-        $dataUnit = $this->service->getUnitColorProduct($skuProduct); 
+        $dataUnit = $this->service->getUnitColorProduct($skuProduct, $gender); 
         $dataProductAttributeId = $this->service->getProductAttributeId($idsanpham);
+
         if(!$dataProductsId) {
             return redirect('errors/404');
         }
 
-        $color_prd = $this->request->getPost('color_prd');
-        $size_prd = $this->request->getPost('size_prd');
-        $quantity_prd = $this->request->getPost('quantity_prd');
-        $checkLogin = $this->session->customer_login;
-
-        $checkSubmit = $this->request->getPost('addtocart');
-        if(isset($checkSubmit)){
-            $this->service->addToCart($checkSubmit, $color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham);
-        }
-        
         $data = [
             'products' => $dataProductsId,
             'attributeProductId' => $dataProductAttributeId,
             'categories' => $dataCategories,
-            'unit' => $dataUnit
+            'unitColor' => $dataUnit,
+            'id_prd' => $idsanpham
         ];
-
+        
         return $this->viewCustomer('detail-product', 'baseDetailPrds', $data);
+    }
+    
+    public function addProductToCart () { 
+        $id = $this->request->getPost('id_prd');
+        $color_prd = $this->request->getPost('color_prd');
+        $size_prd = $this->request->getPost('size_prd');
+        $quantity_prd = $this->request->getPost('quantity_prd');
+        $checkLogin = $this->session->customer_login;
+    
+        $this->service->addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $id);
+
+        return redirect('user/myCart');
     }
 
     public function listProduct() {
@@ -75,8 +80,9 @@ class ProductCustomerController extends BaseControllerUser{
             'categories' => $dataCategories,
             'products' => $dataProducts,
             'attributeProduct' => $dataProductAttribute,
-            'gioitinh' => $gioitinh
-        ];
+            'gioitinh' => $gioitinh,
+            'category_id' => $iddanhmuc
+        ]; 
     
         return $this->viewCustomer('listProduct', 'baseListPrds', $data);
     }

@@ -8,7 +8,8 @@
       </div>
 
       <div class="card-body">
-      <form method="post" class="form-horizontal">
+      <form method="post" action="<?= base_url('admin/doLinkProductAttribute') ?>" class="form-horizontal">
+        <?= view('massages/massage') ?>
         <div class="form-group">
           <label for="idsanpham">ID Sản Phẩm</label>
           <select class="custom-select rounded-0" name="product_id" id="idsanpham">
