@@ -11,7 +11,7 @@
             <select class="form-control" name="category_id">
               <?php foreach($categories as $col){ ?>
 
-                <option value="<?php echo $col['category_id'] ?>"><?php echo $col['title']." - ". $col['name'] . " - "?></option>
+                <option value="<?= $col['category_id'] ?>"><?php echo $col['title']." - ". $col['name'] . " - "?></option>
 
                   <?php 
                       }
@@ -22,19 +22,20 @@
         <?php foreach($product as $item) { ?>
         <tr>
           <td>Tiêu đề</td>
-          <td><input class="form-control" type="text" name="title_product" value="<?php echo $item['title'] ?>"></td>
+          <td><input class="form-control" type="text" name="title_product" value="<?= $item['title'] ?>"></td>
         </tr>
         <tr>
           <td>Giá</td>
-          <td><input class="form-control" type="text" name="price_product" value="<?php echo $item['price'] ?>"></td>
-        </tr>
+          <td><input class="form-control" type="text" name="price_product" value="<?= $item['price'] ?>"></td>
+          <input class="form-control" type="hidden" name="product_id" value=""<?= $product_id ?>">
+        </tr> 
         <tr>
           <td>Thumbnail</td>
           <td><input type="file" name="thumbnails[]" multiple></td>
         </tr>
         <tr>
           <td>Chi tiết sản phẩm</td>
-          <td><input class="form-control" type="text" name="description_product" value="<?php echo $item['description'] ?>"></td>
+          <td><input class="form-control" type="text" name="description_product" value="<?= $item['description'] ?>"></td>
         </tr>
         <tr>
           <td>Giới tính</td>
@@ -63,7 +64,7 @@
         </tr>
         <tr>
           <td>Trạng thái</td>
-          <td><input class="form-control" type="text" name="status_product" placeholder="0 (chưa có sẵn) 1 (có sẵn)" value="<?php echo $item['status'] ?>"></td>
+          <td><input class="form-control" type="text" name="status_product" placeholder="0 (chưa có sẵn) 1 (có sẵn)" value="<?= $item['status'] ?>"></td>
         </tr>
         <?php 
         }

@@ -65,12 +65,13 @@ class ProductsAdminController extends BaseControllerAdmin
             'pageTitle' => 'Quản lý danh mục sản phẩm',
             'dashboard' => 'Cập nhật sản phẩm',
             'product' => $dataProduct,
-            'categories' => $dataCategories
+            'categories' => $dataCategories,
+            'product_id' => $idsanpham
         ];
         
         return $this->viewAdmin('products/tools/update', $data);
     }
-    
+     
     public function doUpdateProduct() {
         $result = $this->service->updateProductModel($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);

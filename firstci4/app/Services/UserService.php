@@ -41,7 +41,7 @@ class UserService extends BaseService{
         $session = session();
         $session->remove('customer_login');
     }
-
+ 
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
      {
             return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);

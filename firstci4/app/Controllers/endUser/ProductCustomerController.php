@@ -74,7 +74,7 @@ class ProductCustomerController extends BaseControllerUser{
         $iddanhmuc = $this->request->getGet('iddanhmuc');
         $gioitinh = $this->request->getGet('gioitinh');
         $dataCategories = $this->service->getCategories();
-        $dataProducts = $this->service->getProductCategory($iddanhmuc, $gioitinh);
+        $dataProducts = $this->service->getProductGender($gioitinh);
         $dataProductAttribute = $this->service->getProductAttribute();
         $data = [
             'categories' => $dataCategories,
