@@ -1,4 +1,4 @@
-<form method="post" <?= base_url('user/aboutAccount') ?>>
+<form method="post" action="<?= base_url('user/doLogin') ?>">
     <div class="container">
         <div class="layer">
             <div class="login-wrapper">

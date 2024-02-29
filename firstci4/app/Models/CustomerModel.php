@@ -113,25 +113,23 @@ class CustomerModel extends Model
         return $result;
     }
 
-    public function checkLoginCusomer($checkRequest, $submitLogin, $emaillogin, $pwdlogin)
+    public function checkLoginCusomer($emaillogin, $pwdlogin)
     {
-        if ($checkRequest == 'POST' && isset($submitLogin)) {
+        $db = $this->db;
+        $builder = $db->table('customers');
+        $builder->select('*');
+        $builder->where('email', $emaillogin);
+        $builder->where(password_verify('password',PASSWORD_BCRYPT), $pwdlogin);
+        $result = $builder->get()->getResultArray();
+        $countResult = $builder->countAllResults();
 
-            $db = $this->db;
-            $builder = $db->table('customers');
-            $builder->select('*');
-            $builder->where('email', $emaillogin);
-            $builder->where('password', $pwdlogin);
-            $result = $builder->get()->getResultArray();
-            $countResult = $builder->countAllResults();
-
-            if ($countResult > 0) {
-                $session = session();
-                $session->set('customer_login', $result);
-            } else {
-                //  
-            }
+        if ($countResult > 0) {
+            // $session = session();
+            // $session->set('customer_login', $result);
+            $_SESSION['customer_login'] = $result;
+            return true;
         }
+        return false;
     }
 
     public function getProducts()
@@ -231,11 +229,10 @@ class CustomerModel extends Model
     }
 
     //add to cart
-    public function addToCart($color_prd, $size_prd, $quantity_prd, $sessionLogin, $idsanpham)
+    public function addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham)
     {
         if (isset($color_prd)  && isset($size_prd) && isset($quantity_prd)) {
-            if (isset($sessionLogin)) { 
-                $session = session();
+            if (isset($_SESSION['customer_login'])) { 
                 $db = $this->db;
                 $builder = $db->table('products');
                 $builder->select('*');
@@ -243,15 +240,6 @@ class CustomerModel extends Model
                 $result = $builder->get(1)->getResultArray();
 
                 foreach ($result as $row) {
-                    // $array = [
-                    //     $idsanpham => [
-                    //         'sku' => $row['sku'],
-                    //         'title' => $row['title'],
-                    //         'price' => $row['price'],
-                    //         'thumbnail' => $row['thumbnail'],
-                    //         ]
-                    //     ];
-                    //     $session->set('cart', 'some_value');
                     $_SESSION['cart'][$idsanpham]['sku'] = $row['sku'];
                     $_SESSION['cart'][$idsanpham]['title'] = $row['title'];
                     $_SESSION['cart'][$idsanpham]['price'] = $row['price'];
@@ -261,17 +249,13 @@ class CustomerModel extends Model
                 $_SESSION['cart'][$idsanpham]['color'] = $_POST['color_prd'];
                 $_SESSION['cart'][$idsanpham]['size'] = $_POST['size_prd'];
                 $_SESSION['cart'][$idsanpham]['quantity'] = $_POST['quantity_prd'];
-
-                $item = $_SESSION['cart'];
-                $session->set($item);
-                $session->close();
             }
         }
     }
 
-    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice, $customer_login, $cart)
+    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
-        if (isset($fullname)  && isset($address) && isset($phoneNumber) && isset($totalPrice) && isset($customer_login) && isset($cart)) {
+        if (isset($fullname)  && isset($address) && isset($phoneNumber) && isset($totalPrice)) {
             $db = $this->db;
 
             // Prepare the Query
@@ -285,8 +269,8 @@ class CustomerModel extends Model
                 ]);
             });
 
-            foreach ($customer_login as $key) {
-                $customerId = $key['id_customer'];
+            foreach ($_SESSION['customer_login'] as $key) {
+                $customerId = $key['customer_id'];
             }
 
             // Run the Query
@@ -297,11 +281,11 @@ class CustomerModel extends Model
 
             $sqlOrderId = $db->query("SELECT * FROM orders WHERE customer_id = '$customerId' ORDER BY order_id DESC LIMIT 1");
 
-            foreach ($sqlOrderId->getResult('array') as $row) {
+            foreach ($sqlOrderId->getResultArray() as $row) {
                 $id_order = $row['order_id'];
             }
 
-            foreach ($cart as $id => $each) {
+            foreach ($_SESSION['cart'] as $id => $each) {
                 $order_id = "";
                 $product_id = "";
                 $price = "";
@@ -321,7 +305,7 @@ class CustomerModel extends Model
 
                 $row = $_SESSION['customer_login'];
                 foreach ($row as $key) {
-                    $customerId = $key['id_customer'];
+                    $customerId = $key['customer_id'];
                 }
 
                 $order_id = $id_order;
@@ -335,6 +319,10 @@ class CustomerModel extends Model
                 // Close out the prepared statement
                 $pQuery->close();
             }
+
+            return true;
+        } else {
+            return false;
         }
     }
 }

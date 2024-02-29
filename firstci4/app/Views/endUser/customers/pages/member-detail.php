@@ -663,11 +663,11 @@
       </button>
     </li>
     <li>
-      <a href="index.php?controller=HomeCustomerController&action=<?php if (isset($_SESSION['customer_login'])) {
-                                                                    echo base_url('user/aboutAccount');
-                                                                  } else {
-                                                                    echo base_url('user/userLogin');
-                                                                  } ?>" class="menu-tools__account">
+      <a href="<?php if (!empty($_SESSION['customer_login'])) {
+                        echo base_url('user/aboutAccount');
+                      } else {
+                        echo base_url('user/userLogin');
+                      } ?>" class="menu-tools__account">
         <i class="fa-regular fa-user"></i>
       </a>
     </li>
@@ -726,7 +726,7 @@
               <div class="title">Địa chỉ email</div>
               <div class="detail">
                 <?php
-                if (isset($_SESSION['customer_login'])) {
+                if (!empty($_SESSION['customer_login'])) {
                   $row = $_SESSION['customer_login'];
                   foreach ($row as $key) {
                     echo $key['email'];
@@ -739,7 +739,7 @@
               <div class="title">Sinh nhật</div>
               <div class="detail mb20">
                 <?php
-                if (isset($_SESSION['customer_login'])) {
+                if (!empty($_SESSION['customer_login'])) {
                   $row = $_SESSION['customer_login'];
                   foreach ($row as $key) {
                     echo $key['dob'];
@@ -750,7 +750,7 @@
               <div class="title">Giới tính</div>
               <div class="detail">
                 <?php
-                if (isset($_SESSION['customer_login'])) {
+                if (!empty($_SESSION['customer_login'])) {
                   $row = $_SESSION['customer_login'];
                   foreach ($row as $key) {
                     if ($key['gender'] == "female") {

@@ -663,11 +663,11 @@
       </button>
     </li>
     <li>
-      <a href="index.php?controller=HomeCustomerController&action=<?php if (isset($_SESSION['customer_login'])) {
-                                                                    echo base_url('user/aboutAccount');
-                                                                  } else {
-                                                                    echo base_url('user/userLogin');
-                                                                  } ?>" class="menu-tools__account">
+      <a href="<?php if (isset($_SESSION['customer_login'])) {
+                  echo base_url('user/aboutAccount');
+                } else {
+                  echo base_url('user/userLogin');
+                } ?>" class="menu-tools__account">
         <i class="fa-regular fa-user"></i>
       </a>
     </li>
@@ -702,7 +702,6 @@
               $i = 0;
               $total = 0;
               $shippingCost = 50000;
-              var_dump($_SESSION['cart']);
               foreach ($cart as $id => $row) {
                 $i++;
           ?>
@@ -714,13 +713,16 @@
                           <div class="product-image">
                             <?php
                             $dataThumbnail = json_decode($row['thumbnail']);
+                            $i = 0;
                             foreach ((array)$dataThumbnail as $key) :
-                                  if ($key == 0) :
-                                      $urlImage = base_url('assets/uploads/');
-                                      echo "<img src='" . $urlImage  . $img . "' class='thumb-img' alt='product'>";
-                                  endif;
+                              if($i > 0) {
+                                break;
+                              }
+                              $urlImage = base_url('assets/uploads/');
+                              echo "<img src='" . $urlImage  . $key . "' class='thumb-img' alt='product'>";
+                              $i++;
                             endforeach;
-              
+
                             ?>
                           </div>
                         </a>
@@ -874,14 +876,16 @@
           </div>
           <div class="wrapper-button">
             <div class="button-wrapper">
-              <a href="index.php?controller=HomeCustomerController&action=order">
+              <a href="<?= base_url('user/myOrder') ?>">
                 <div name="addToOrder" class="button-payment">
                   Thanh toán
                 </div>
               </a>
             </div>
             <div class="button-wrapper">
-              <button class="button-shopping" type="button">Tiếp tục mua sắm</button>
+              <a href="<?= base_url('user/homePage' . '?gioitinh=woman') ?>">
+                <button class="button-shopping" type="button">Tiếp tục mua sắm</button>
+              </a>
             </div>
           </div>
         </div>

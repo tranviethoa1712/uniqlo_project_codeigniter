@@ -98,6 +98,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->get('userLogin', 'HomeCustomerController::login');
         $routes->post('doLogin', 'HomeCustomerController::dologin');
         $routes->get('logout', 'HomeCustomerController::logOutCustomer');
+        $routes->get('successLoginView', 'HomeCustomerController::successLoginView');
 
         $routes->get('userRegister', 'HomeCustomerController::register');
         $routes->post('doRegister', 'HomeCustomerController::doRegister');
@@ -108,7 +109,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->post('addToCart', 'HomeCustomerController::addToCart');
 
         $routes->get('myOrder', 'HomeCustomerController::order');
-        $routes->post('myOrder', 'HomeCustomerController::order');
+        $routes->post('doOrder', 'HomeCustomerController::doOrder');
     
         $routes->get('listProducts', 'ProductCustomerController::listProduct');
         $routes->get('detailProduct', 'ProductCustomerController::detailProduct');

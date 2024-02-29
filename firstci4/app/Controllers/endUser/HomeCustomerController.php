@@ -17,7 +17,7 @@ class HomeCustomerController extends BaseControllerUser{
         $this->service = new UserService;
     }
 
-    public function viewCustomer($page = '', $headHtml,  $data)
+    public function viewCustomer($page = '', $headHtml,  $data = [])
     {
         if (! is_file(APPPATH . 'Views/endUser/customers/pages/' . $page . '.php')) {
             // Whoops, we don't have a page for that!
@@ -36,8 +36,8 @@ class HomeCustomerController extends BaseControllerUser{
         $dataCategories = $this->service->getCategories();
         $daraProductGender = $this->service->getProductGender($gioitinhGet);    
         $dataProducts = $this->service->getProducts();    
-        // $dataUnit = $this->service->getUnitColorProduct(); 
-    
+        
+        // $this->service->logOutCustomer();
         $data = [
             'categories' => $dataCategories,
             'productGender' => $daraProductGender,
@@ -60,17 +60,20 @@ class HomeCustomerController extends BaseControllerUser{
     } 
     
     public function doLogin () {
-        $checkRequest = $_SERVER['REQUEST_METHOD'];
-        $checkSubmit = $this->request->getPost('submitLogin');
         $emaillogin = $this->request->getPost('emaillogin');
         $pwdlogin = $this->request->getPost('pwdlogin');
     
-        $this->service->checkLoginCusomer($checkRequest, $checkSubmit, $emaillogin, $pwdlogin);
+        $result = $this->service->checkLoginCusomer($emaillogin, $pwdlogin);
+        
+        if (!$result) {
+            return redirect('user/userLogin');
+        }
+
+        return redirect('user/aboutAccount');
     }
 
     public function logOutCustomer () {
-        $this->logOutCustomer();
-
+        $this->service->logOutCustomer();
         return redirect('user/userLogin');
     }
 
@@ -82,9 +85,7 @@ class HomeCustomerController extends BaseControllerUser{
     }
 
     public function doRegister()
-    {
-        $data = [];
-        
+    {        
         $result = $this->service->RegisterCustomer($this->request); 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
@@ -116,8 +117,8 @@ class HomeCustomerController extends BaseControllerUser{
         $size_prd = $this->request->getPost('size_prd');
         $quantity_prd = $this->request->getPost('quantity_prd');
         $id_prd = $this->request->getPost('id_prd');
-        $sessionLogin = $this->session->customer_login;
-        $this->service->addToCart($color_prd, $size_prd, $quantity_prd, $sessionLogin, $id_prd);
+
+        $this->service->addToCart($color_prd, $size_prd, $quantity_prd, $id_prd);
 
         return redirect('user/myCart');
     }
@@ -128,18 +129,24 @@ class HomeCustomerController extends BaseControllerUser{
             'categories' => $dataCategories,
         ];
 
-        $checkSubmit = $this->request->getPost('submitOrder');
+        return $this->viewCustomer('order', 'baseOrder', $data);
+    }
+    
+    public function doOrder() {
         $fullname = $this->request->getPost('fullname');
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
         $totalPrice = $this->request->getPost('totalPrice');
         
-        $customer_login = $this->session->customer_login;
-        $cart = $this->session->cart;
-        if(isset($checkSubmit)) {
-            $this->service->submitOrder($checkSubmit, $fullname, $address, $phoneNumber, $totalPrice, $customer_login, $cart);
+        $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
+        if (!$result) {
+            return redirect('user/myOrder');
         }
-        return $this->viewCustomer('order', 'baseOrder', $data);
+        return redirect('user/successLoginView');
+    }
+
+    public function successLoginView () {
+        return $this->viewCustomer('loginSuccess','baseSuccessLogin');
     }
 
 }

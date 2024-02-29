@@ -32,11 +32,9 @@ class UserService extends BaseService{
         return $this->customerModel->getProducts();
     } 
 
-    public function checkLoginCusomer($checkRequest, $checkSubmit, $emaillogin, $pwdlogin) 
+    public function checkLoginCusomer($emaillogin, $pwdlogin) 
     {
-        if(isset($checkSubmit)){
-            return $this->customerModel->checkLoginCusomer($checkRequest, $checkSubmit, $emaillogin, $pwdlogin);        
-        }
+        return $this->customerModel->checkLoginCusomer($emaillogin, $pwdlogin);        
     } 
 
     public function logOutCustomer (){
@@ -44,11 +42,9 @@ class UserService extends BaseService{
         $session->remove('customer_login');
     }
 
-    public function submitOrder($checkSubmit, $fullname, $address, $phoneNumber, $totalPrice, $customer_login, $cart)
+    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
      {
-        if(isset($checkSubmit)) {
-            return $this->customerModel->submitOrder($checkSubmit, $fullname, $address, $phoneNumber, $totalPrice, $customer_login, $cart);
-        }
+            return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
     } 
     
     public function getProductsId($idsanpham) 
@@ -74,8 +70,8 @@ class UserService extends BaseService{
         return $this->customerModel->getProductAttribute();
     } 
 
-    public function addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham) {
-        return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $idsanpham);
+    public function addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham) {
+        return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham);
     } 
  
     public function RegisterCustomer($requestData)

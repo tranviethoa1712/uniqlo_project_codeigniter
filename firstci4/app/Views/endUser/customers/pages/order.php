@@ -695,7 +695,7 @@
     <h2 class="h2">
       <span class="title">Thanh toán</span>
     </h2>
-    <form method="post">
+    <form method="post" action="<?= base_url('user/doOrder') ?>">
       <div class="mainwrapper">
         <?php
         if (!empty($_SESSION['customer_login'])) {
@@ -784,18 +784,17 @@
                     <?php foreach ($cart as $id => $row) { ?>
                       <li class="item">
                         <?php
-                        $dataThumbnail = (array)json_decode($row['thumbnail']);
-                        foreach ($dataThumbnail as $key => $value) {
-                          if (is_array($value) || is_object($value)) {
-                            foreach ($value as $item => $img) {
-                              if ($key == 'name') {
-                                if ($item == 0) {
-                                  echo "<img src='" . $urlImage . $img . "'alt='thumbnail' class='item-image'>";
-                                }
-                              }
-                            }
+                        $dataThumbnail = json_decode($row['thumbnail']);
+                        $i = 0;
+                        foreach ((array)$dataThumbnail as $key) :
+                          if($i > 0) {
+                            break;
                           }
-                        }
+                          $urlImage = base_url('assets/uploads/');
+                          echo "<img src='" . $urlImage  . $key . "' class='thumb-img' alt='product'>";
+                          $i++;
+                        endforeach;
+
                         ?>
 
                         <span class="item-value"><?php echo $row['quantity']; ?></span>
