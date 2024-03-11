@@ -4,8 +4,13 @@ namespace App\Services;
 use App\Models\AdminModel;
 use App\Common\ResultUtils;
 use Exception;
-
 class AdminService extends BaseService{
+    
+    /**
+     * The main task:
+     * 1. Handle logic for admin controllers 
+     * 2. Set Validation Rules
+     */
 
     protected $adminModel;
  
@@ -15,7 +20,11 @@ class AdminService extends BaseService{
         $this->adminModel = model(AdminModel::class);  
     }
 
-    public function addCategoryModel($requestData) {
+    /**
+     * Categories Handle
+     */
+    public function addCategoryModel($requestData) 
+    {
         $validate = $this->validateAddCategory($requestData);
 
         if($validate->getErrors()){
@@ -53,7 +62,6 @@ class AdminService extends BaseService{
         }
     } 
 
-
     private function validateAddCategory($requestData) 
     {
         $rules = [
@@ -82,36 +90,85 @@ class AdminService extends BaseService{
         return $this->validation;
     }
 
+    public function updateCategoryModel($requestData) {
+        $validate = $this->validateUpdateCategory($requestData);
 
+        if($validate->getErrors()){
+            return [
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massages' => $validate->getErrors(),
+            ];
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-    
-    public function getCategory($iddanhmuc) {
-        return $this->adminModel->getCategory($iddanhmuc);
+        $dataSave = $requestData->getPost();
+        
+        try {
+            $this->adminModel->updateCategoryModel($dataSave['title_update'], $dataSave['name_update'], $dataSave['id_update']);
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_OK,
+                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
+                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
+            ];
+        } catch (Exception $e) {
+            return [ 
+                'status' => ResultUtils::STATUS_CODE_ERR,
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
+                'massages' => ['error' => $e->getMessage()], 
+            ];
+        }
     } 
 
-    public function deleteCategoryModel($iddanhmuc) {
+    private function validateUpdateCategory($requestData) 
+    {
+        $rules = [
+            'title_update' => 'required|max_length[300]',
+            'name_update' => 'required|max_length[200]|is_unique[categories.name,category_id,'.$requestData->getPost()['id_update'] . ']',
+        ];
+
+        $messages = [
+            'title_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+            ],
+            'name_update' => [
+                'required' => 'Không được để trống!',
+                'max_length' => 'Tối đa là {param} ký tự!',
+                'is_unique' => 'Tên danh mục đã tồn tại!',
+            ],
+        ];
+
+        // reset all previous errors
+        $this->validation->reset();
+
+        $this->validation->setRules($rules, $messages);
+        $this->validation->withRequest($requestData)->run(); 
+
+        return $this->validation;
+    }
+
+    public function deleteCategoryModel($iddanhmuc) 
+    {
         return $this->adminModel->deleteCategoryModel($iddanhmuc);        
     } 
 
-    public function getCategories() {
+    public function getCategory($iddanhmuc) 
+    {
+        return $this->adminModel->getCategory($iddanhmuc);
+    } 
+
+    public function getCategories() 
+    {
         return $this->adminModel->getCategories();        
     } 
 
-    public function getProductCategory() {
+    /**
+     * Product Handle
+     */
+    public function getProductCategory() 
+    {
         return $this->adminModel->getProductCategory();
     } 
-    
 
     public function addProductModel($requestData)
     {
@@ -145,8 +202,8 @@ class AdminService extends BaseService{
         }
     }
 
-    public function updateProductModel($requestData) {
-
+    public function updateProductModel($requestData) 
+    {
         $validate = $this->validateUpdateProduct($requestData);
 
         if($validate->getErrors()){
@@ -267,32 +324,24 @@ class AdminService extends BaseService{
         return $this->validation;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function getProductId($idsanpham) {
+    public function getProductId($idsanpham) 
+    {
         return $this->adminModel->getProductId($idsanpham);
     } 
 
-    public function deleteProductModel($idsanpham) {
+    public function deleteProductModel($idsanpham) 
+    {
         return $this->adminModel->deleteProductModel($idsanpham);
     } 
 
-    public function getProducts() {
+    public function getProducts() 
+    {
         return $this->adminModel->getProducts();
     } 
     
-
+    /**
+     * Attribute Handle
+     */
     public function addAttributeModel($requestData)
     {
         $validate = $this->validateAddAttribute($requestData);
@@ -354,84 +403,6 @@ class AdminService extends BaseService{
         $this->validation->withRequest($requestData)->run(); 
 
         return $this->validation;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Pagination Data
-
-    // framework
-    public function getCategoryPaginationData() {
-        return $this->adminModel->getCategoryPaginationData();
-    }  
-    
-    public function getProductPaginationData() {
-        return $this->adminModel->getProductPaginationData();
-    } 
-
-    public function getAttributePaginationData() {
-        return $this->adminModel->getAttributePaginationData();
-    } 
-    
-    public function getOrderPaginationData() {
-        return $this->adminModel->getOrderPaginationData();
-    } 
-    
-    public function getCustomerPaginationData() {
-        return $this->adminModel->getCustomerPaginationData();
-    } 
-    
-    public function getPagerCategories() {
-        return $this->adminModel->pagerCategories();
-    }
-    
-    public function getPagerProducts() {
-        return $this->adminModel->pagerProducts();
-    }
-    
-    public function getPagerAttributes() {
-        return $this->adminModel->pagerAttributes();
-    }
-    
-    public function getPagerOrders() {
-        return $this->adminModel->pagerOrders();
-    }
-    
-    public function getPagerCustomers() {
-        return $this->adminModel->pagerCustomers();
-    }
-
-    // module
-    public function productFilter($filterSubmit, $containerInputFilter, $page) {
-        return $this->adminModel->productFilter($filterSubmit, $containerInputFilter, $page);
-    } 
-
-    public function paginationProducts($page) {
-        return $this->adminModel->paginationProducts($page);
-    } 
-
-    public function paginationProductAtt($pageGet) {
-        return $this->adminModel->paginationProductAtt($pageGet);
-    }
-    
-    // end Pagination
-    
-    public function getAttribute($id) {
-        return $this->adminModel->getAttribute($id);
     }
 
     public function updateAttributeModel($requestData)
@@ -496,8 +467,94 @@ class AdminService extends BaseService{
         return $this->validation;
     }
 
+    public function deleteAttributeModel($idAtt) 
+    {
+        return $this->adminModel->deleteAttributeModel($idAtt);
+    }
+    
+    public function getAttributes() 
+    {
+        return $this->adminModel->getAttributes();
+    }
 
-    public function updateProductAttributeModel($requestData) {
+    public function getAttribute($id) 
+    {
+        return $this->adminModel->getAttribute($id);
+    }
+
+    /**
+     * Pagination Handle
+     */
+    public function getCategoryPaginationData() 
+    {
+        return $this->adminModel->getCategoryPaginationData();
+    }  
+    
+    public function getProductPaginationData() 
+    {
+        return $this->adminModel->getProductPaginationData();
+    } 
+
+    public function getAttributePaginationData()
+    {
+        return $this->adminModel->getAttributePaginationData();
+    } 
+    
+    public function getOrderPaginationData() 
+    {
+        return $this->adminModel->getOrderPaginationData();
+    } 
+    
+    public function getCustomerPaginationData() 
+    {
+        return $this->adminModel->getCustomerPaginationData();
+    } 
+    
+    public function getPagerCategories() 
+    {
+        return $this->adminModel->pagerCategories();
+    }
+    
+    public function getPagerProducts()
+     {
+        return $this->adminModel->pagerProducts();
+    }
+    
+    public function getPagerAttributes() 
+    {
+        return $this->adminModel->pagerAttributes();
+    }
+    
+    public function getPagerOrders() 
+    {
+        return $this->adminModel->pagerOrders();
+    }
+    
+    public function getPagerCustomers() 
+    {
+        return $this->adminModel->pagerCustomers();
+    }
+
+    public function productFilter($filterSubmit, $containerInputFilter, $page) 
+    {
+        return $this->adminModel->productFilter($filterSubmit, $containerInputFilter, $page);
+    } 
+
+    public function paginationProducts($page) 
+    {
+        return $this->adminModel->paginationProducts($page);
+    } 
+
+    public function paginationProductAtt($pageGet) 
+    {
+        return $this->adminModel->paginationProductAtt($pageGet);
+    }
+
+    /**
+     * Product Attribute Handle
+     */
+    public function updateProductAttributeModel($requestData) 
+    {
 
         $validate = $this->validateUpdateProductAttribute($requestData);
 
@@ -528,7 +585,6 @@ class AdminService extends BaseService{
 
     }
 
-
     private function validateUpdateProductAttribute($requestData) 
     {
         $rules = [
@@ -553,77 +609,9 @@ class AdminService extends BaseService{
 
         return $this->validation;
     }
-
-    public function updateCategoryModel($requestData) {
-        $validate = $this->validateUpdateCategory($requestData);
-
-        if($validate->getErrors()){
-            return [
-                'status' => ResultUtils::STATUS_CODE_ERR,
-                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
-                'massages' => $validate->getErrors(),
-            ];
-        }
-
-        $dataSave = $requestData->getPost();
-        
-        try {
-            $this->adminModel->updateCategoryModel($dataSave['title_update'], $dataSave['name_update'], $dataSave['id_update']);
-            return [ 
-                'status' => ResultUtils::STATUS_CODE_OK,
-                'massageCode' => ResultUtils::MESSAGE_CODE_OK,
-                'massages' => ['success' => 'Cập nhật dữ liệu thành công'], 
-            ];
-        } catch (Exception $e) {
-            return [ 
-                'status' => ResultUtils::STATUS_CODE_ERR,
-                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
-                'massages' => ['error' => $e->getMessage()], 
-            ];
-        }
-    } 
-
-
-    private function validateUpdateCategory($requestData) 
-    {
-        $rules = [
-            'title_update' => 'required|max_length[300]',
-            'name_update' => 'required|max_length[200]|is_unique[categories.name,category_id,'.$requestData->getPost()['id_update'] . ']',
-        ];
-
-        $messages = [
-            'title_update' => [
-                'required' => 'Không được để trống!',
-                'max_length' => 'Tối đa là {param} ký tự!',
-            ],
-            'name_update' => [
-                'required' => 'Không được để trống!',
-                'max_length' => 'Tối đa là {param} ký tự!',
-                'is_unique' => 'Tên danh mục đã tồn tại!',
-            ],
-        ];
-
-        // reset all previous errors
-        $this->validation->reset();
-
-        $this->validation->setRules($rules, $messages);
-        $this->validation->withRequest($requestData)->run(); 
-
-        return $this->validation;
-    }
-
-
-    public function deleteAttributeModel($idAtt) {
-        return $this->adminModel->deleteAttributeModel($idAtt);
-    }
     
-    public function getAttributes() {
-        return $this->adminModel->getAttributes();
-    }
-    
-    public function addAttributeProductModel($requestData) {
-
-        
+    public function addAttributeProductModel($requestData) 
+    {  
         $validate = $this->validateLinkProductAttribute($requestData);
         
         if($validate->getErrors()){
@@ -663,7 +651,6 @@ class AdminService extends BaseService{
 
     }
 
-
     private function validateLinkProductAttribute($requestData) 
     {
         $rules = [
@@ -688,38 +675,32 @@ class AdminService extends BaseService{
 
         return $this->validation;
     }
+        
+    public function deleteProductAttributeModel($idPrdAtt) 
+    {
+        return $this->adminModel->deleteProductAttributeModel($idPrdAtt);
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public function getProductAttribute() {
+    public function getProductAttribute() 
+    {
         return $this->adminModel->getProductAttribute();
     }
         
-    public function getProductAttributeId($idPrdAtt) {
+    public function getProductAttributeId($idPrdAtt) 
+    {
         return $this->adminModel->getProductAttributeId($idPrdAtt);
     }
     
-        
-    public function deleteProductAttributeModel($idPrdAtt) {
-        return $this->adminModel->deleteProductAttributeModel($idPrdAtt);
-    }
-        
-    public function getOrders() {
+    /**
+     * Order handle
+     */
+    public function getOrders() 
+    {
         return $this->adminModel->getOrders();
     }
         
-    public function getOrder($idUpdate) {
+    public function getOrder($idUpdate) 
+    {
         return $this->adminModel->getOrder($idUpdate);
     }
 
@@ -754,7 +735,6 @@ class AdminService extends BaseService{
         }
 
     }
-
 
     private function validateUpdateOrder($requestData) 
     {
@@ -797,43 +777,35 @@ class AdminService extends BaseService{
 
         return $this->validation;
     }
-
-
-
-
-
-
-        
-    public function deleteOrderModel($idUpdate) {
+  
+    public function deleteOrderModel($idUpdate) 
+    {
         return $this->adminModel->deleteOrderModel($idUpdate);
     }
         
-    public function getDetailOrder($idUpdate) {
+    public function getDetailOrder($idUpdate)
+    {
         return $this->adminModel->getDetailOrder($idUpdate);
     }
-        
-    public function LoginAdmin($loginAdmin, $emailAddress, $password) {
+       
+    /**
+     * Login handle
+     */
+    public function LoginAdmin($loginAdmin, $emailAddress, $password) 
+    {
         return $this->adminModel->LoginAdmin($loginAdmin, $emailAddress, $password);
     }
         
-    public function RegisterAdmin($checkSubmit, $name, $emailAddress, $password) {
+    public function RegisterAdmin($checkSubmit, $name, $emailAddress, $password) 
+    {
         if(isset($checkSubmit)) {
             return $this->adminModel->RegisterAdmin($name, $emailAddress, $password);
         }
     }
 
-    public function getUSers(){
-        return $this->adminModel->getUSers();
-    }
-
-    public function getUSer($id){
-        return $this->adminModel->getUSer($id);
-    }
-
     /**
-     * update user info to db
+     * User handle
      */
-    
     public function updateUser($requestData){
 
         $validate = $this->validateUserInfo($requestData);
@@ -922,9 +894,16 @@ class AdminService extends BaseService{
         return $this->validation;
     }
 
-    /**
-     * Delete user by id primary key
-     */
+    public function getUSers()
+    {
+        return $this->adminModel->getUSers();
+    }
+
+    public function getUSer($id)
+    {
+        return $this->adminModel->getUSer($id);
+    }
+
     public function deleteUser($id){
         try {
             $this->adminModel->deleteUser($id);

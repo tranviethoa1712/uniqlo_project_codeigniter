@@ -8,6 +8,10 @@ use Exception;
 
 class ContactService extends BaseService
 {
+    /**
+     * The main task:
+     * Handle logic for the contact controller
+     */
 
     protected $contactModel;
 
@@ -17,16 +21,18 @@ class ContactService extends BaseService
         $this->contactModel = model(ContactModel::class);
     }
 
-    public function getContacts() {
+    public function getContacts() 
+    {
         return $this->contactModel->getContacts();
     }
 
-    public function getContactPaginationData() {
+    public function getContactPaginationData() 
+    {
         return $this->contactModel->orderBy('id', 'DESC')->paginate(10);
     }
 
-    public function getPagerContacts() {
+    public function getPagerContacts() 
+    {
         return $this->contactModel->pager;
     }
-    
 }

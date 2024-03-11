@@ -34,21 +34,24 @@ class LoginAdminController extends BaseControllerAdmin
 
     }
 
-    public function login() {
+    public function login() 
+    {
         $data = [''];
         $data['pageTitle'] = 'Đăng nhập quản trị'; // Capitalize the first letter        
     }
     
-    public function doLogin() {
+    public function doLogin() 
+    {
         $result = $this->service->hasLoginInfo($this->request);    
         if ($result['status'] === ResultUtils::STATUS_CODE_OK) {
             return redirect('admin/home');
         } elseif ($result['status'] === ResultUtils::STATUS_CODE_ERR) {
-            return redirect('login')->with($result['massageCode'], $result['massages']);
+            return redirect('login')->back()->withInput()->with($result['massageCode'], $result['massages']);
         }
     }
 
-    public function logout() {
+    public function logout() 
+    {
         $this->service->logOutUser();
         return redirect('login');
     }

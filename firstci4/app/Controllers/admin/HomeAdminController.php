@@ -8,7 +8,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class HomeAdminController extends BaseControllerAdmin{
     
-    private $pageTitle = 'Quản lý sản phẩm';
+    private $pageTitle = '';
     private $pathView = 'admin/';
     private $pathViewLayout = 'admin/layouts/';
     protected $service;
@@ -33,7 +33,8 @@ class HomeAdminController extends BaseControllerAdmin{
         . view($this->pathViewLayout.'footer');
     }
 
-    public function index() {
+    public function index() 
+    {
         $data = [
             'pageTitle' => 'Tổng quan',
             'dashboard' => 'Tổng quan',
@@ -67,12 +68,14 @@ class HomeAdminController extends BaseControllerAdmin{
         return $this->viewAdmin('users/tools/updateUser', $data);
     }
     
-    public function doUpdateUser(){        
+    public function doUpdateUser()
+    {        
         $result = $this->service->updateUser($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
-    public function deleteUser($id){     
+    public function deleteUser($id)
+    {     
         $user = $this->service->getUSer($id);
         if(!$user){
             return redirect('errors/404');

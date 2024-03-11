@@ -9,7 +9,11 @@ class AdminModel extends Model
 {
     protected $table = 'products';
 
-    //category data 
+    /**
+     * Category handle 
+     * 1. CURD
+     * 2. Check Info 
+     */
     public function addCategoryModel($titlePost, $namePost)
     {
         if (isset($titlePost) && isset($namePost))  {
@@ -32,7 +36,6 @@ class AdminModel extends Model
         }
     }
 
-
     public function updateCategoryModel($titlePost, $namePost, $iddanhmuc)
     {
         if (isset($titlePost) && isset($namePost)) {
@@ -47,7 +50,6 @@ class AdminModel extends Model
         $sql = "DELETE FROM categories WHERE category_id = ?";
         return $this->db->query($sql, array($iddanhmuc));
     }
-
 
     public function getCategories()
     {
@@ -70,7 +72,6 @@ class AdminModel extends Model
         return $query;
     }
 
-
     public function getCategory($iddanhmuc)
     {
         $db = $this->db;
@@ -84,6 +85,66 @@ class AdminModel extends Model
         return $query;
     }
 
+    public function hasCategoryInfo($title_category, $name_category)
+    {
+        //check category
+        $sql = "SELECT * FROM categories WHERE title = ? AND name = ?";
+
+        $result = $this->db->query($sql, array($title_category, $name_category));
+        $number_of_result = $result->getNumRows();
+
+        if ($number_of_result > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Attributes handle 
+     * main: CURD
+     */
+
+     public function addAttributeModel($name_attribute, $code_attribute, $unit_attribute)
+     {
+         if (isset($name_attribute) && isset($code_attribute) && isset($unit_attribute)) {
+ 
+             $db = $this->db;
+ 
+             $nameCollect = "";
+             $skuCollect = "";
+             $unitCollect = "";
+ 
+             $sql = "SELECT * FROM attributes WHERE attribute_sku = '$code_attribute'";
+             $query = $db->query($sql);
+             $checkRow = $query->getNumRows();
+ 
+             if ($checkRow > 0) {
+                 $alert = "attribute đã tồn tại";
+                 return $alert;
+             } else {
+                 // Prepare the Query
+                 $pQuery = $db->prepare(static function ($db) {
+                     return $db->table('attributes')->insert([
+                         'name'    => 'x',
+                         'attribute_sku'   => 'y',
+                         'unit' => 'z',
+                     ]);
+                 });
+ 
+                 $nameCollect = $name_attribute;
+                 $skuCollect = $code_attribute;
+                 $unitCollect = $unit_attribute;
+ 
+ 
+                 // Run the Query
+                 $pQuery->execute($nameCollect, $skuCollect, $unitCollect);
+ 
+                 // Close out the prepared statement
+                 $pQuery->close();
+             }
+         }
+     }
+  
     public function updateAttributeModel($name_update, $code_update, $unit_update, $idAtt)
     {
         if (isset($name_update) && isset($code_update) && isset($unit_update)) {
@@ -91,19 +152,6 @@ class AdminModel extends Model
             $this->db->query($sql, array($name_update, $code_update, $unit_update, $idAtt));
         }
     }
-
-    public function updateProductAttributeModel($product_id, $attribute_id, $idPrdAtt)
-    {
-        if ($product_id && $attribute_id) {
-
-            $db = $this->db;
-
-            $sql = "UPDATE product_attribute SET product_id = ?, attribute_id = ? WHERE id = ?";
-            $this->db->query($sql, array($product_id, $attribute_id, $idPrdAtt));
-        }
-    }
-
-
 
     public function deleteAttributeModel($idAtt)
     {
@@ -122,26 +170,33 @@ class AdminModel extends Model
         $pQuery->close();
     }
 
-    public function deleteProductAttributeModel($idPrdAtt)
+    public function getAttributes()
     {
         $db = $this->db;
 
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('product_attribute')->delete([
-                'id'    => 'x',
-            ]);
-        });
+        $builder = $db->table('attributes');
+        $builder->select('*');
+        $query   = $builder->get()->getResultArray();
 
-        // Run the Query
-        $pQuery->execute($idPrdAtt);
-        // Close out the prepared statement
-        $pQuery->close();
+        return $query;
     }
 
+    public function getAttribute($id_attribute)
+    {
+        $db = $this->db;
+        $builder = $db->table('attributes');
+        $builder->select('*');
+        $builder->where('attribute_id', $id_attribute);
+        $query   = $builder->get()->getResultArray();
 
+        return $query;
+    }
 
-    //product data
+    /**
+     * Products handle
+     * 1. CURD
+     * 2. Check Info 
+     */
     public function addProductModel($category_id, $code_product, $title_product, $price_product, $thumbnails , $description_product, $images, $gender_product, $status_product)
     {
         if (isset($category_id)  && isset($code_product) && isset($title_product) && isset($price_product) && isset($thumbnails)  && isset($images) && isset($gender_product) && isset($description_product) && isset($status_product)) {
@@ -207,6 +262,7 @@ class AdminModel extends Model
             $this->db->query($sql, array($categoryIdPost, $codeProductPost, $titleProductPost, $priceProductPost, $containerFileNameThumnails, $descriptionProductPost,  $containerFileNameImages, $genderProductPost, $statusProductPost, $product_id));
         }
     }
+
     public function deleteProductModel($product_id)
     {
         $db = $this->db;
@@ -247,72 +303,11 @@ class AdminModel extends Model
         return $query;
     }
 
-    //attribute data
-
-    public function addAttributeModel($name_attribute, $code_attribute, $unit_attribute)
-    {
-        if (isset($name_attribute) && isset($code_attribute) && isset($unit_attribute)) {
-
-            $db = $this->db;
-
-            $nameCollect = "";
-            $skuCollect = "";
-            $unitCollect = "";
-
-            $sql = "SELECT * FROM attributes WHERE attribute_sku = '$code_attribute'";
-            $query = $db->query($sql);
-            $checkRow = $query->getNumRows();
-
-            if ($checkRow > 0) {
-                $alert = "attribute đã tồn tại";
-                return $alert;
-            } else {
-                // Prepare the Query
-                $pQuery = $db->prepare(static function ($db) {
-                    return $db->table('attributes')->insert([
-                        'name'    => 'x',
-                        'attribute_sku'   => 'y',
-                        'unit' => 'z',
-                    ]);
-                });
-
-                $nameCollect = $name_attribute;
-                $skuCollect = $code_attribute;
-                $unitCollect = $unit_attribute;
-
-
-                // Run the Query
-                $pQuery->execute($nameCollect, $skuCollect, $unitCollect);
-
-                // Close out the prepared statement
-                $pQuery->close();
-            }
-        }
-    }
-
-
-    public function getAttributes()
-    {
-        $db = $this->db;
-
-        $builder = $db->table('attributes');
-        $builder->select('*');
-        $query   = $builder->get()->getResultArray();
-
-        return $query;
-    }
-
-    public function getAttribute($id_attribute)
-    {
-        $db = $this->db;
-        $builder = $db->table('attributes');
-        $builder->select('*');
-        $builder->where('attribute_id', $id_attribute);
-        $query   = $builder->get()->getResultArray();
-
-        return $query;
-    }
-
+    /**
+     * Product Attributes handle
+     * 1. CURD
+     * 2. Check Info 
+     */
     public function hasAttPrdInfo($product_id, $attribute_id)
     {
         //check trùng liên kết
@@ -326,21 +321,6 @@ class AdminModel extends Model
         }
         return false;
     }
-
-    public function hasCategoryInfo($title_category, $name_category)
-    {
-        //check category
-        $sql = "SELECT * FROM categories WHERE title = ? AND name = ?";
-
-        $result = $this->db->query($sql, array($title_category, $name_category));
-        $number_of_result = $result->getNumRows();
-
-        if ($number_of_result > 0) {
-            return true;
-        }
-        return false;
-    }
-
 
     public function addAttributeProductModel($product_id, $attribute_id)
     {
@@ -365,6 +345,34 @@ class AdminModel extends Model
         }
     }
 
+    public function updateProductAttributeModel($product_id, $attribute_id, $idPrdAtt)
+    {
+        if ($product_id && $attribute_id) {
+
+            $db = $this->db;
+
+            $sql = "UPDATE product_attribute SET product_id = ?, attribute_id = ? WHERE id = ?";
+            $this->db->query($sql, array($product_id, $attribute_id, $idPrdAtt));
+        }
+    }
+
+    public function deleteProductAttributeModel($idPrdAtt)
+    {
+        $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('product_attribute')->delete([
+                'id'    => 'x',
+            ]);
+        });
+
+        // Run the Query
+        $pQuery->execute($idPrdAtt);
+        // Close out the prepared statement
+        $pQuery->close();
+    }
+
     public function getProductAttribute()
     {
         $db = $this->db;
@@ -380,7 +388,6 @@ class AdminModel extends Model
         return $result;
     }
 
-
     public function getProductAttributeId($idPrdAtt)
     {
 
@@ -394,7 +401,9 @@ class AdminModel extends Model
         return $query;
     }
 
-    // Pagination Attributes 
+    /**
+     * Pagination Data Ci4
+     */
     public function getCategoryPaginationData()
     {
         $this->table = 'categories';
@@ -412,7 +421,6 @@ class AdminModel extends Model
         $this->table = 'attributes';
         return $this->orderBy('attribute_id', 'DESC')->paginate(10);
     }
-
 
     public function getOrderPaginationData()
     {
@@ -462,8 +470,9 @@ class AdminModel extends Model
         return $this->pager;
     }
 
-
-    // pagination
+    /**
+     * Pagination manually
+     */
     public function paginationProducts($pageCurrent)
     {
  
@@ -497,7 +506,6 @@ class AdminModel extends Model
         $data['numberOfPage'] =  $number_of_page;
         return $data;
     }
-
 
     public function getAttributeProductPaginationData (?int $perPage = null) {
         $this->table('product_attribute');
@@ -564,7 +572,9 @@ class AdminModel extends Model
         return $data;
     }
 
-    //filterDataProduct
+    /**
+     * Filter product data
+     */
     public function productFilter($filterSubmit, $containerInputFilter, $page)
     {
         if (isset($filterSubmit) && isset($containerInputFilter)) {
@@ -630,7 +640,55 @@ class AdminModel extends Model
         }
     }
 
-    //order
+    /**
+     * Order handle
+     * 1. URD
+     * 2. Check Info 
+     */
+    
+    public function updateOrderModel()
+    {
+        if (isset($fullname) && isset($address) && isset($phone_number) && isset($total_price) && isset($status)) {
+            $db = $this->db;
+
+            // Prepare the Query
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('orders')->update([
+                    'fullname'    => 'x',
+                    'address'   => 'y',
+                    'phone_number'   => 'z',
+                    'total_price'   => 'a',
+                    'status'   => 'b',
+                ]);
+            });
+
+            $order_id = $_GET['idOrder'];
+            $db->table('product_attribute')->where('order_id', $order_id);
+
+            // Run the Query
+            $pQuery->execute($fullname, $address, $phone_number, $total_price, $status);
+            // Close out the prepared statement
+            $pQuery->close();
+        }
+    }
+
+    public function deleteOrderModel($idUpdate)
+    {
+        $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('orders')->delete([
+                'order_id'    => 'x',
+            ]);
+        });
+
+        // Run the Query
+        $pQuery->execute($idUpdate);
+        // Close out the prepared statement
+        $pQuery->close();
+    }
+
     public function getOrders()
     {
         $db = $this->db;
@@ -654,53 +712,6 @@ class AdminModel extends Model
         return $query;
     }
 
-    public function updateOrderModel()
-    {
-        if (isset($fullname) && isset($address) && isset($phone_number) && isset($total_price) && isset($status)) {
-
-
-            $db = $this->db;
-
-            // Prepare the Query
-            $pQuery = $db->prepare(static function ($db) {
-                return $db->table('orders')->update([
-                    'fullname'    => 'x',
-                    'address'   => 'y',
-                    'phone_number'   => 'z',
-                    'total_price'   => 'a',
-                    'status'   => 'b',
-                ]);
-            });
-
-            $order_id = $_GET['idOrder'];
-            $db->table('product_attribute')->where('order_id', $order_id);
-
-
-            // Run the Query
-            $pQuery->execute($fullname, $address, $phone_number, $total_price, $status);
-            // Close out the prepared statement
-            $pQuery->close();
-        }
-    }
-
-
-    public function deleteOrderModel($idUpdate)
-    {
-        $db = $this->db;
-
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('orders')->delete([
-                'order_id'    => 'x',
-            ]);
-        });
-
-        // Run the Query
-        $pQuery->execute($idUpdate);
-        // Close out the prepared statement
-        $pQuery->close();
-    }
-
     public function getDetailOrder($idUpdate)
     {
         $db = $this->db;
@@ -715,43 +726,10 @@ class AdminModel extends Model
         return $result;
     }
 
-    //login and register 
-    public function RegisterAdmin($name, $emailAddress, $password)
-    {
-        if (isset($name) && isset($emailAddress) && isset($password)) {
-
-            //pull email and phone from db 
-            $db = $this->db;
-            $builder = $db->table('admin');
-            $builder->select('*');
-            $builder->where('email', $emailAddress);
-            $resultEmail = $builder->countAllResults();
-
-            //check email and phone exists
-            if ($resultEmail > 0) {
-                // echo "<br/>" . "Email is already used";
-            } else {
-                $db = $this->db;
-
-                // Prepare the Query
-                $pQuery = $db->prepare(static function ($db) {
-                    return $db->table('admin_user')->insert([
-                        'name'    => 'x',
-                        'email'    => 'y',
-                        'password'    => 'z',
-                    ]);
-                });
-
-                // Run the Query
-                $pQuery->execute($name, $emailAddress, $password);
-                // Close out the prepared statement
-                $pQuery->close();
-            }
-        } else {
-            return "";
-        }
-    }
-
+    /**
+     * Login handle
+     * main: login process
+     *  */ 
     public function LoginAdmin($loginAdmin, $emailAddress)
     {
         if (isset($loginAdmin)) {
@@ -764,7 +742,22 @@ class AdminModel extends Model
         }
     }
 
-    //User
+    /**
+     * User handle
+     * main: URD
+     */
+    public function updateUser($namePost, $emailPost, $passwordPost, $dobPost, $genderPost, $idUser)
+    {
+        $sql = "UPDATE customers SET name = ?, email = ?, password = ?, dob = ?, gender = ? WHERE customer_id = ?";
+        $this->db->query($sql, array($namePost, $emailPost, $passwordPost, $dobPost, $genderPost, $idUser));
+    }
+    
+    public function deleteUser($id)
+    {
+        $sql = "DELETE FROM customers WHERE customer_id = ?";
+        $this->db->query($sql, array($id));
+    }
+
     public function getUSers()
     {
 
@@ -785,17 +778,5 @@ class AdminModel extends Model
         $result = $builder->get()->getResultArray();
 
         return $result;
-    }
-
-    public function updateUser($namePost, $emailPost, $passwordPost, $dobPost, $genderPost, $idUser)
-    {
-        $sql = "UPDATE customers SET name = ?, email = ?, password = ?, dob = ?, gender = ? WHERE customer_id = ?";
-        $this->db->query($sql, array($namePost, $emailPost, $passwordPost, $dobPost, $genderPost, $idUser));
-    }
-
-    public function deleteUser($id)
-    {
-        $sql = "DELETE FROM customers WHERE customer_id = ?";
-        $this->db->query($sql, array($id));
     }
 }

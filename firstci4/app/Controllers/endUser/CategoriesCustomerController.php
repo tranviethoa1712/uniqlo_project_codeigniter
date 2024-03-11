@@ -13,7 +13,8 @@ class CategoriesCustomerController extends BaseControllerUser{
     protected $request;
     protected $service;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->service = new UserService;
     }
 
@@ -33,7 +34,8 @@ class CategoriesCustomerController extends BaseControllerUser{
         . view($this->pathViewLayout.'footer');
     }
 
-    public function category() {
+    public function category() 
+    {
         $gioitinhGet = $this->request->getGet('gioitinh');
         $dataCategories = $this->service->getCategories();
         $data = [

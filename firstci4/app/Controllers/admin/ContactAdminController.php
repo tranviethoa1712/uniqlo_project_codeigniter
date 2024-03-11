@@ -6,7 +6,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class ContactAdminController extends BaseControllerAdmin{
     
-    private $pageTitle = 'Quản lý sản phẩm';
+    private $pageTitle = '';
     private $pathView = 'admin/';
     private $pathViewLayout = 'admin/layouts/';
     protected $service;
@@ -30,8 +30,8 @@ class ContactAdminController extends BaseControllerAdmin{
         . view($this->pathViewLayout.'footer');
     }
 
-    public function list() {
-
+    public function list() 
+    {
         $data = [
             'pageTitle' => 'Quản lý liên hệ',
             'dashboard' => 'Danh sách liên hệ',

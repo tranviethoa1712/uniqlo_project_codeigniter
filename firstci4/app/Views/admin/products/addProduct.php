@@ -6,7 +6,7 @@
       <div class="card-header">
         <h3 class="card-title">Thêm sản phẩm</h3>
       </div>
-
+    <?= $header; ?>
       <form method="post" action="<?= base_url('admin/doAddProduct') ?>" enctype="multipart/form-data" class="form-horizontal">
       <?= view('massages/massage') ?>
         <div class="card-body">

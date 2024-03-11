@@ -9,6 +9,9 @@ class ContactModel extends Model
 {
     protected $table = 'contacts';
 
+    /**
+     * Read data
+     */
     public function getContacts()
     {
         $db = $this->db;

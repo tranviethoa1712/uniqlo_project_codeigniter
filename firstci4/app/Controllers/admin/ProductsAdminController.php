@@ -44,13 +44,15 @@ class ProductsAdminController extends BaseControllerAdmin
             'dashboard' => 'Thêm sản phẩm',
             'products' => $dataProduct,
             'categories' => $dataCategories,
+            'header' => $this->request->getHeaderLine('Content-Type')
         ];
 
         
         return $this->viewAdmin('products/addProduct', $data);
     }
     
-    public function doAddProduct() {
+    public function doAddProduct() 
+    {
         $result = $this->service->addProductModel($this->request);
         
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
@@ -72,7 +74,8 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('products/tools/update', $data);
     }
      
-    public function doUpdateProduct() {
+    public function doUpdateProduct() 
+    {
         $result = $this->service->updateProductModel($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
@@ -117,13 +120,14 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('attributes/addAttribute', $data);
     }
     
-    public function doAddAttribute () {
+    public function doAddAttribute() 
+    {
         $result = $this->service->addAttributeModel($this->request);
 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
-    public function listAttributes ()
+    public function listAttributes()
     {
         $data = [
             'pageTitle' => 'Quản lý thuộc tính',
@@ -147,7 +151,8 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('attributes/tools/updateAttribute', $data);
     }
     
-    public function doUpdateAttribute () {
+    public function doUpdateAttribute() 
+    {
         $result = $this->service->updateAttributeModel($this->request);
 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
@@ -159,7 +164,7 @@ class ProductsAdminController extends BaseControllerAdmin
         return redirect('admin/showAttributes');
     }
 
-    public function linkProductAttribute ()
+    public function linkProductAttribute()
     {
         $dataAttributes = $this->service->getAttributes();
         $dataProducts = $this->service->getProducts();
@@ -173,7 +178,8 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('attributes/link_product_attribute', $data);
     }
     
-    public function doLinkProductAttribute () {
+    public function doLinkProductAttribute() 
+    {
         $result = $this->service->addAttributeProductModel($this->request);
 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
@@ -210,7 +216,8 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('attributes/tools/updateProductAttribute', $data);
     }
     
-    public function doUpdateProductAttribute () {
+    public function doUpdateProductAttribute () 
+    {
         $checkSubmit = $this->request->getPost('updateProductAttribute');
         $product_id = $this->request->getPost('product_id');
         $attribute_id = $this->request->getPost('attribute_id');
@@ -228,7 +235,7 @@ class ProductsAdminController extends BaseControllerAdmin
     }
 
 
-    public function listOrders ()
+    public function listOrders()
     {
         $data = [
             'pageTitle' => 'Quản lý đơn hàng',
@@ -239,7 +246,7 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('orders/listOrders', $data);
     }
 
-    public function updateOrder ($idUpdate)
+    public function updateOrder($idUpdate)
     {
         $dataOrders = $this->service->getOrder($idUpdate);
         $data = [
@@ -250,7 +257,8 @@ class ProductsAdminController extends BaseControllerAdmin
         return $this->viewAdmin('orders/tools/update', $data);
     }
     
-    public function doUpdateOrder () {
+    public function doUpdateOrder() 
+    {
         $result = $this->service->updateOrderModel($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }

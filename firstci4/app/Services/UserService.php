@@ -7,7 +7,10 @@ use App\Common\ResultUtils;
 use Exception;
 
 class UserService extends BaseService{
-
+    /**
+     * The main task:
+     * Handle logic for the customer controller
+     */
     protected $customerModel;
 
     function __construct()
@@ -15,32 +18,7 @@ class UserService extends BaseService{
         parent::__construct();
         $this->customerModel = model(CustomerModel::class);  
         $this->customerModel->protect(false);  
-    }
-
-    public function getCategories() 
-    {
-        return $this->customerModel->getCategories();
     } 
-    
-    public function getProductGender($gioitinhGet) 
-    {
-        return $this->customerModel->getProductGender($gioitinhGet);
-    } 
-
-    public function getProducts() 
-    {
-        return $this->customerModel->getProducts();
-    } 
-
-    public function checkLoginCusomer($emaillogin, $pwdlogin) 
-    {
-        return $this->customerModel->checkLoginCusomer($emaillogin, $pwdlogin);        
-    } 
-
-    public function logOutCustomer (){
-        $session = session();
-        $session->remove('customer_login');
-    }
  
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
      {
@@ -61,19 +39,42 @@ class UserService extends BaseService{
     {
         return $this->customerModel->getProductAttributeId($idsanpham);
     } 
+
     public function getProductCategory($iddanhmuc, $gioitinh) 
     {
         return $this->customerModel->getProductCategory($iddanhmuc, $gioitinh);
     } 
+
     public function getProductAttribute() 
     {
         return $this->customerModel->getProductAttribute();
     } 
+    
+    public function getCategories() 
+    {
+        return $this->customerModel->getCategories();
+    } 
+    
+    public function getProductGender($gioitinhGet) 
+    {
+        return $this->customerModel->getProductGender($gioitinhGet);
+    } 
 
-    public function addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham) {
+    public function getProducts() 
+    {
+        return $this->customerModel->getProducts();
+    } 
+
+    public function addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham) 
+    {
         return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham);
     } 
- 
+
+    public function checkLoginCusomer($emaillogin, $pwdlogin) 
+    {
+        return $this->customerModel->checkLoginCusomer($emaillogin, $pwdlogin);        
+    } 
+
     public function RegisterCustomer($requestData)
     {
         $validate = $this->validateAddCustomer($requestData);
@@ -144,4 +145,11 @@ class UserService extends BaseService{
 
         return $this->validation;
     }
+
+    public function logOutCustomer()
+    {
+        $session = session();
+        $session->remove('customer_login');
+    }
+
 }

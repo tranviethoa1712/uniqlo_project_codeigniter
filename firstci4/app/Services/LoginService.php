@@ -8,6 +8,10 @@ use Exception;
 
 class LoginService extends BaseService
 {
+    /**
+     * The main task:
+     * Handle logic for the login controller 
+     */
 
     protected $adminModel;
 
@@ -16,7 +20,6 @@ class LoginService extends BaseService
         parent::__construct();
         $this->adminModel = model(AdminModel::class);
     }
-
 
     public function hasLoginInfo($requestData)
     {
@@ -93,7 +96,8 @@ class LoginService extends BaseService
         return $this->validation;
     }
 
-    public function logOutUser(){
+    public function logOutUser()
+    {
         $session = session();
         $session->destroy();
     }

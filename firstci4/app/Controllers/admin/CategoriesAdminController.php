@@ -35,7 +35,8 @@ class CategoriesAdminController extends BaseControllerAdmin{
         . view($this->pathViewLayout.'footer');
     }
     
-    public function add() {
+    public function add() 
+    {
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Thêm danh mục',
@@ -48,14 +49,16 @@ class CategoriesAdminController extends BaseControllerAdmin{
         . view($this->pathViewLayout.'footer');
     }     
      
-    public function doAddCategory () {
+    public function doAddCategory() 
+    {
         $result = $this->service->addCategoryModel($this->request);
 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
     
 
-    public function update($id) {
+    public function update($id) 
+    {
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Cập nhật Danh Mục',
@@ -72,13 +75,15 @@ class CategoriesAdminController extends BaseControllerAdmin{
         
     }
     
-    public function doUpdateCategory () {
+    public function doUpdateCategory() 
+    {
         $result = $this->service->updateCategoryModel($this->request);
 
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     } 
     
-    public function delete($iddanhmuc) {
+    public function delete($iddanhmuc) 
+    {
         $result = $this->service->deleteCategoryModel($iddanhmuc);
         if(!$result) {
             return redirect('errors/404');
@@ -87,7 +92,8 @@ class CategoriesAdminController extends BaseControllerAdmin{
        return redirect('admin/showCategories');
     }
 
-    public function listCategories() {
+    public function listCategories() 
+    {
         $data = [
             'pageTitle' => $this->pageTitle,
             'dashboard' => 'Danh Mục sản phẩm',

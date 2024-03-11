@@ -14,7 +14,8 @@ class ProductCustomerController extends BaseControllerUser{
     protected $session;
     protected $service;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->session = session();
         $this->service = new UserService;
     }
@@ -32,7 +33,8 @@ class ProductCustomerController extends BaseControllerUser{
         . view($this->pathViewLayout.'footer');
     }
 
-    public function detailProduct() { 
+    public function detailProduct() 
+    { 
         $idsanpham = $this->request->getGet('idsanpham');    
         $skuProduct = $this->request->getGet('sku');
         $gender = $this->request->getGet('gioitinh');
@@ -58,7 +60,8 @@ class ProductCustomerController extends BaseControllerUser{
         return $this->viewCustomer('detail-product', 'baseDetailPrds', $data);
     }
     
-    public function addProductToCart () { 
+    public function addProductToCart() 
+    { 
         $id = $this->request->getPost('id_prd');
         $color_prd = $this->request->getPost('color_prd');
         $size_prd = $this->request->getPost('size_prd');
@@ -70,7 +73,8 @@ class ProductCustomerController extends BaseControllerUser{
         return redirect('user/myCart');
     }
 
-    public function listProduct() {
+    public function listProduct() 
+    {
         $iddanhmuc = $this->request->getGet('iddanhmuc');
         $gioitinh = $this->request->getGet('gioitinh');
         $dataCategories = $this->service->getCategories();

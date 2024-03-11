@@ -12,7 +12,8 @@ class HomeCustomerController extends BaseControllerUser{
     protected $session;
     protected $service;
 
-    public function __construct() {
+    public function __construct() 
+    {
         $this->session = session();
         $this->service = new UserService;
     }
@@ -30,7 +31,8 @@ class HomeCustomerController extends BaseControllerUser{
         . view($this->pathViewLayout.'footer');
     }
 
-    public function home() {
+    public function home() 
+    {
         $gioitinhGet = $this->request->getGet('gioitinh');
 
         $dataCategories = $this->service->getCategories();
@@ -59,7 +61,8 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('customer-login', 'baseLogin', $data);
     } 
     
-    public function doLogin () {
+    public function doLogin() 
+    {
         $emaillogin = $this->request->getPost('emaillogin');
         $pwdlogin = $this->request->getPost('pwdlogin');
     
@@ -72,7 +75,8 @@ class HomeCustomerController extends BaseControllerUser{
         return redirect('user/aboutAccount');
     }
 
-    public function logOutCustomer () {
+    public function logOutCustomer() 
+    {
         $this->service->logOutCustomer();
         return redirect('user/userLogin');
     }
@@ -90,7 +94,8 @@ class HomeCustomerController extends BaseControllerUser{
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
-    public function memberDetail() {
+    public function memberDetail() 
+    {
         $dataCategories = $this->service->getCategories();
         $data = [
             'categories' => $dataCategories,
@@ -99,7 +104,8 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('member-detail', 'baseMemberDetail', $data);
     }
 
-    public function cart() { 
+    public function cart() 
+    { 
         $dataCategories = $this->service->getCategories();
         $sessionLogin = $this->session->customer_login;
         $sessionCart = $this->session->cart;
@@ -112,7 +118,8 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('cart', 'baseCart', $data);
     }
 
-    public function addToCart() {
+    public function addToCart() 
+    {
         $color_prd = $this->request->getPost('color_prd');
         $size_prd = $this->request->getPost('size_prd');
         $quantity_prd = $this->request->getPost('quantity_prd');
@@ -123,7 +130,8 @@ class HomeCustomerController extends BaseControllerUser{
         return redirect('user/myCart');
     }
 
-    public function order() {
+    public function order() 
+    {
         $dataCategories = $this->service->getCategories();
         $data = [
             'categories' => $dataCategories,
@@ -132,7 +140,8 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('order', 'baseOrder', $data);
     }
     
-    public function doOrder() {
+    public function doOrder() 
+    {
         $fullname = $this->request->getPost('fullname');
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
@@ -145,7 +154,8 @@ class HomeCustomerController extends BaseControllerUser{
         return redirect('user/successLoginView');
     }
 
-    public function successLoginView () {
+    public function successLoginView() 
+    {
         return $this->viewCustomer('loginSuccess','baseSuccessLogin');
     }
 

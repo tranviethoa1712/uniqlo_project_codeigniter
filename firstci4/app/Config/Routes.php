@@ -1,36 +1,23 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection; 
-use App\Filters\AuthFilter;
-// use App\Controllers\Admin\CategoriesAdminController;// Add this line
-// use App\Controllers\ProductsAdminController;// Add this line
-use App\Controllers\News; 
-use App\Controllers\Pages;
-
-
  
 /**
  * @var RouteCollection $routes
  */
-// $routes->get('/', 'Home::index');
-// Project
-// Admin
-// $routes->setDefaultNamespace('App\Controllers\Admin');
-// $routes->get('admin/addCategoryView', [CategoriesAdminController::class, 'addCategoriesIndex']);
-// $routes->post('admin/doAddCategory', [CategoriesAdminController::class, 'add']);
 
 $routes->get('errors/404', function () {
     return view('errors/html/error_404');
-});
+}); 
 
-$routes->group('', ['namespace' => 'App\Controllers\Admin'], static function ($routes) {
+$routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($routes) {
     
     // Login
     $routes->get('login', 'LoginAdminController::index');
-    $routes->post('login', 'LoginAdminController::doLogin');
+    $routes->post('login', 'LoginAdminController::doLogin'); 
 
-    $routes->group('admin', function($routes){
-        
+    // $routes->group('admin', ['filter' => 'adminfilter'] ,function($routes){
+    $routes->group('admin',function($routes){
         // Home
         $routes->get('home', 'HomeAdminController::index');
         $routes->get('logout', 'LoginAdminController::logout');
@@ -85,9 +72,6 @@ $routes->group('', ['namespace' => 'App\Controllers\Admin'], static function ($r
         $routes->get('contactList', 'ContactAdminController::list');
     });
 });
-
-// $routes->get('(:segment)', [CategoriesAdminController::class, 'view']);
-
 
 $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function ($routes) {
     $routes->group('user', function($routes){

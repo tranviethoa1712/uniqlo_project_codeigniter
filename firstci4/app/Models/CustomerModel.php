@@ -6,41 +6,6 @@ use CodeIgniter\Model;
 
 class CustomerModel extends Model
 {
-    public function RegisterCustomer($namePost, $emailPost, $pwdPost, $dobPost, $genderPost)
-    {
-        if (isset($namePost) && isset($emailPost) && isset($pwdPost) && isset($dobPost) && isset($genderPost)) {
-
-            $db = $this->db;
-            $builder = $db->table('customers');
-            $builder->select('*');
-            $builder->where('email', $emailPost);
-            $resultEmail = $builder->countAllResults();
-
-            //check email and phone exists
-            if ($resultEmail > 0) {
-                // echo "<br/>" . "Email is already used";
-            } else {
-                // Prepare the Query
-                $pQuery = $db->prepare(static function ($db) {
-                    return $db->table('customers')->insert([
-                        'name'    => 'n',
-                        'email'    => 'x',
-                        'password'    => 'y',
-                        'dob'    => 'z',
-                        'gender'    => 'a',
-                    ]);
-                });
-
-                // Run the Query
-                $pQuery->execute($namePost, $emailPost, $pwdPost, $dobPost, $genderPost);
-                // Close out the prepared statement
-                $pQuery->close();
-            }
-        } else {
-            return "";
-        }
-    }
-
     public function getAllCustomer()
     {
         $db = $this->db;
@@ -62,74 +27,15 @@ class CustomerModel extends Model
         return $result;
     }
 
-    public function updateUserModel($email, $pwd, $dob, $gender, $id)
-    {
-        $db = $this->db;
-
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('customers')->update([
-                'email'    => 'x',
-                'password'    => 'y',
-                'dob'    => 'z',
-                'gender'    => 'a',
-            ]);
-        });
-
-        $db->table('customers')->where('id_customer', $id);
-
-        // Run the Query
-        $pQuery->execute($email, $pwd, $dob, $gender);
-        // Close out the prepared statement
-        $pQuery->close();
-    }
-
-    public function deleteUserModel($id)
-    {
-        $db = $this->db;
-
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('customers')->delete([
-                'id_customers'    => 'x',
-            ]);
-        });
-
-
-        // Run the Query
-        $pQuery->execute($id);
-        // Close out the prepared statement
-        $pQuery->close();
-    }
-
     public function getProductGender($gender)
     {
-
         $db = $this->db;
         $builder = $db->table('products');
         $builder->select('*');
         $builder->where('gender', $gender);
         $result = $builder->get()->getResultArray();
+
         return $result;
-    }
-
-    public function checkLoginCusomer($emaillogin, $pwdlogin)
-    {
-        $db = $this->db;
-        $builder = $db->table('customers');
-        $builder->select('*');
-        $builder->where('email', $emaillogin);
-        $builder->where(password_verify('password',PASSWORD_BCRYPT), $pwdlogin);
-        $result = $builder->get()->getResultArray();
-        $countResult = $builder->countAllResults();
-
-        if ($countResult > 0) {
-            // $session = session();
-            // $session->set('customer_login', $result);
-            $_SESSION['customer_login'] = $result;
-            return true;
-        }
-        return false;
     }
 
     public function getProducts()
@@ -217,7 +123,6 @@ class CustomerModel extends Model
         return $data;
     }
 
-
     public function getCategories()
     {
         $db = $this->db;
@@ -228,7 +133,82 @@ class CustomerModel extends Model
         return $result;
     }
 
-    //add to cart
+    public function RegisterCustomer($namePost, $emailPost, $pwdPost, $dobPost, $genderPost)
+    {
+        if (isset($namePost) && isset($emailPost) && isset($pwdPost) && isset($dobPost) && isset($genderPost)) {
+
+            $db = $this->db;
+            $builder = $db->table('customers');
+            $builder->select('*');
+            $builder->where('email', $emailPost);
+            $resultEmail = $builder->countAllResults();
+
+            //check email and phone exists
+            if ($resultEmail > 0) {
+                // echo "<br/>" . "Email is already used";
+            } else {
+                // Prepare the Query
+                $pQuery = $db->prepare(static function ($db) {
+                    return $db->table('customers')->insert([
+                        'name'    => 'n',
+                        'email'    => 'x',
+                        'password'    => 'y',
+                        'dob'    => 'z',
+                        'gender'    => 'a',
+                    ]);
+                });
+
+                // Run the Query
+                $pQuery->execute($namePost, $emailPost, $pwdPost, $dobPost, $genderPost);
+                // Close out the prepared statement
+                $pQuery->close();
+            }
+        } else {
+            return "";
+        }
+    }
+
+    public function checkLoginCusomer($emaillogin, $pwdlogin)
+    {
+        $db = $this->db;
+        $builder = $db->table('customers');
+        $builder->select('*');
+        $builder->where('email', $emaillogin);
+        $builder->where(password_verify('password',PASSWORD_BCRYPT), $pwdlogin);
+        $result = $builder->get()->getResultArray();
+        $countResult = $builder->countAllResults();
+
+        if ($countResult > 0) {
+            // $session = session();
+            // $session->set('customer_login', $result);
+            $_SESSION['customer_login'] = $result;
+            return true;
+        }
+        return false;
+    }
+
+    public function updateUserModel($email, $pwd, $dob, $gender, $id)
+    {
+        $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('customers')->update([
+                'email'    => 'x',
+                'password'    => 'y',
+                'dob'    => 'z',
+                'gender'    => 'a',
+            ]);
+        });
+
+        $db->table('customers')->where('id_customer', $id);
+
+        // Run the Query
+        $pQuery->execute($email, $pwd, $dob, $gender);
+        // Close out the prepared statement
+        $pQuery->close();
+    }
+
     public function addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham)
     {
         if (isset($color_prd)  && isset($size_prd) && isset($quantity_prd)) {
