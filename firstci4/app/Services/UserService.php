@@ -70,6 +70,15 @@ class UserService extends BaseService{
         return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham);
     } 
 
+    public function deleteItemCart($id) {
+        // $item = $_SESSION['cart'][$id];
+        unset($_SESSION['cart'][$id]);
+    }
+
+    public function updateQuantityItemCart($id_prd, $quantity) {
+        $_SESSION['cart'][$id_prd]['quantity'] = $quantity;
+    }
+
     public function checkLoginCusomer($emaillogin, $pwdlogin) 
     {
         return $this->customerModel->checkLoginCusomer($emaillogin, $pwdlogin);        

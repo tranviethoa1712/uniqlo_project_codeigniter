@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/base.css') ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/home.css') ?>" />
     <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/detailproduct.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/w-listprd.css') ?>">
+    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/listprd.css') ?>">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
@@ -21,6 +21,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Nữ</title>
+    <title>Danh sách sản phẩm</title>
 </head>
 <body>

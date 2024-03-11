@@ -939,7 +939,7 @@
                   <div class="contents-cards__prd-colors">
 
                     <?php
-                    if (count($attributeProduct) > 0) {
+                    if (count($attributeProduct) > 0) { 
                     ?>
                       <?php
                       foreach ($attributeProduct as $row) {
@@ -978,7 +978,6 @@
             <?php
             }
             ?>
-
           </div>
         </div>
       </div>

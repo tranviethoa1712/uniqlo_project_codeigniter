@@ -25,22 +25,22 @@ function changeQuantity(element) {
       });
       
     let total = 0;
-    dotSums = papa.querySelectorAll(".dotSum");
+    dotSums = document.querySelectorAll(".dotSum");
     for(let i = 0; i < dotSums.length; i++) {
       value = dotSums[i].innerHTML;
       total += parseFloat(value);
     }
     shippingCost = 50000;
-    papa.querySelector(".final-sum").innerHTML = total.toLocaleString('en-US', {
+    document.querySelector(".final-sum").innerHTML = total.toLocaleString('en-US', {
       style: 'currency',
       currency: 'VND',
     });
     finalTotal = parseFloat(total) + parseFloat(shippingCost);
-    papa.querySelector(".finalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
+    document.querySelector(".finalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
       style: 'currency',
       currency: 'VND',
     });
-    papa.querySelector(".finalfinalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
+    document.querySelector(".finalfinalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
       style: 'currency',
       currency: 'VND',
     });
@@ -55,7 +55,6 @@ function DeleteProduct(element) {
   let dottotal = document.querySelector(".dotTotal").innerHTML;
   shippingCost = 50000;
   let updatedTotal = parseFloat(dottotal) - parseFloat(dotsum);
-  console.log(updatedTotal)
   
   document.querySelector(".final-sum").innerHTML = updatedTotal.toLocaleString('en-US', {
     style: 'currency',

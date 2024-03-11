@@ -1067,7 +1067,13 @@
             ?>
           </div>
         </div>
-        <div class="title-head">UT KAWS Áo Thun Ngắn Tay</div>
+        <div class="title-head">
+          <?php
+            foreach ($products as $col) :
+              echo $col['title'];
+            endforeach;
+          ?>
+        </div>
         <div class="dis-between">
           <div class="price-prd">
             <?php

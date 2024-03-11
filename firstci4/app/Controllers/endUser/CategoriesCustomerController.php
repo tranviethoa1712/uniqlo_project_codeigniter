@@ -36,11 +36,15 @@ class CategoriesCustomerController extends BaseControllerUser{
 
     public function category() 
     {
-        $gioitinhGet = $this->request->getGet('gioitinh');
+        $gioitinh = $this->request->getGet('gioitinh');
         $dataCategories = $this->service->getCategories();
+        $dataProductAttribute = $this->service->getProductAttribute();
+        $dataProductGender = $this->service->getProductGender($gioitinh);
         $data = [
             'categories' => $dataCategories,
-            'gioitinh' => $gioitinhGet
+            'gioitinh' => $gioitinh,
+            'products' => $dataProductGender,
+            'attributeProduct' => $dataProductAttribute,
         ];
 
         return $this->viewCustomer('category', $data);

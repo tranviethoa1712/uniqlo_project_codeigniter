@@ -91,6 +91,8 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
 
         $routes->get('myCart', 'HomeCustomerController::cart');
         $routes->post('addToCart', 'HomeCustomerController::addToCart');
+        $routes->post('deleteItemCart', 'HomeCustomerController::deleteItemCart');
+        $routes->post('updateQuantityItemCart', 'HomeCustomerController::updateQuantityItemCart');
 
         $routes->get('myOrder', 'HomeCustomerController::order');
         $routes->post('doOrder', 'HomeCustomerController::doOrder');

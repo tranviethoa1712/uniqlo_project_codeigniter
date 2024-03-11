@@ -130,6 +130,19 @@ class HomeCustomerController extends BaseControllerUser{
         return redirect('user/myCart');
     }
 
+    public function deleteItemCart()
+    {
+        $id_prd = $this->request->getPost('idProduct');
+        return $this->service->deleteItemCart($id_prd);
+    }
+
+    public function updateQuantityItemCart()
+    {
+        $id_prd = $this->request->getPost('idProduct');
+        $quantity = $this->request->getPost('valueQuantity');
+        return $this->service->updateQuantityItemCart($id_prd, $quantity);
+    }
+
     public function order() 
     {
         $dataCategories = $this->service->getCategories();

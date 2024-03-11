@@ -240,15 +240,6 @@
     margin-left: 0;
 }
 
-.three-column {
-    width: 65%;
-    display: flex;
-    margin-right: -20px;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-left: 0;
-}
-
 .grid-row {
     display: flex;
     width: 100%;

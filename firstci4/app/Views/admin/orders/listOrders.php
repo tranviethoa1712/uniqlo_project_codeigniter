@@ -35,7 +35,6 @@
           <td><?php echo $row['phone_number'] ?></td>
           <td><?php echo $row['total_price'] ?></td>
           <td><?php echo $row['status'] ?></td>
-          <td><?php echo $row['created_at'] ?></td>
           <?php
           $urlUpdate = base_url('admin/updateOrder');
           $urlDelete = base_url('admin/deleteOrder');

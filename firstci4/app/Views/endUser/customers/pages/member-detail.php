@@ -773,7 +773,7 @@
               <?php
                 $urlImage = base_url('assets/uploads/');
               ?>
-              <img src="<?= $urlImage ?>usersku.jpg" alt="sku USer">
+              <img src="<?= $urlImage ?>qr_code.jpg" alt="sku USer">
             </div>
             <div class="description">
               Vui lòng đưa mã vạch trên thẻ thành viên này cho nhân viên thu ngân khi bạn thanh toán cho sản phẩm đã mua.

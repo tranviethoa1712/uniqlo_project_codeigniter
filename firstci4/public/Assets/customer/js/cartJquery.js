@@ -2,12 +2,11 @@
   $(document).ready(function () {
     $(".btn-dropdown__quantity").change(function() {
         let element = $(this);
-        let idProduct = $(this).data('id')
+        let idProduct = $(this).attr("data-id")
         let valueQuantity = element.val();
-
         $.ajax({
             type: "POST",
-            url: "views/endUser/customers/handle/updateQuantity.php",
+            url: "http://localhost/user/updateQuantityItemCart",
             data: {idProduct, valueQuantity},
             // dataType: "dataType",
         })
@@ -15,11 +14,11 @@
 
     $(".btn-delete-product").click(function() {
         let element = $(this);
-        let idProduct = $(this).data('id')
-
+        let idProduct = $(this).attr("data-id")
+        // console.log('s2', idProduct)
         $.ajax({
             type: "POST",
-            url: "views/endUser/customers/handle/deleteProductCart.php",
+            url: "http://localhost/user/deleteItemCart",
             data: {idProduct},
             // dataType: "dataType",
         })

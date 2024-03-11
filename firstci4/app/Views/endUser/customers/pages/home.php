@@ -958,7 +958,7 @@
       <a href="#">
         <div class="utility-apps__about-item">
           <div class="utility-apps__about-img">
-            <img src="<?= $urlImage ?>appBenefits_1.jpg" alt="">
+            <img src="<?= $urlImage ?>benifit_app_uniqlo_1.jpg" alt="">
           </div>
           <div class="utility-apps__about-title">ƯU ĐÃI ĐỘC QUYỀN CHỈ CÓ TẠI ỨNG DỤNG</div>
           <div class="utility-apps__about-des">Giá đặc biệt chỉ dành cho thành viên ứng dụng. Scan Mã ID Thành Viên Ứng Dụng trước khi thanh toán tại cửa hàng để nhận giá ưu đãi.</div>
@@ -967,7 +967,7 @@
       <a href="#">
         <div class="utility-apps__about-item">
           <div class="utility-apps__about-img">
-            <img src="<?= $urlImage ?>appBenefits_2.jpg" alt="">
+            <img src="<?= $urlImage ?>benifit_app_uniqlo_2.jpg" alt="">
           </div>
           <div class="utility-apps__about-title">WELCOME COUPON</div>
           <div class="utility-apps__about-des">Tải ứng dụng UNIQLO ngay và trải nghiệm welcome coupon cho đơn hàng đầu tiên trên app.</div>
@@ -976,7 +976,7 @@
       <a href="#">
         <div class="utility-apps__about-item">
           <div class="utility-apps__about-img">
-            <img src="<?= $urlImage ?>appBenefits_3.jpg" alt="">
+            <img src="<?= $urlImage ?>benifit_app_uniqlo_3.jpg" alt="">
           </div>
           <div class="utility-apps__about-title">QUÉT MÃ VẠCH SẢN PHẨM</div>
           <div class="utility-apps__about-des">Quét mã vạch trên sản phẩm để dễ dàng kiểm tra xem sản phẩm còn hàng online hay trong cửa hàng.</div>
@@ -985,7 +985,7 @@
       <a href="#">
         <div class="utility-apps__about-item">
           <div class="utility-apps__about-img">
-            <img src="<?= $urlImage ?>appBenefits_4.jpg" alt="">
+            <img src="<?= $urlImage ?>benifit_app_uniqlo_4.jpg" alt="">
           </div>
           <div class="utility-apps__about-title">NHẬN THÔNG BÁO MỚI NHẤT</div>
           <div class="utility-apps__about-des">Nhận các thông tin mới nhất về sản phẩm mới ra mắt, ưu đãi đặc biệt và các tin tức nổi bật.</div>

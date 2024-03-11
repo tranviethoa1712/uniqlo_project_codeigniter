@@ -711,17 +711,12 @@
     ?>
     <div class="contents-cards-w">
         <div class="img-banner-top">
-            <img src="<?php echo $urlImage ?>bannerCategory_1.jpg" alt="banner">
+            <img src="<?php echo $urlImage ?>banner_categories_1_<?= $gioitinh ?>.jpg" alt="banner">
         </div>
     </div>
     <div class="contents-cards-w">
         <div class="img-banner-top">
-            <img src="<?php echo $urlImage ?>bannerCategory_2.jpg" alt="banner">
-        </div>
-    </div>
-    <div class="contents-cards-w">
-        <div class="img-banner-top">
-            <img src="<?php echo $urlImage ?>bannerCategory_3.jpg" alt="banner">
+            <img src="<?php echo $urlImage ?>banner_categories_2_<?= $gioitinh ?>.jpg" alt="banner">
         </div>
     </div>
     <div class="contents-cards-w">
@@ -861,7 +856,7 @@
             </h2>
         </div>
         <div class="new-prd__collection">
-            <div class="new-prd__image-plus">
+            <div class="w25">
                 <div class="image-wrapper">
                     <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
                 </div>
@@ -871,303 +866,65 @@
                 <div class="description">Thiết kế quần cách điệu, ống suông và cạp co giãn thoải mái.</div>
                 <div class="price-original">784.000 VND</div>
             </div>
-            <div class="new-prd__list three-column">
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Doraemon Nhồi Bông</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>489.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Hybrid Down Áo Khoác Phao</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>2.944.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                            <li class="color-tip bg-color-brown"></li>
-                                            <li class="color-tip bg-color-pink"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-blue"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-green"></li>
-                                            <li class="color-tip bg-color-red"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            <div class="w75">
+            <div class="content-full-main">
+            <?php foreach ($products as $col) {
+            ?>
+              <div class="contents-cards__prd">
+                <a class="link-prd" href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
+                  <?php
+                  $dataThumbnail = json_decode($col['thumbnail']);
+                  foreach ((array)$dataThumbnail as $key => $value) :
+                    if($key == 0):
+                            echo "<img src='". $urlImage . $value . "' class='contents-cards__prd-img' alt='product'>";
+                    endif;
+                  endforeach; 
+                  ?>
+
+                  <div class="contents-cards__prd-colors">
+
+                    <?php
+                    if (count($attributeProduct) > 0) { 
+                    ?>
+                      <?php
+                      foreach ($attributeProduct as $row) {
+                        if ($row['product_id'] == $col['product_id']) {
+                          if ($row['name'] == 'color') {
+                            $arrayUnit = explode(", ", $row['unit']);
+                            foreach ($arrayUnit as $item) {
+                      ?>
+                              <div class='prd-colors-brown' style='background-color: <?php echo $item ?>'></div>
+                      <?php
+                            }
+                          }
+                        }
+                      }
+                    }
+                    ?>
+                  </div>
+                  <div class="contents-cards__prd-gender-size">
+                    <div class="prd-gender"><?php if ($col['gender'] == "woman") {
+                                              echo "Nữ";
+                                            } ?></div>
+                    <div class="prd-size">S-L</div>
+                  </div>
+                  <div class="contents-cards__prd-name">
+                    <?php echo $col['title']; ?>
+                  </div>
+                  <div class="contents-cards__prd-original-price">
+                    <?php echo $col['price']; ?>
+                  </div>
+                  <div class="contents-cards__prd-sale-price">
+                    <?php echo $col['price']; ?>
+                  </div>
+                  <div class="contents-cards__prd-status">Sale</div>
+                </a>
+              </div>
+            <?php
+            }
+            ?>
             </div>
+        </div>
         </div>
         <a href="#">
             <div class="margin-wrapper">

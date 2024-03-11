@@ -702,7 +702,7 @@
               $i = 0;
               $total = 0;
               $shippingCost = 50000;
-              foreach ($cart as $id => $row) {
+              foreach ($cart as $id => $row) :
                 $i++;
           ?>
                 <div class="list-cart-product">
@@ -750,22 +750,20 @@
                               <p class="priceHidden" style="display: none;"><?php echo $row['price']; ?></p>
                             </div>
                           </div>
-                          <div class="product-right-column btn-delete-product" data-id="<?php echo $id; ?>" onclick="DeleteProduct(this)">
+                          <div class="product-right-column btn-delete-product" data-id="<?= $id ?>" onclick="DeleteProduct(this)">
                             <button class="product-close-button" type="button">
                               <span class="remove" style="font-size: 30px;">
-                                <i class="fa-solid fa-xmark"></i>
+                                <i class="fa-solid fa-xmark"></i> 
                               </span>
-                            </button>
+                            </button> 
                           </div>
                         </div>
                         <div class="box-bottom">
                           <div class="pulldown-wrapper">
                             <span class="label-quantity">Số lượng </span>
-                            <?php
-                            // echo $row['quantity'];
-                            ?>
+
                             <div class="quantity-prd__wrapper">
-                              <select class="btn-dropdown__quantity" name="quantity_product " data-id="<?php echo $id; ?>" onchange="changeQuantity(this)">
+                              <select class="btn-dropdown__quantity" name="quantity_product " data-id="<?= $id ?>" onchange="changeQuantity(this)">
                                 <option selected="selected"><?php echo $row['quantity'] ?></option>
                                 <option class="dropdown-quantity__item" data-id="<?php echo $id; ?>" value="1">1</option>
                                 <option class="dropdown-quantity__item" data-id="<?php echo $id; ?>" value="2">2</option>
@@ -796,7 +794,7 @@
                   </div>
                 </div>
               <?php
-              }
+              endforeach;
               ?>
         </div>
         <div class="rightContainer">
@@ -832,10 +830,10 @@
                   ?>
                 </div>
               </div>
-              <div class="row">
+              <!-- <div class="row">
                 <div class="left-text">Đã bao gồm thuế giá trị gia tăng</div>
                 <div class="right-text">61.630 VND</div>
-              </div>
+              </div> -->
               <div class="row-total">
                 <div class="left-text">Tổng đơn đặt hàng</div>
                 <div class="right-text-end finalfinalTotal">
