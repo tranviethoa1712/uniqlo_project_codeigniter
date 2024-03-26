@@ -18,7 +18,7 @@ define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR);
 if (getcwd() . DIRECTORY_SEPARATOR !== FCPATH) {
     chdir(FCPATH);
 }
-
+ 
 /*
  *---------------------------------------------------------------
  * BOOTSTRAP THE APPLICATION
@@ -39,11 +39,11 @@ $paths = new Config\Paths();
 require rtrim($paths->systemDirectory, '\\/ ') . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 // Load environment settings from .env files into $_SERVER and $_ENV
-require_once SYSTEMPATH . 'Config/DotEnv.php';
+require_once SYSTEMPATH . 'Config/DotEnv.php'; 
 (new CodeIgniter\Config\DotEnv(ROOTPATH))->load();
 
-// Define ENVIRONMENT
-if (! defined('ENVIRONMENT')) {
+// Define ENVIRONMENT 
+if (! defined('ENVIRONMENT')) { 
     define('ENVIRONMENT', env('CI_ENVIRONMENT', 'production'));
 }
 
@@ -65,7 +65,7 @@ if (! defined('ENVIRONMENT')) {
 $app = Config\Services::codeigniter();
 $app->initialize();
 $context = is_cli() ? 'php-cli' : 'web';
-$app->setContext($context);
+$app->setContext($context); 
 
 /*
  *---------------------------------------------------------------

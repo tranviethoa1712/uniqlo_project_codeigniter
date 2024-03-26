@@ -5,6 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+$routes->get('/', 'Home::index');
 
 $routes->get('errors/404', function () {
     return view('errors/html/error_404');
@@ -82,7 +83,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->get('userLogin', 'HomeCustomerController::login');
         $routes->post('doLogin', 'HomeCustomerController::dologin');
         $routes->get('logout', 'HomeCustomerController::logOutCustomer');
-        $routes->get('successLoginView', 'HomeCustomerController::successLoginView');
+        $routes->get('orderSuccess', 'HomeCustomerController::orderSuccessView');
 
         $routes->get('userRegister', 'HomeCustomerController::register');
         $routes->post('doRegister', 'HomeCustomerController::doRegister');

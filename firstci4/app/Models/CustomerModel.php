@@ -298,6 +298,7 @@ class CustomerModel extends Model
                 $pQuery->execute($order_id, $product_id, $price, $quantity, $total_momney);
                 // Close out the prepared statement
                 $pQuery->close();
+                unset($_SESSION['cart']);
             }
 
             return true;

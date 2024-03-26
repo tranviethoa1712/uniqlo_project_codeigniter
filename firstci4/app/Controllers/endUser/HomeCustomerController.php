@@ -164,12 +164,17 @@ class HomeCustomerController extends BaseControllerUser{
         if (!$result) {
             return redirect('user/myOrder');
         }
-        return redirect('user/successLoginView');
+        return redirect('user/orderSuccess');
     }
 
-    public function successLoginView() 
+    public function orderSuccessView() 
     {
-        return $this->viewCustomer('loginSuccess','baseSuccessLogin');
+        $dataCategories = $this->service->getCategories();
+        $data = [
+            'categories' => $dataCategories,
+        ];
+
+        return $this->viewCustomer('orderSuccess','baseOrderSuccess', $data);
     }
 
 }
