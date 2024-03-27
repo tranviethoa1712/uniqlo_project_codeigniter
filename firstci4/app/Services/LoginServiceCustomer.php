@@ -2,27 +2,28 @@
 
 namespace App\Services;
 
-use App\Models\AdminModel;
+use App\Models\CustomerModel;
 use App\Common\ResultUtils;
 use Exception;
 
-class LoginService extends BaseService
+class LoginServiceCustomer extends BaseService
 {
     /**
      * The main task:
      * Handle logic for the login controller 
      */
 
-    protected $adminModel;
+    protected $customerModel;
 
     function __construct()
     {
         parent::__construct();
-        $this->adminModel = model(AdminModel::class);
+        $this->customerModel = model(CustomerModel::class);
     }
 
     public function hasLoginInfo($requestData)
     {
+        // die(var_dump($requestData->getPost()));
         $validate = $this->validateLogin($requestData);
         if ($validate->getErrors()) {
             return [
@@ -33,8 +34,8 @@ class LoginService extends BaseService
         } 
 
         $dataSave = $requestData->getPost();
-
-        $result = $this->adminModel->LoginAdmin($dataSave['loginAdmin'], $dataSave['emailAddress']);
+        
+        $result = $this->customerModel->checkLoginCusomer($dataSave['submitLogin'], $dataSave['emaillogin']);
         if (!$result) {
             return [
                 'status' => ResultUtils::STATUS_CODE_ERR,
@@ -45,7 +46,7 @@ class LoginService extends BaseService
             ];
         } 
 
-        if (!password_verify($dataSave['password'], $result[0]['password'])) {
+        if (!password_verify($dataSave['pwdlogin'], $result[0]['password'])) {
             return [
                 'status' => ResultUtils::STATUS_CODE_ERR,
                 'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
@@ -60,7 +61,7 @@ class LoginService extends BaseService
 
         unset($result['password']);
         
-        $session->set('manager_login', $result);
+        $session->set('customer_login', $result);
 
         return [
             'status' => ResultUtils::STATUS_CODE_OK,
@@ -72,31 +73,30 @@ class LoginService extends BaseService
     private function validateLogin($requestData)
     {
         $rules = [
-            'emailAddress' => 'valid_email',
-            'password' => 'max_length[30]|min_length[6]',
+            'emaillogin' => 'valid_email',
+            'pwdlogin' => 'max_length[30]|min_length[6]',
         ];
 
         $messages = [
-            'emailAddress' => [
-                'valid_email' => 'Tài khoản {field} {value} không đúng định dạng',
+            'emaillogin' => [
+                'valid_email' => 'Tài khoản {value} không đúng định dạng',
             ],
-            'password' => [
-                'min_length' => 'Mật khẩu ít nhất là {param} ký tự!',
+            'pwdlogin' => [
                 'max_length' => 'Mật khẩu quá dài, vui lòng nhập {param} ký tự!',
+                'min_length' => 'Mật khẩu ít nhất là {param} ký tự!',
             ],
         ];
-
-
+        
         // reset all previous errors
         $this->validation->reset();
-
+        
         $this->validation->setRules($rules, $messages);
         $this->validation->withRequest($requestData)->run();
 
         return $this->validation;
     }
 
-    public function logOutUser()
+    public function logOutCustomer()
     {
         $session = session();
         $session->destroy();

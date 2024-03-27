@@ -79,11 +79,6 @@ class UserService extends BaseService{
         $_SESSION['cart'][$id_prd]['quantity'] = $quantity;
     }
 
-    public function checkLoginCusomer($emaillogin, $pwdlogin) 
-    {
-        return $this->customerModel->checkLoginCusomer($emaillogin, $pwdlogin);        
-    } 
-
     public function RegisterCustomer($requestData)
     {
         $validate = $this->validateAddCustomer($requestData);

@@ -80,9 +80,9 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         // $routes->post('admin/addCategoryView', 'CategoriesAdminController::add');
     
         $routes->get('homePage', 'HomeCustomerController::home');
-        $routes->get('userLogin', 'HomeCustomerController::login');
-        $routes->post('doLogin', 'HomeCustomerController::dologin');
-        $routes->get('logout', 'HomeCustomerController::logOutCustomer');
+        $routes->get('userLogin', 'LoginCustomerController::login');
+        $routes->post('doLogin', 'LoginCustomerController::doLogin');
+        $routes->get('logout', 'LoginCustomerController::logOutCustomer');
         $routes->get('orderSuccess', 'HomeCustomerController::orderSuccessView');
 
         $routes->get('userRegister', 'HomeCustomerController::register');

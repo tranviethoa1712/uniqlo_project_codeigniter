@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Controllers\Enduser;
 
 use App\Services\UserService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class HomeCustomerController extends BaseControllerUser{
+class HomeCustomerController extends BaseControllerUser
+{
 
     private $pathView = 'endUser/customers/pages/';
     private $pathViewLayout = 'endUser/layouts/';
@@ -12,7 +14,7 @@ class HomeCustomerController extends BaseControllerUser{
     protected $session;
     protected $service;
 
-    public function __construct() 
+    public function __construct()
     {
         $this->session = session();
         $this->service = new UserService;
@@ -20,25 +22,26 @@ class HomeCustomerController extends BaseControllerUser{
 
     public function viewCustomer($page = '', $headHtml,  $data = [])
     {
-        if (! is_file(APPPATH . 'Views/endUser/customers/pages/' . $page . '.php')) {
+        if (!is_file(APPPATH . 'Views/endUser/customers/pages/' . $page . '.php')) {
             // Whoops, we don't have a page for that!
             throw new PageNotFoundException($page);
-        }        
-        
-        return view($this->pathViewLayout . $headHtml) 
-        . view($this->pathViewLayout.'header', $data)
-        . view($this->pathView . $page)
-        . view($this->pathViewLayout.'footer');
+        }
+
+        return view($this->pathViewLayout . $headHtml)
+            . view($this->pathViewLayout . 'header', $data)
+            . view($this->pathView . $page)
+            . view($this->pathViewLayout . 'footer');
     }
 
-    public function home() 
+    public function home()
     {
+        // unset($_SESSION['customer_login']);
         $gioitinhGet = $this->request->getGet('gioitinh');
 
         $dataCategories = $this->service->getCategories();
-        $daraProductGender = $this->service->getProductGender($gioitinhGet);    
-        $dataProducts = $this->service->getProducts();    
-        
+        $daraProductGender = $this->service->getProductGender($gioitinhGet);
+        $dataProducts = $this->service->getProducts();
+
         // $this->service->logOutCustomer();
         $data = [
             'categories' => $dataCategories,
@@ -49,63 +52,31 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('home', 'baseHome', $data);
     }
 
-    public function login()
-    {
-        $data = [];
-        $urlMemberDetail = base_url('user/aboutAccount');
-        
-        if(isset($this->session->customer_login)) {
-            return redirect($urlMemberDetail);          
-        }
-
-        return $this->viewCustomer('customer-login', 'baseLogin', $data);
-    } 
-    
-    public function doLogin() 
-    {
-        $emaillogin = $this->request->getPost('emaillogin');
-        $pwdlogin = $this->request->getPost('pwdlogin');
-    
-        $result = $this->service->checkLoginCusomer($emaillogin, $pwdlogin);
-        
-        if (!$result) {
-            return redirect('user/userLogin');
-        }
-
-        return redirect('user/aboutAccount');
-    }
-
-    public function logOutCustomer() 
-    {
-        $this->service->logOutCustomer();
-        return redirect('user/userLogin');
-    }
-
     public function register()
     {
         $data = [];
-        
+
         return $this->viewCustomer('customer-register', 'baseRegister', $data);
     }
 
     public function doRegister()
-    {        
-        $result = $this->service->RegisterCustomer($this->request); 
+    {
+        $result = $this->service->RegisterCustomer($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
-    public function memberDetail() 
+    public function memberDetail()
     {
         $dataCategories = $this->service->getCategories();
         $data = [
             'categories' => $dataCategories,
         ];
- 
+
         return $this->viewCustomer('member-detail', 'baseMemberDetail', $data);
     }
 
-    public function cart() 
-    { 
+    public function cart()
+    {
         $dataCategories = $this->service->getCategories();
         $sessionLogin = $this->session->customer_login;
         $sessionCart = $this->session->cart;
@@ -118,7 +89,7 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->viewCustomer('cart', 'baseCart', $data);
     }
 
-    public function addToCart() 
+    public function addToCart()
     {
         $color_prd = $this->request->getPost('color_prd');
         $size_prd = $this->request->getPost('size_prd');
@@ -143,7 +114,7 @@ class HomeCustomerController extends BaseControllerUser{
         return $this->service->updateQuantityItemCart($id_prd, $quantity);
     }
 
-    public function order() 
+    public function order()
     {
         $dataCategories = $this->service->getCategories();
         $data = [
@@ -152,29 +123,133 @@ class HomeCustomerController extends BaseControllerUser{
 
         return $this->viewCustomer('order', 'baseOrder', $data);
     }
-    
-    public function doOrder() 
+
+    public function doOrder()
     {
         $fullname = $this->request->getPost('fullname');
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
         $totalPrice = $this->request->getPost('totalPrice');
-        
-        $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
-        if (!$result) {
-            return redirect('user/myOrder');
+        if ($this->request->getPost('submitOrder')) {
+            $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
+            if (!$result) {
+                return redirect('user/myOrder');
+            }
+            return redirect('user/orderSuccess');
+        } elseif ($this->request->getPost('vnpay')) {
+
+            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+            $vnp_Returnurl = "http://localhost/user/orderSuccess";
+            $vnp_TmnCode = "PYY55LE8"; //Mã website tại VNPAY 
+            $vnp_HashSecret = "JEBPLUFFDQLMZCCGNKWFJXOBIHBISEST"; //Chuỗi bí mật
+
+            $vnp_TxnRef = $this->request->getPost('order_id'); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_OrderInfo = 'Noi dung thanh toan';
+            $vnp_OrderType = 'billpayment';
+            $vnp_Amount = $totalPrice * 100;
+            $vnp_Locale = 'vn';
+            $vnp_BankCode = 'NCB';
+            $vnp_IpAddr = $_SERVER['REMOTE_ADDR']; //127.0.0.1
+            //Add Params of 2.0.1 Version
+            // $vnp_ExpireDate = $_POST['txtexpire'];
+            //Billing
+            $vnp_Bill_Mobile = $phoneNumber;
+            // $vnp_Bill_Email = $_POST['txt_billing_email'];
+            $fullName = trim((string)$fullname);
+            if (isset($fullName) && trim($fullName) != '') {
+                $name = explode(' ', $fullName);
+                $vnp_Bill_FirstName = array_shift($name);
+                $vnp_Bill_LastName = array_pop($name);
+            }
+            $vnp_Bill_Address = $address;
+            // $vnp_Bill_City = $_POST['txt_bill_city'];
+            // $vnp_Bill_Country = $_POST['txt_bill_country'];
+            // $vnp_Bill_State = $_POST['txt_bill_state'];
+            // Invoice
+            $vnp_Inv_Phone = $phoneNumber;
+            // $vnp_Inv_Email = $_POST['txt_inv_email'];
+            // $vnp_Inv_Customer = $_POST['txt_inv_customer'];
+            $vnp_Inv_Address = $address;
+            // $vnp_Inv_Company = $_POST['txt_inv_company'];
+            // $vnp_Inv_Taxcode = $_POST['txt_inv_taxcode'];
+            // $vnp_Inv_Type = $_POST['cbo_inv_type'];
+            $inputData = array(
+                "vnp_Version" => "2.1.0",
+                "vnp_TmnCode" => $vnp_TmnCode,
+                "vnp_Amount" => $vnp_Amount,
+                "vnp_Command" => "pay",
+                "vnp_CreateDate" => date('YmdHis'),
+                "vnp_CurrCode" => "VND",
+                "vnp_IpAddr" => $vnp_IpAddr,
+                "vnp_Locale" => $vnp_Locale,
+                "vnp_OrderInfo" => $vnp_OrderInfo,
+                "vnp_OrderType" => $vnp_OrderType,
+                "vnp_ReturnUrl" => $vnp_Returnurl,
+                "vnp_TxnRef" => $vnp_TxnRef,
+                // "vnp_ExpireDate" => $vnp_ExpireDate,
+                "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
+                // "vnp_Bill_Email" => $vnp_Bill_Email,
+                "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
+                "vnp_Bill_LastName" => $vnp_Bill_LastName,
+                "vnp_Bill_Address" => $vnp_Bill_Address,
+                // "vnp_Bill_City" => $vnp_Bill_City,
+                // "vnp_Bill_Country" => $vnp_Bill_Country,
+                "vnp_Inv_Phone" => $vnp_Inv_Phone,
+                // "vnp_Inv_Email" => $vnp_Inv_Email,
+                // "vnp_Inv_Customer" => $vnp_Inv_Customer,
+                "vnp_Inv_Address" => $vnp_Inv_Address,
+                // "vnp_Inv_Company" => $vnp_Inv_Company,
+                // "vnp_Inv_Taxcode" => $vnp_Inv_Taxcode,
+                // "vnp_Inv_Type" => $vnp_Inv_Type
+            );
+
+            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                $inputData['vnp_BankCode'] = $vnp_BankCode;
+            }
+            // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+            //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
+            // }
+
+            //var_dump($inputData);
+            ksort($inputData);
+            $query = "";
+            $i = 0;
+            $hashdata = "";
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1;
+                }
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
+
+            $vnp_Url = $vnp_Url . "?" . $query;
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret); //  
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+            $returnData = array(
+                'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+            );
+            if ($this->request->getPost('vnpay')) {
+                header('Location: ' . $vnp_Url);
+                die();
+            } else {
+                echo json_encode($returnData);
+            }
+            // vui lòng tham khảo thêm tại code demo
         }
-        return redirect('user/orderSuccess');
     }
 
-    public function orderSuccessView() 
+    public function orderSuccessView()
     {
         $dataCategories = $this->service->getCategories();
         $data = [
             'categories' => $dataCategories,
         ];
 
-        return $this->viewCustomer('orderSuccess','baseOrderSuccess', $data);
+        return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
     }
-
 }

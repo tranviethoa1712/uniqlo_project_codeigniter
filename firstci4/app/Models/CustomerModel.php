@@ -168,23 +168,18 @@ class CustomerModel extends Model
         }
     }
 
-    public function checkLoginCusomer($emaillogin, $pwdlogin)
+    public function checkLoginCusomer($submitLogin, $emaillogin)
     {
-        $db = $this->db;
-        $builder = $db->table('customers');
-        $builder->select('*');
-        $builder->where('email', $emaillogin);
-        $builder->where(password_verify('password',PASSWORD_BCRYPT), $pwdlogin);
-        $result = $builder->get()->getResultArray();
-        $countResult = $builder->countAllResults();
-
-        if ($countResult > 0) {
-            // $session = session();
-            // $session->set('customer_login', $result);
-            $_SESSION['customer_login'] = $result;
-            return true;
+        if(isset($submitLogin)){
+            // die($emaillogin);
+            $db = $this->db;
+            $builder = $db->table('customers');
+            $builder->select('*');
+            $builder->where('email', $emaillogin);
+            $result = $builder->get()->getResultArray();
+    
+            return $result;
         }
-        return false;
     }
 
     public function updateUserModel($email, $pwd, $dob, $gender, $id)

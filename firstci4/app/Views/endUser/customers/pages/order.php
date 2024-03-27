@@ -717,16 +717,17 @@
             <div class="leftContainer">
 
               <label for="fullname">Họ và Tên</label>
-              <input type="text" id="fullname" class="input" name="fullname">
+              <input type="text" id="fullname" class="input" name="fullname" required>
 
               <label for="address">Địa chỉ </label>
-              <input type="text" id="address" class="input" name="address">
+              <input type="text" id="address" class="input" name="address" required>
 
               <label for="phoneNumber">Số điện thoại</label>
-              <input type="text" id="phoneNumber" class="input" name="phoneNumber">
+              <input type="text" id="phoneNumber" class="input" name="phoneNumber" required>
 
               <!-- <label for="totalPrice">Tổng tiền</label> -->
               <input style="visibility: hidden;" type="text" class="input" name="totalPrice" value="<?php echo $total; ?>">
+              <input style="visibility: hidden;" type="text" class="input" name="order_id" value="<?php echo rand(00, 9999  ); ?>">
             </div>
             <!-- <input type="text" name=""> -->
             <div class="rightContainer">
@@ -806,13 +807,15 @@
                   </ul>
                 </div>
               </div>
-              <input type="submit" name="submitOrder" value="Thanh toán">
+              <input type="submit" class="offline-payment-button" name="submitOrder" value="Thanh toán khi nhận hàng">
+              <input type="submit" class="online-payment-button" name="vnpay" value="Ứng dụng ngân hàng di động VNPAY">
             </div>
         <?php
           }
         }
         ?>
       </div>
+    </form>
   </div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>

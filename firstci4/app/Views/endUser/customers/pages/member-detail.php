@@ -778,7 +778,7 @@
             <div class="description">
               Vui lòng đưa mã vạch trên thẻ thành viên này cho nhân viên thu ngân khi bạn thanh toán cho sản phẩm đã mua.
             </div>
-            <button class="btn">in mã vạch</button>
+            <a href="<?= base_url('user/logout') ?>"><button class="btn">Đăng xuất</button></a>
           </div>
         </div>
 
