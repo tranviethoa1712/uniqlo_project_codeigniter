@@ -21,9 +21,13 @@ class UserService extends BaseService{
     } 
  
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
-     {
-            return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
-    } 
+    {
+        return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
+    }
+    
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder ,$order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate) {
+        return $this->customerModel->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder,  $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
+    }
     
     public function getProductsId($idsanpham) 
     {

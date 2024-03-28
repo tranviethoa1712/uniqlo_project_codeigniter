@@ -230,7 +230,7 @@ class CustomerModel extends Model
 
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
-        if (isset($fullname)  && isset($address) && isset($phoneNumber) && isset($totalPrice)) {
+        if (empty($fullname) && empty($address) && empty($phoneNumber) && empty($totalPrice)) {
             $db = $this->db;
 
             // Prepare the Query
@@ -300,5 +300,43 @@ class CustomerModel extends Model
         } else {
             return false;
         }
+    }
+
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
+    {
+        $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('online_payment')->insert([
+                'customer_id'    => 'x',
+                'order_id'    => 'y',
+                'order_code'    => 'z',
+                'bank_code'    => 'a',
+                'bank_tran_no'    => 'b',
+                'transaction_no'    => 'c',
+                'content'    => 'e',
+                'amount'    => 'f',
+                'pay_date'    => 'g',
+            ]);
+        });
+
+        $row = $_SESSION['customer_login'];
+        foreach ($row as $key) {
+            $customerId = $key['customer_id'];
+        }
+
+        $sqlOrderId = $db->query("SELECT * FROM orders WHERE customer_id = '$customerId' ORDER BY order_id DESC LIMIT 1");
+
+        foreach ($sqlOrderId->getResultArray() as $row) {
+            $id_order = $row['order_id'];
+        }
+
+        // Run the Query
+        $pQuery->execute($customerId, $id_order, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $totalPriceOrder, $payDate);
+        // Close out the prepared statement
+        $pQuery->close();
+        
+        $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder);
     }
 }

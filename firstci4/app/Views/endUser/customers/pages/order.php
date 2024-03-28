@@ -7,7 +7,7 @@
         $urlHome = base_url('user/homePage');
         $urlImage = base_url('assets/uploads/');
         ?>
-        <a href="<?php echo base_url('user/homePage?gioitinh=woman'); ?>">
+        <a href="<?= base_url('user/homePage?gioitinh=woman'); ?>">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 40" width="90" height="40" role="img" aria-label="ユニクロ｜UNIQLO">
             <title>ユニクロ｜UNIQLO</title>
             <path fill="red" d="M50 0h40v40H50zM0 0h40v40H0z"></path>
@@ -24,7 +24,7 @@
       <div class="menu-links__list">
         <ul class="menu-links__list-contents">
           <li class="menu-links__list-item-dropdown woman">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
             <div class="dropdown-wrapper dropdown-woman">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -178,7 +178,7 @@
           </li>
 
           <li class="menu-links__list-item-dropdown man">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
             <div class="dropdown-wrapper dropdown-man">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -330,7 +330,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
             <div class="dropdown-wrapper dropdown-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -482,7 +482,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown non-baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
             <div class="dropdown-wrapper dropdown-non-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -650,7 +650,7 @@
       <a class="menu-tools__fav">
         <i class="fa-regular fa-heart"></i>
       </a>
-      <a href="<?php echo base_url('user/myCart'); ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart'); ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </div>
@@ -681,7 +681,7 @@
       </a>
     </li>
     <li>
-      <a href="<?php echo base_url('user/myCart') ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart') ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </li>
@@ -726,8 +726,7 @@
               <input type="text" id="phoneNumber" class="input" name="phoneNumber" required>
 
               <!-- <label for="totalPrice">Tổng tiền</label> -->
-              <input style="visibility: hidden;" type="text" class="input" name="totalPrice" value="<?php echo $total; ?>">
-              <input style="visibility: hidden;" type="text" class="input" name="order_id" value="<?php echo rand(00, 9999  ); ?>">
+              <input style="visibility: hidden;" type="text" class="input" name="totalPrice" value="<?= $total; ?>">
             </div>
             <!-- <input type="text" name=""> -->
             <div class="rightContainer">
@@ -735,7 +734,7 @@
                 <div class="title-head">
                   <span>Tổng đơn hàng</span>
 
-                  <span>| <?php echo $productCount; ?> Sản phẩm</span>
+                  <span>| <?= $productCount; ?> Sản phẩm</span>
                 </div>
                 <div class="contents">
                   <div class="row">
@@ -757,9 +756,7 @@
                   <div class="row-total">
                     <div class="left-text">tổng</div>
                     <div class="right-text">
-                      <?php
-                      echo number_format($total, 0, ',', '.') . ' VND';
-                      ?>
+                      <?= number_format($total, 0, ',', '.') . ' VND';?>
                     </div>
                   </div>
                   <div class="row">
@@ -769,7 +766,7 @@
                   <div class="row-total">
                     <div class="left-text">Tổng đơn đặt hàng</div>
                     <div class="right-text-end">
-                      <?php echo number_format($total, 0, ',', '.') . ' VND'; ?>
+                      <?= number_format($total, 0, ',', '.') . ' VND'; ?>
                     </div>
                   </div>
                 </div>
@@ -798,7 +795,7 @@
 
                         ?>
 
-                        <span class="item-value"><?php echo $row['quantity']; ?></span>
+                        <span class="item-value"><?= $row['quantity']; ?></span>
                       </li>
                     <?php
                     }
@@ -821,5 +818,5 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="<?php echo base_url('assets/customer/js/home.js'); ?>"></script>
-<script src="<?php echo base_url('assets/customer/js/slick.js'); ?>></script>
+<script src="<?= base_url('assets/customer/js/home.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/slick.js'); ?>></script>

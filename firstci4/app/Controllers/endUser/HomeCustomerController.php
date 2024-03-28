@@ -129,7 +129,13 @@ class HomeCustomerController extends BaseControllerUser
         $fullname = $this->request->getPost('fullname');
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
-        $totalPrice = $this->request->getPost('totalPrice');
+        $totalPrice = $this->request->getPost('totalPrice'); 
+        $order_code = $this->request->getPost('order_code');
+        $bank_code = $this->request->getPost('bank_code');
+        $bank_tran_no = $this->request->getPost('bank_tran_no');
+        $transaction_no = $this->request->getPost('transaction_no'); 
+        $content = $this->request->getPost('content');
+        $pay_date = $this->request->getPost('pay_date'); 
         if ($this->request->getPost('submitOrder')) {
             $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
             if (!$result) {
@@ -137,13 +143,21 @@ class HomeCustomerController extends BaseControllerUser
             }
             return redirect('user/orderSuccess');
         } elseif ($this->request->getPost('vnpay')) {
-
+            $newdata = [
+                'fullNameOrder'  => $fullname,
+                'addressOrder'     => $address,
+                'phoneNumberOrder' => $phoneNumber,
+                'totalPriceOrder' => $totalPrice,
+            ];
+            
+            $this->session->set($newdata);
+            
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://localhost/user/orderSuccess";
+            $vnp_Returnurl = "http://localhost/user/myOrder";
             $vnp_TmnCode = "PYY55LE8"; //Mã website tại VNPAY 
             $vnp_HashSecret = "JEBPLUFFDQLMZCCGNKWFJXOBIHBISEST"; //Chuỗi bí mật
 
-            $vnp_TxnRef = $this->request->getPost('order_id'); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_TxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
             $vnp_OrderInfo = 'Noi dung thanh toan';
             $vnp_OrderType = 'billpayment';
             $vnp_Amount = $totalPrice * 100;
@@ -210,7 +224,6 @@ class HomeCustomerController extends BaseControllerUser
             //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
             // }
 
-            //var_dump($inputData);
             ksort($inputData);
             $query = "";
             $i = 0;
@@ -235,7 +248,6 @@ class HomeCustomerController extends BaseControllerUser
             );
             if ($this->request->getPost('vnpay')) {
                 header('Location: ' . $vnp_Url);
-                die();
             } else {
                 echo json_encode($returnData);
             }
@@ -249,6 +261,25 @@ class HomeCustomerController extends BaseControllerUser
         $data = [
             'categories' => $dataCategories,
         ];
+
+        if ($this->request->getGet('vnp_TxnRef')) {
+            $fullName = $_SESSION['fullNameOrder'];
+            $addressOrder = $_SESSION['addressOrder'];
+            $phoneNumberOrder = $_SESSION['phoneNumberOrder'];
+            $totalPriceOrder = $_SESSION['totalPriceOrder'];
+    
+            $order_code = $this->request->getGet('vnp_TxnRef');
+            $bankCode = $this->request->getGet('vnp_BankCode');
+            $bankTranNo = $this->request->getGet('vnp_BankTranNo');
+            $transactionNo = $this->request->getGet('vnp_TransactionNo');
+            $orderInfo = $this->request->getGet('vnp_OrderInfo');
+            $payDate = $this->request->getGet('vnp_PayDate');
+            $result = $this->service->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
+            if (!$result) {
+                return redirect('user/myOrder');
+            }
+            return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
+        }
 
         return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
     }
