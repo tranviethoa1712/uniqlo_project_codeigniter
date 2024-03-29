@@ -171,7 +171,6 @@ class CustomerModel extends Model
     public function checkLoginCusomer($submitLogin, $emaillogin)
     {
         if(isset($submitLogin)){
-            // die($emaillogin);
             $db = $this->db;
             $builder = $db->table('customers');
             $builder->select('*');
@@ -230,9 +229,8 @@ class CustomerModel extends Model
 
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
-        if (empty($fullname) && empty($address) && empty($phoneNumber) && empty($totalPrice)) {
+        if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice)) {
             $db = $this->db;
-
             // Prepare the Query
             $pQuery = $db->prepare(static function ($db) {
                 return $db->table('orders')->insert([
@@ -304,6 +302,7 @@ class CustomerModel extends Model
 
     public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
     {
+        if (!empty($fullName) && !empty($addressOrder) && !empty($phoneNumberOrder) && !empty($totalPriceOrder)) {
         $db = $this->db;
 
         // Prepare the Query
@@ -338,5 +337,8 @@ class CustomerModel extends Model
         $pQuery->close();
         
         $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder);
+        return true;
+        }
+        return false;
     }
 }

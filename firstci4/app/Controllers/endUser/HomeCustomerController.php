@@ -130,12 +130,6 @@ class HomeCustomerController extends BaseControllerUser
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
         $totalPrice = $this->request->getPost('totalPrice'); 
-        $order_code = $this->request->getPost('order_code');
-        $bank_code = $this->request->getPost('bank_code');
-        $bank_tran_no = $this->request->getPost('bank_tran_no');
-        $transaction_no = $this->request->getPost('transaction_no'); 
-        $content = $this->request->getPost('content');
-        $pay_date = $this->request->getPost('pay_date'); 
         if ($this->request->getPost('submitOrder')) {
             $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
             if (!$result) {
@@ -153,7 +147,7 @@ class HomeCustomerController extends BaseControllerUser
             $this->session->set($newdata);
             
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://localhost/user/myOrder";
+            $vnp_Returnurl = "http://localhost/user/orderSuccess";
             $vnp_TmnCode = "PYY55LE8"; //Mã website tại VNPAY 
             $vnp_HashSecret = "JEBPLUFFDQLMZCCGNKWFJXOBIHBISEST"; //Chuỗi bí mật
 
@@ -201,25 +195,26 @@ class HomeCustomerController extends BaseControllerUser
                 "vnp_ReturnUrl" => $vnp_Returnurl,
                 "vnp_TxnRef" => $vnp_TxnRef,
                 // "vnp_ExpireDate" => $vnp_ExpireDate,
-                "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
+                // "vnp_Bill_Mobile" => $vnp_Bill_Mobile,
                 // "vnp_Bill_Email" => $vnp_Bill_Email,
-                "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
-                "vnp_Bill_LastName" => $vnp_Bill_LastName,
-                "vnp_Bill_Address" => $vnp_Bill_Address,
+                // "vnp_Bill_FirstName" => $vnp_Bill_FirstName,
+                // "vnp_Bill_LastName" => $vnp_Bill_LastName,
+                // "vnp_Bill_Address" => $vnp_Bill_Address,
                 // "vnp_Bill_City" => $vnp_Bill_City,
                 // "vnp_Bill_Country" => $vnp_Bill_Country,
-                "vnp_Inv_Phone" => $vnp_Inv_Phone,
+                // "vnp_Inv_Phone" => $vnp_Inv_Phone,
                 // "vnp_Inv_Email" => $vnp_Inv_Email,
                 // "vnp_Inv_Customer" => $vnp_Inv_Customer,
-                "vnp_Inv_Address" => $vnp_Inv_Address,
+                // "vnp_Inv_Address" => $vnp_Inv_Address,
                 // "vnp_Inv_Company" => $vnp_Inv_Company,
                 // "vnp_Inv_Taxcode" => $vnp_Inv_Taxcode,
                 // "vnp_Inv_Type" => $vnp_Inv_Type
             );
-
+            
             if (isset($vnp_BankCode) && $vnp_BankCode != "") {
                 $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
+            
             // if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
             //     $inputData['vnp_Bill_State'] = $vnp_Bill_State;
             // }
@@ -246,8 +241,10 @@ class HomeCustomerController extends BaseControllerUser
             $returnData = array(
                 'code' => '00', 'message' => 'success', 'data' => $vnp_Url
             );
+            
             if ($this->request->getPost('vnpay')) {
                 header('Location: ' . $vnp_Url);
+                die();
             } else {
                 echo json_encode($returnData);
             }
@@ -275,7 +272,7 @@ class HomeCustomerController extends BaseControllerUser
             $orderInfo = $this->request->getGet('vnp_OrderInfo');
             $payDate = $this->request->getGet('vnp_PayDate');
             $result = $this->service->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
-            if (!$result) {
+            if ($result === false) {
                 return redirect('user/myOrder');
             }
             return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
