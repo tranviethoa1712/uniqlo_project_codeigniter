@@ -252,7 +252,8 @@ class ProductsAdminController extends BaseControllerAdmin
         $data = [
             'pageTitle' => 'Quản lý đơn hàng',
             'dashboard' => 'Cập nhật đơn hàng',
-            'order' => $dataOrders
+            'order' => $dataOrders,
+            'order_id' => $idUpdate
         ];
         return $this->viewAdmin('orders/tools/update', $data);
     }

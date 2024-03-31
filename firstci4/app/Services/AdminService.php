@@ -715,11 +715,11 @@ class AdminService extends BaseService{
                 'massages' => $validate->getErrors(),
             ];
         }
-        
+
         $dataSave = $requestData->getPost();
         
         try {
-            $this->adminModel->updateOrderModel($dataSave['fullname'], $dataSave['address'], $dataSave['phone_number'], $dataSave['total_price'], $dataSave['status'],);
+            $this->adminModel->updateOrderModel($dataSave['order_id'], $dataSave['fullname'] ,$dataSave['address'], $dataSave['phone_number'], $dataSave['status'],);
 
             return [ 
                 'status' => ResultUtils::STATUS_CODE_OK,
@@ -741,27 +741,22 @@ class AdminService extends BaseService{
         $rules = [
             'fullname' => 'required|max_length[200]',
             'address' => 'required',
-            'phone_number' => 'required|max_length[13]|min_length[11]',
-            'total_price' => 'required|max_length[50]',
+            'phone_number' => 'required|max_length[12]|min_length[9]',
             'status' => 'required|max_length[11]',
         ];
 
         $messages = [
             'fullname' => [
-                'required' => 'Không được để trống!',
-                'max_length' => 'Tối đa là {param} ký tự!',
+                'required' => 'Họ và tên không được để trống!',
+                'max_length' => 'Họ và tên tối đa là {param} ký tự!',
             ],
             'address' => [
-                'required' => 'Không được để trống!',
+                'required' => 'Địa chỉ không được để trống!',
             ],
             'phone_number' => [
-                'required' => 'Không được để trống!',
-                'max_length' => 'Tối đa là {param} ký tự!',
-                'min_length' => 'Tối thiểu là {param} ký tự!',
-            ],
-            'total_price' => [
-                'required' => 'Không được để trống!',
-                'max_length' => 'Tối đa là {param} ký tự!',
+                'required' => 'Số điện thoại không được để trống!',
+                'max_length' => 'Số điện thoại tối đa là {param} ký tự!',
+                'min_length' => 'Số điện thoại tối thiểu là {param} ký tự!',
             ],
             'status' => [
                 'required' => 'Không được để trống!',

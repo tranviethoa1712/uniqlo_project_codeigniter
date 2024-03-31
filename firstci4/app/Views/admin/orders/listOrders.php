@@ -35,13 +35,14 @@
           <td><?php echo $row['phone_number'] ?></td>
           <td><?php echo $row['total_price'] ?></td>
           <td><?php echo $row['status'] ?></td>
+          <td><?php echo $row['order_date'] ?></td>
           <?php
           $urlUpdate = base_url('admin/updateOrder');
           $urlDelete = base_url('admin/deleteOrder');
           $urlDetailOrders = base_url('admin/showOrderDetail');
           ?> 
-          <td><a href="<?php echo $urlUpdate . $row['order_id'] ?>">Sửa</a></td>
-          <td><a href="<?php echo $urlDelete . $row['order_id'] ?>">Xóa</a></td>
+          <td><a href="<?php echo $urlUpdate . '/' . $row['order_id'] ?>">Sửa</a></td>
+          <td><a href="<?php echo $urlDelete . '/' . $row['order_id'] ?>">Xóa</a></td>
           <td><a href="<?php echo $urlDetailOrders . $row['order_id'] ?>">Xem</a></td>
         </tr>
         <?php

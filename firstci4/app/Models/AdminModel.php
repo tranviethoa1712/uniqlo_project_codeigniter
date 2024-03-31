@@ -646,35 +646,29 @@ class AdminModel extends Model
      * 2. Check Info 
      */
     
-    public function updateOrderModel()
+    public function updateOrderModel($order_id, $fullname, $address, $phone_number, $status)
     {
-        if (isset($fullname) && isset($address) && isset($phone_number) && isset($total_price) && isset($status)) {
-            $db = $this->db;
-
-            // Prepare the Query
-            $pQuery = $db->prepare(static function ($db) {
-                return $db->table('orders')->update([
-                    'fullname'    => 'x',
-                    'address'   => 'y',
-                    'phone_number'   => 'z',
-                    'total_price'   => 'a',
-                    'status'   => 'b',
-                ]);
-            });
-
-            $order_id = $_GET['idOrder'];
-            $db->table('product_attribute')->where('order_id', $order_id);
-
-            // Run the Query
-            $pQuery->execute($fullname, $address, $phone_number, $total_price, $status);
-            // Close out the prepared statement
-            $pQuery->close();
+        if (isset($fullname) && isset($address) && isset($phone_number) && isset($status)) {
+            $sql = "UPDATE orders SET fullname = ?, address = ?, phone_number = ?, status = ? WHERE order_id = ?";
+            $this->db->query($sql, array($fullname, $address, $phone_number, $status, $order_id));
         }
     }
 
     public function deleteOrderModel($idUpdate)
     {
         $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('order_items')->delete([
+                'order_id'    => 'x',
+            ]);
+        });
+
+        // Run the Query
+        $pQuery->execute($idUpdate);
+        // Close out the prepared statement
+        $pQuery->close();
 
         // Prepare the Query
         $pQuery = $db->prepare(static function ($db) {

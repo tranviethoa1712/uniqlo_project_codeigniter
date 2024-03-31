@@ -5,26 +5,23 @@
     <table class="table table-bordered">
       <form method="post" action="<?= base_url('admin/doUpdateOrder') ?>" class="form-inline">
         <?= view('massages/massage') ?>
-        <?php foreach($data['order'] as $item) { ?>
+        <?php foreach($order as $item) { ?>
         <tr>
           <td>Họ và tên</td>
-          <td><input class="form-control" type="text" name="fullname" value="<?php echo $item['fullname'] ?>"></td>
+          <td><input class="form-control" type="text" name="fullname" value="<?= $item['fullname'] ?>"></td>
         </tr>
         <tr>
           <td>Số điện thoại</td>
-          <td><input class="form-control" type="text" name="address" value="<?php echo $item['address'] ?>"></td>
+          <td><input class="form-control" type="text" name="address" value="<?= $item['address'] ?>"></td>
         </tr>
         <tr>
           <td>Địa chỉ</td>
-          <td><input class="form-control" type="text" name="phone_number" value="<?php echo $item['phone_number'] ?>"></td>
-        </tr>
-        <tr>
-          <td>Tổng tiền</td>
-          <td><input class="form-control" type="text" name="total_price" value="<?php echo $item['total_price'] ?>"></td>
+          <td><input class="form-control" type="text" name="phone_number" value="<?= $item['phone_number'] ?>"></td>
         </tr>
         <tr>
           <td>Trạng thái</td>
-          <td><input class="form-control" type="text" name="status" value="<?php echo $item['status'] ?>"></td>
+          <td><input class="form-control" type="text" name="status" value="<?= $item['status'] ?>"></td>
+          <input hidden class="form-control" type="text" name="order_id" value="<?= $order_id ?>">
         </tr>
         <?php 
         }
