@@ -61,7 +61,8 @@ $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($
         $routes->get('updateOrder/(:num)', 'ProductsAdminController::updateOrder/$1');
         $routes->post('doUpdateOrder', 'ProductsAdminController::doUpdateOrder');
         $routes->get('deleteOrder/(:num)', 'ProductsAdminController::deleteOrder/$1');
-        $routes->get('showOrderDetail', 'ProductsAdminController::detailOrder');
+        $routes->get('showOrderDetail/(:num)', 'ProductsAdminController::showOrderDetail/$1');
+        $routes->get('UpdateOrderItemStatus/(:num)/(:num)', 'ProductsAdminController::UpdateOrderItemStatus/$1/$2');
  
         // Customer 
         $routes->get('userListManage', 'HomeAdminController::userList');
@@ -89,6 +90,8 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->post('doRegister', 'HomeCustomerController::doRegister');
 
         $routes->get('aboutAccount', 'HomeCustomerController::memberDetail');
+        $routes->get('purchaseOrder', 'HomeCustomerController::purchaseOrder');
+        $routes->get('detailPurchaseOrder', 'HomeCustomerController::detailPurchaseOrder');
 
         $routes->get('myCart', 'HomeCustomerController::cart');
         $routes->post('addToCart', 'HomeCustomerController::addToCart');

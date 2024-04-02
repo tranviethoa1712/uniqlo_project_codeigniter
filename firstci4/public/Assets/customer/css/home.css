@@ -358,6 +358,7 @@
 
 .contents-cards {
     padding: 40px 20px;
+    margin-top: 80px;
 }
 
 .contents-cards li:hover {
@@ -665,11 +666,7 @@
 
 /*special price*/
 
-.contents-cards {
-    margin-bottom: 20px;
-    padding: 50px 20px;
-    margin-top: 28px;
-}
+
 
 .spe-price__title {
     min-height: 36px;
@@ -680,7 +677,6 @@
     font-stretch: normal;
     font-style: normal;
     font-weight: 700;
-    margin-bottom: 20px;
 }
 
 
@@ -698,7 +694,6 @@
     font-stretch: normal;
     font-style: normal;
     font-weight: 700;
-    margin-top: 30px;
     margin-bottom: 20px;
 }
 
@@ -1037,10 +1032,6 @@ footer {
 
     .contents-intro__grid {
         font-size: 13px;
-    }
-
-    .contents-cards {
-        padding: 14px 0px;
     }
 
     .contents-cards__title {

@@ -375,17 +375,21 @@ class AdminModel extends Model
 
     public function getProductAttribute()
     {
+
         $db = $this->db;
         $query = $db->query('SELECT products.product_id, products.title, products.sku, 
         attributes.attribute_id, attributes.name, attributes.attribute_sku, 
         products.gender, product_attribute.id
-        FROM products, attributes, product_attribute
-        WHERE product_attribute.product_id = products.product_id
-        AND product_attribute.attribute_id = attributes.attribute_id');
+        FROM product_attribute
+        JOIN products
+        ON product_attribute.product_id = products.product_id
+        JOIN attributes
+        ON product_attribute.attribute_id = attributes.attribute_id');
 
         $result =  $query->getResultArray();
 
         return $result;
+       
     }
 
     public function getProductAttributeId($idPrdAtt)
@@ -706,18 +710,25 @@ class AdminModel extends Model
         return $query;
     }
 
-    public function getDetailOrder($idUpdate)
+    public function getDetailOrder($id_order)
     {
         $db = $this->db;
         $query = $db->query("SELECT order_items.order_item_id, order_items.order_id, order_items.product_id,
-        order_items.price, order_items.quantity, order_items.total_money,
+        order_items.price, order_items.quantity, order_items.total_money, order_items.status,
         products.title
-        FROM order_items, products 
-        WHERE order_items.order_id = '$idUpdate'
-        AND order_items.product_id = products.product_id");
+        FROM order_items 
+        JOIN products
+        ON order_items.product_id = products.product_id
+        WHERE order_items.order_id = '$id_order'");
 
         $result = $query->getResultArray();
         return $result;
+    }
+
+    public function UpdateOrderItemStatus($order_item_id, $statusUpdate) 
+    {
+        $sql = "UPDATE order_items SET status = ? WHERE order_item_id = ?";
+        $this->db->query($sql, array($statusUpdate, $order_item_id));
     }
 
     /**

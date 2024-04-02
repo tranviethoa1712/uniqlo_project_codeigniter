@@ -20,13 +20,13 @@ class UserService extends BaseService{
         $this->customerModel->protect(false);  
     } 
  
-    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
+    public function submitOrder($fullname, $address, $phoneNumber, $size,  $color, $totalPrice)
     {
-        return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
+        return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $size,  $color, $totalPrice);
     }
     
-    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder ,$order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate) {
-        return $this->customerModel->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder,  $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate) {
+        return $this->customerModel->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
     }
     
     public function getProductsId($idsanpham) 
@@ -72,6 +72,16 @@ class UserService extends BaseService{
     public function addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham) 
     {
         return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham);
+    } 
+
+    public function getAllOrder() 
+    {
+        return $this->customerModel->getAllOrder();
+    } 
+
+    public function getDetailOrder($orderItemId) 
+    {
+        return $this->customerModel->getDetailOrder($orderItemId);
     } 
 
     public function deleteItemCart($id) {

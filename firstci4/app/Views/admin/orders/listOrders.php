@@ -12,7 +12,6 @@
           <th>Địa chỉ</th>
           <th>Số điện thoại</th>
           <th>Tổng tiền</th>
-          <th>Trạng thái</th>
           <th>Thời gian đặt hàng</th>
           <th width="6%">Sửa</th>
           <th width="6%">Xóa</th>
@@ -34,7 +33,6 @@
           <td><?php echo $row['address'] ?></td>
           <td><?php echo $row['phone_number'] ?></td>
           <td><?php echo $row['total_price'] ?></td>
-          <td><?php echo $row['status'] ?></td>
           <td><?php echo $row['order_date'] ?></td>
           <?php
           $urlUpdate = base_url('admin/updateOrder');
@@ -43,7 +41,7 @@
           ?> 
           <td><a href="<?php echo $urlUpdate . '/' . $row['order_id'] ?>">Sửa</a></td>
           <td><a href="<?php echo $urlDelete . '/' . $row['order_id'] ?>">Xóa</a></td>
-          <td><a href="<?php echo $urlDetailOrders . $row['order_id'] ?>">Xem</a></td>
+          <td><a href="<?php echo $urlDetailOrders . '/' . $row['order_id'] ?>">Xem</a></td>
         </tr>
         <?php
           endforeach;

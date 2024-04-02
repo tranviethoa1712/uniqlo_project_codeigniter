@@ -227,7 +227,7 @@ class CustomerModel extends Model
         }
     }
 
-    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
+    public function submitOrder($fullname, $address, $phoneNumber, $size,  $color, $totalPrice)
     {
         if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice)) {
             $db = $this->db;
@@ -271,6 +271,8 @@ class CustomerModel extends Model
                         'order_id'    => 'x',
                         'product_id'    => 'y',
                         'price'    => 'z',
+                        'size'    => 'p',
+                        'color'    => 't',
                         'quantity'    => 'a',
                         'total_money'    => 'b',
                     ]);
@@ -288,7 +290,7 @@ class CustomerModel extends Model
                 $total_momney = $each['price'] * $each['quantity'];
 
                 // Run the Query
-                $pQuery->execute($order_id, $product_id, $price, $quantity, $total_momney);
+                $pQuery->execute($order_id, $product_id, $price, $size, $color, $quantity, $total_momney);
                 // Close out the prepared statement
                 $pQuery->close();
                 unset($_SESSION['cart']);
@@ -300,7 +302,7 @@ class CustomerModel extends Model
         }
     }
 
-    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
     {
         if (!empty($fullName) && !empty($addressOrder) && !empty($phoneNumberOrder) && !empty($totalPriceOrder)) {
         $db = $this->db;
@@ -336,9 +338,61 @@ class CustomerModel extends Model
         // Close out the prepared statement
         $pQuery->close();
         
-        $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder);
+        $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder);
         return true;
         }
         return false;
+    }
+
+    public function getAllOrder()
+    {
+        $db = $this->db;
+        $customerId = '';
+        foreach ($_SESSION['customer_login'] as $key) {
+            $customerId = $key['customer_id'];
+        }
+
+        $builder = $db->table('orders');
+        $builder->select('*');
+        $builder->where('customer_id', $customerId);
+        $orders = $builder->get()->getResultArray();
+
+        $eachOrder = [];
+        $i = 0;
+        foreach($orders as $order) {
+            $i++;
+            $orderId = $order['order_id'];
+            $query = $db->query("SELECT order_items.order_item_id, order_items.product_id,
+            order_items.quantity, order_items.size, order_items.color, order_items.total_money,
+            products.title, products.thumbnail, orders.total_price
+            FROM order_items 
+            JOIN orders
+            ON order_items.order_id = orders.order_id
+            JOIN products
+            ON order_items.product_id = products.product_id
+            WHERE order_items.order_id = $orderId
+            ");
+
+            $result = $query->getResultArray();
+            $eachOrder[$i] = $result;
+        }
+
+        return $eachOrder;
+    }
+
+    public function getDetailOrder($order_item_id)
+    {
+        $db = $this->db;
+        $query = $db->query("SELECT order_items.quantity, order_items.size, order_items.color, order_items.total_money, order_items.status,
+        products.title, products.thumbnail, orders.fullname, orders.address, orders.phone_number
+        FROM order_items 
+        JOIN products
+        ON order_items.product_id = products.product_id
+        JOIN orders
+        ON order_items.order_id = orders.order_id
+        WHERE order_items.order_item_id = '$order_item_id'");
+
+        $result = $query->getResultArray();
+        return $result;
     }
 }

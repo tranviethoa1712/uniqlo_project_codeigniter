@@ -245,6 +245,16 @@ class ProductsAdminController extends BaseControllerAdmin
         ];
         return $this->viewAdmin('orders/listOrders', $data);
     }
+    
+    public function showOrderDetail($order_id)
+    {
+        $data = [
+            'pageTitle' => 'Quản lý đơn hàng',
+            'dashboard' => 'Chi tiết đơn hàng',
+            'detailOrder' => $this->service->getDetailOrder($order_id),
+        ];
+        return $this->viewAdmin('orders/detailOrder', $data);
+    }
 
     public function updateOrder($idUpdate)
     {
@@ -256,6 +266,12 @@ class ProductsAdminController extends BaseControllerAdmin
             'order_id' => $idUpdate
         ];
         return $this->viewAdmin('orders/tools/update', $data);
+    }
+
+    public function UpdateOrderItemStatus($order_item_id, $statusUpdate)
+    {
+        $this->service->UpdateOrderItemStatus($order_item_id, $statusUpdate);
+        return redirect()->back();
     }
     
     public function doUpdateOrder() 

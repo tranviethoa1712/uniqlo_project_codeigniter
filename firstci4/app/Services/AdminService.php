@@ -704,6 +704,10 @@ class AdminService extends BaseService{
         return $this->adminModel->getOrder($idUpdate);
     }
 
+    public function getDetailOrder($id_order) {
+        return $this->adminModel->getDetailOrder($id_order);
+    }
+
     public function updateOrderModel($requestData) {
         
         $validate = $this->validateUpdateOrder($requestData);
@@ -777,10 +781,10 @@ class AdminService extends BaseService{
     {
         return $this->adminModel->deleteOrderModel($idUpdate);
     }
-        
-    public function getDetailOrder($idUpdate)
+  
+    public function UpdateOrderItemStatus($order_item_id, $statusUpdate) 
     {
-        return $this->adminModel->getDetailOrder($idUpdate);
+        return $this->adminModel->UpdateOrderItemStatus($order_item_id, $statusUpdate);
     }
        
     /**

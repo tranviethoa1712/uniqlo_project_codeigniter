@@ -68,11 +68,70 @@ class HomeCustomerController extends BaseControllerUser
     public function memberDetail()
     {
         $dataCategories = $this->service->getCategories();
-        $data = [
-            'categories' => $dataCategories,
-        ];
+        if($this->request->getGet('currentMenu')) {
+            $data = [
+                'categories' => $dataCategories,
+                'currentMenu' => $this->request->getGet('currentMenu'),
+            ];
+        } else {
+            $data = [
+                'categories' => $dataCategories,
+                'currentMenu' => '',
+            ];
+        }
+        
+        if(isset($_SESSION['customer_login'])) {
+            return $this->viewCustomer('member-detail', 'baseMemberDetail', $data);
+        } else {
+            return redirect('user/userLogin');
+        }
+    }
 
-        return $this->viewCustomer('member-detail', 'baseMemberDetail', $data);
+    public function purchaseOrder()
+    {
+        if(isset($_SESSION['customer_login'])) {
+            $dataCategories = $this->service->getCategories();
+            $dataOrders = $this->service->getAllOrder();
+            // die(var_dump($dataOrders));
+            if($this->request->getGet('currentMenu')) {
+                $data = [
+                    'categories' => $dataCategories,
+                    'currentMenu' => $this->request->getGet('currentMenu'),
+                    'orders' => $dataOrders,
+                ];
+            } else {
+                $data = [
+                    'categories' => $dataCategories,
+                    'currentMenu' => '',
+                    'orders' => $dataOrders,
+                ];
+            }
+            return $this->viewCustomer('purchase_order', 'basePurchaseOrder', $data);
+        } else {
+            return redirect('user/userLogin');
+        }
+    }
+
+    public function detailPurchaseOrder()
+    {
+        $orderItemId = $this->request->getGet('orderItemId');
+        $dataCategories = $this->service->getCategories();
+        $dataOrderitem = $this->service->getDetailOrder($orderItemId);
+        if($this->request->getGet('currentMenu')) {
+            $data = [
+                'categories' => $dataCategories,
+                'orderItem' => $dataOrderitem,
+                'currentMenu' => $this->request->getGet('currentMenu'),
+            ];
+        } else {
+            $data = [
+                'categories' => $dataCategories,
+                'orderItem' => $dataOrderitem,
+                'currentMenu' => '',
+            ];
+        }
+
+        return $this->viewCustomer('detail_purchase_order', 'basePurchaseOrder', $data);
     }
 
     public function cart()
@@ -129,9 +188,11 @@ class HomeCustomerController extends BaseControllerUser
         $fullname = $this->request->getPost('fullname');
         $address = $this->request->getPost('address');
         $phoneNumber = $this->request->getPost('phoneNumber');
+        $size = $this->request->getPost('size'); 
+        $color = $this->request->getPost('color');
         $totalPrice = $this->request->getPost('totalPrice'); 
         if ($this->request->getPost('submitOrder')) {
-            $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
+            $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $size,  $color, $totalPrice);
             if (!$result) {
                 return redirect('user/myOrder');
             }
@@ -263,6 +324,8 @@ class HomeCustomerController extends BaseControllerUser
             $fullName = $_SESSION['fullNameOrder'];
             $addressOrder = $_SESSION['addressOrder'];
             $phoneNumberOrder = $_SESSION['phoneNumberOrder'];
+            $size = $this->request->getPost('size'); 
+            $color = $this->request->getPost('color');    
             $totalPriceOrder = $_SESSION['totalPriceOrder'];
     
             $order_code = $this->request->getGet('vnp_TxnRef');
@@ -271,7 +334,7 @@ class HomeCustomerController extends BaseControllerUser
             $transactionNo = $this->request->getGet('vnp_TransactionNo');
             $orderInfo = $this->request->getGet('vnp_OrderInfo');
             $payDate = $this->request->getGet('vnp_PayDate');
-            $result = $this->service->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
+            $result = $this->service->submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate);
             if ($result === false) {
                 return redirect('user/myOrder');
             }

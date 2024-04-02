@@ -713,14 +713,14 @@
                           <div class="product-image">
                             <?php
                             $dataThumbnail = json_decode($row['thumbnail']);
-                            $i = 0;
+                            $j = 0;
                             foreach ((array)$dataThumbnail as $key) :
-                              if($i > 0) {
+                              if($j > 0) {
                                 break;
                               }
                               $urlImage = base_url('assets/uploads/');
                               echo "<img src='" . $urlImage  . $key . "' class='thumb-img' alt='product'>";
-                              $i++;
+                              $j++;
                             endforeach;
 
                             ?>

@@ -696,8 +696,8 @@
         <span>Tư cách thành viên</span>
       </div>
       <ul class="links-wrapper">
-      <li class="links-item <?= $currentMenu == 'profile' || $currentMenu == '' ? ' selected' : '' ?>"><a href="<?= base_url('user/aboutAccount') . '?currentMenu=profile' ?>">Hồ sơ</a></li>
-        <li class="links-item <?= $currentMenu == 'purchase' ? 'selected' : '' ?>"><a href="<?= base_url('user/purchaseOrder') . '?currentMenu=purchase' ?>">Lịch sử đơn hàng</a></li>
+        <li class="links-item <?= $currentMenu == 'profile' || $currentMenu == '' ? ' selected' : '' ?>"><a href="<?= base_url('user/aboutAccount') . '?currentMenu=profile' ?>">Hồ sơ</a></li>
+        <li class="links-item <?= $currentMenu == 'purchase' ? ' selected' : '' ?>"><a href="<?= base_url('user/purchaseOrder') . '?currentMenu=purchase' ?>">Lịch sử đơn hàng</a></li>
       </ul>
     </div>
 
@@ -705,69 +705,66 @@
       <div class="box-inner">
         <div>
           <div class="title-top">
-            <span>Hồ sơ</span>
+            <span>Đơn hàng</span>
           </div>
-          <div class="info-customer__box">
-            <div class="info-customer__box-left">
-              <div class="title">Địa chỉ email</div>
-              <div class="detail">
-                <?php
-                if (!empty($_SESSION['customer_login'])) {
-                  $row = $_SESSION['customer_login'];
-                  foreach ($row as $key) {
-                    echo $key['email'];
-                  }
-                }
-                ?>
-              </div>
-            </div>
-            <div class="info-customer__box-right">
-              <div class="title">Sinh nhật</div>
-              <div class="detail mb20">
-                <?php
-                if (!empty($_SESSION['customer_login'])) {
-                  $row = $_SESSION['customer_login'];
-                  foreach ($row as $key) {
-                    echo $key['dob'];
-                  }
-                }
-                ?>
-              </div>
-              <div class="title">Giới tính</div>
-              <div class="detail">
-                <?php
-                if (!empty($_SESSION['customer_login'])) {
-                  $row = $_SESSION['customer_login'];
-                  foreach ($row as $key) {
-                    if ($key['gender'] == "female") {
-                      echo "Nam";
-                    } else {
-                      echo "Nữ";
-                    }
-                  }
-                }
-                ?>
-              </div>
-            </div>
-          </div>
-          <div class="horizonal-full"></div>
-          <div class="info-customer__code">
-            <div class="title">
-              <span>Mã vạch thành viên</span>
-            </div>
-            <div class="barcode">
-              <?php
-                $urlImage = base_url('assets/uploads/');
-              ?>
-              <img src="<?= $urlImage ?>qr_code.jpg" alt="sku USer">
-            </div>
-            <div class="description">
-              Vui lòng đưa mã vạch trên thẻ thành viên này cho nhân viên thu ngân khi bạn thanh toán cho sản phẩm đã mua.
-            </div>
-            <a href="<?= base_url('user/logout') ?>"><button class="btn">Đăng xuất</button></a>
+          <div class="purchased-order">
+                <ul class="purchase-order_menu">
+                  <li class="purchase-order_menu-item"><a href="#">Tất cả</a></li>
+                  <li class="purchase-order_menu-item"><a href="#">Chờ xác nhận</a></li>
+                  <li class="purchase-order_menu-item"><a href="#">Vận chuyển</a></li>
+                  <li class="purchase-order_menu-item"><a href="#">Đang giao hàng</a></li>
+                  <li class="purchase-order_menu-item"><a href="#">Hoàn thành</a></li>
+                </ul>
+                <div class="products">
+                  <?php foreach($orders as $order => $item) : ?>
+                    <h1>Đơn hàng: <?= ' ' . $order ?></h1>
+                  <?php foreach($item as $column) : ?>
+                  <a href="<?= base_url('user/detailPurchaseOrder?orderItemId=') . $column['order_item_id'] ?>">
+                    <div class="product-item">
+                      <div class="product-item_detail">
+                          <div class="product-item_thumbnail">
+                            <?php
+                            $dataThumbnail = json_decode($column['thumbnail']);
+                            $f = 0;
+                            foreach ((array)$dataThumbnail as $key) :
+                              if($f > 0) {
+                                break;
+                              }
+                              $urlImage = base_url('assets/uploads/');
+                              echo "<img src='" . $urlImage  . $key . "' alt='product'>";
+                              $f++;
+                            endforeach;
+                            ?>
+                          </div>
+                          <div class="product-item_info">
+                            <div class="product-item_title">
+                              <?= $column['title'] ?>
+                            </div>
+                            <div class="product-item_size">
+                            <?= strtoupper($column['size']) ?>
+                            </div>
+                            <div class="product-item_color">
+                            <?= strtoupper($column['color']) ?>
+                            </div>
+                            <div class="product-item_quantity">
+                            <?= 'x' . $column['quantity'] ?>
+                            </div>
+                          </div>
+                          <div class="product-item_price">
+                          <?= ' ' . number_format($column['total_money'], 0, ',', '.') . ' VND' ?>
+                          </div>
+                      </div>
+                      <div class="product-item_options"></div>
+                    </div>
+                  </a>
+                  <?php endforeach; ?>
+                  <div class="endOrder">
+                    <div class="totalPrice">Tổng giá: <?= ' ' . number_format($column['total_price'], 0, ',', '.') . ' VND' ?></div>
+                  </div>
+                  <?php endforeach; ?>
+                </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

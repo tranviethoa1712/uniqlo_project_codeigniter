@@ -1,0 +1,117 @@
+
+
+.purchased-order .info-user{
+    margin-top: 50px;
+    padding-left: 5px;
+    margin-bottom: 50px;
+}
+
+.purchased-order .info-user .title{
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.purchased-order .info-user .info-user_fullname{
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.purchased-order .info-user .info-user_phonenumber{
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: gray;
+}
+
+.purchased-order .info-user .info-user_address{
+    font-size: 18px;
+    color: gray;
+}
+
+.purchased-order .order-status .title{
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.purchased-order .order-status .status{
+    font-size: 20px;
+    color: rgb(10, 140, 97);
+}
+
+
+.purchase-order_menu {
+    display: flex;
+    justify-content: space-around;
+    border: 1px solid gray;
+}
+
+.purchase-order_menu .purchase-order_menu-item{
+    text-align: center;
+    padding: 20px;
+    font-weight: 600;
+    border-bottom: 4px solid white;
+    cursor: pointer;
+}
+
+.purchase-order_menu .purchase-order_menu-item:hover{
+    border-bottom: 4px solid rgb(215, 92, 92);
+}
+
+.purchased-order .products {
+    margin-top: 5px;
+}
+
+.purchased-order .products .product-item{
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    margin-top: 5px;
+    background: rgb(239, 239, 231);
+}
+
+.purchased-order .products .product-item .product-item_detail{
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_thumbnail{
+    width: 13%;
+    height: 100%;
+    padding: 1%;
+}
+
+.purchased-order .products .product-item .product-item_thumbnail img{
+    width: 100%;
+    height: 10vw;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_info{
+    width: 70%;
+    padding: 2%;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_price{
+    width: 17%;
+    padding: 2%;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_info .product-item_title {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_info .product-item_size {
+    color: gray;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_info .product-item_color {
+    padding-top: 8px;
+    color: gray;
+}
+
+.purchased-order .products .product-item .product-item_detail .product-item_info .product-item_quantity {
+    padding-top: 18px;
+}
+
