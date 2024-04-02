@@ -31,13 +31,6 @@ class LoginAdminController extends BaseControllerAdmin
         return view($this->pathViewLayout.'headerLogin', $data)
         . view($this->pathView . 'manager/login')
         . view($this->pathViewLayout.'footer');
-
-    }
-
-    public function login() 
-    {
-        $data = [''];
-        $data['pageTitle'] = 'Đăng nhập quản trị'; // Capitalize the first letter        
     }
     
     public function doLogin() 

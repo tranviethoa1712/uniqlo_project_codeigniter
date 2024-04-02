@@ -10,21 +10,24 @@ $routes->get('/', 'Home::index');
 $routes->get('errors/404', function () {
     return view('errors/html/error_404');
 }); 
-
+$routes->setDefaultNamespace('App\Controllers\Admin');
 $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($routes) {
     
     // Login
     $routes->get('login', 'LoginAdminController::index');
     $routes->post('login', 'LoginAdminController::doLogin'); 
 
-    // $routes->group('admin', ['filter' => 'adminfilter'] ,function($routes){
-    $routes->group('admin',function($routes){
+    $routes->group('admin', ['filter' => 'adminfilter'] ,function($routes){
+    // $routes->group('admin' , function($routes){
         // Home
         $routes->get('home', 'HomeAdminController::index');
-        $routes->get('logout', 'LoginAdminController::logout');
+        // die("DIE");
 
+        $routes->get('logout', 'LoginAdminController::logout');
+        
         // Category
         $routes->get('addCategoryView', 'CategoriesAdminController::add');
+        
         $routes->post('doAddCategory', 'CategoriesAdminController::doAddCategory');
         $routes->get('updateCategory/(:num)', 'CategoriesAdminController::update/$1');
         $routes->post('doUpdateCategory', 'CategoriesAdminController::doUpdateCategory');
@@ -75,6 +78,7 @@ $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($
     });
 });
 
+$routes->setDefaultNamespace('App\Controllers\Enduser');
 $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function ($routes) {
     $routes->group('user', function($routes){
         $routes->get('categoryPage', 'CategoriesCustomerController::category');
