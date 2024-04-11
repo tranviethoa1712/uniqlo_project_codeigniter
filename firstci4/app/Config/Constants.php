@@ -92,3 +92,14 @@ define('EVENT_PRIORITY_NORMAL', 100);
  * @deprecated Use \CodeIgniter\Events\Events::PRIORITY_HIGH instead.
  */
 define('EVENT_PRIORITY_HIGH', 10);
+
+// VNPAY
+define('VNPAY_URL', 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html');
+define('VNPAY_RETURN_URL', 'http://localhost/user/orderSuccess');
+define('VNPAY_TMNCODE', 'PYY55LE8');
+define('VNPAY_HASH_SECRET', 'JEBPLUFFDQLMZCCGNKWFJXOBIHBISEST');
+define('VNPAY_ORDER_INFO', 'Noi dung thanh toan');
+define('VNPAY_ORDER_TYPE', 'billpayment');
+define('VNPAY_LOCALE', 'vn');
+define('VNPAY_BANK_CODE', 'NCB');
+define('VNPAY_IP_ADDR', $_SERVER['REMOTE_ADDR']);

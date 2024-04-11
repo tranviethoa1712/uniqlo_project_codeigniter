@@ -769,6 +769,10 @@
                       ?>
                     </div>
                   </div>
+                  <div class="method_payment">
+                    <p class="text">Phương thức thanh toán:</p>
+                    <span><?= ' ' . $checkPayMethod ?></span>
+                  </div>
                   <?php endforeach; ?>
           </div>
         </div>

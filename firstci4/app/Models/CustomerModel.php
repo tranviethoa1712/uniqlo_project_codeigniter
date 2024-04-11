@@ -227,7 +227,68 @@ class CustomerModel extends Model
         }
     }
 
-    public function submitOrder($fullname, $address, $phoneNumber, $size,  $color, $totalPrice)
+    public function submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef)
+    {
+        if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice) && !empty($vnpTxnRef)) {
+            $db = $this->db;
+            // Prepare the Query
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('order_transaction')->insert([
+                    'customer_id'    => 't',
+                    'order_code'    => 'x',
+                    'fullname'    => 'y',
+                    'address'    => 'z',
+                    'phone_number'    => 'a',
+                    'total_price'    => 'b',
+                ]);
+            });
+
+            foreach ($_SESSION['customer_login'] as $key) {
+                $customerId = $key['customer_id'];
+            }
+
+            // Run the Query
+            $pQuery->execute($customerId, $vnpTxnRef ,$fullname, $address, $phoneNumber, $totalPrice);
+            // Close out the prepared statement
+            $pQuery->close();
+            
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateOrderTransactionStatus($orde_code, $status)
+    {
+        $db = $this->db;
+
+        // Prepare the Query
+        $pQuery = $db->prepare(static function ($db) {
+            return $db->table('order_transaction')->update([
+                'status'    => 'x',
+            ]);
+        });
+
+        $db->table('order_transaction')->where('order_code', $orde_code);
+
+        // Run the Query
+        $pQuery->execute($status);
+        // Close out the prepared statement
+        $pQuery->close();
+    }
+
+    public function getOrderTransaction($order_code)
+    {
+        $db = $this->db;
+        $builder = $db->table('order_transaction');
+        $builder->select('*');
+        $builder->where('order_code', $order_code);
+        $result = $builder->get()->getResultArray();
+
+        return $result;
+    }
+
+    public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
         if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice)) {
             $db = $this->db;
@@ -285,6 +346,8 @@ class CustomerModel extends Model
 
                 $order_id = $id_order;
                 $product_id = $id;
+                $size = $each['size'];
+                $color = $each['color'];
                 $price = $each['price'];
                 $quantity = $each['quantity'];
                 $total_momney = $each['price'] * $each['quantity'];
@@ -295,51 +358,50 @@ class CustomerModel extends Model
                 $pQuery->close();
                 unset($_SESSION['cart']);
             }
-
             return true;
         } else {
             return false;
         }
     }
 
-    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
     {
-        if (!empty($fullName) && !empty($addressOrder) && !empty($phoneNumberOrder) && !empty($totalPriceOrder)) {
-        $db = $this->db;
+        if (!empty($order_code) && !empty($bankCode) && !empty($bankTranNo) && !empty($transactionNo) && !empty($orderInfo) && !empty($payDate)) {
+            $db = $this->db;
 
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('online_payment')->insert([
-                'customer_id'    => 'x',
-                'order_id'    => 'y',
-                'order_code'    => 'z',
-                'bank_code'    => 'a',
-                'bank_tran_no'    => 'b',
-                'transaction_no'    => 'c',
-                'content'    => 'e',
-                'amount'    => 'f',
-                'pay_date'    => 'g',
-            ]);
-        });
+            $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder);
 
-        $row = $_SESSION['customer_login'];
-        foreach ($row as $key) {
-            $customerId = $key['customer_id'];
-        }
+            // Insert online_paymnet
+            $pQuery = $db->prepare(static function ($db) {
+                return $db->table('online_payment')->insert([
+                    'customer_id'    => 'x',
+                    'order_id'    => 'y',
+                    'order_code'    => 'z',
+                    'bank_code'    => 'a',
+                    'bank_tran_no'    => 'b',
+                    'transaction_no'    => 'c',
+                    'content'    => 'e',
+                    'amount'    => 'f',
+                    'pay_date'    => 'g',
+                ]);
+            });
 
-        $sqlOrderId = $db->query("SELECT * FROM orders WHERE customer_id = '$customerId' ORDER BY order_id DESC LIMIT 1");
+            $row = $_SESSION['customer_login'];
+            foreach ($row as $key) {
+                $customerId = $key['customer_id'];
+            }
 
-        foreach ($sqlOrderId->getResultArray() as $row) {
-            $id_order = $row['order_id'];
-        }
+            $sqlOrderId = $db->query("SELECT * FROM orders WHERE customer_id = '$customerId' ORDER BY order_id DESC LIMIT 1");
 
-        // Run the Query
-        $pQuery->execute($customerId, $id_order, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $totalPriceOrder, $payDate);
-        // Close out the prepared statement
-        $pQuery->close();
-        
-        $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $size, $color, $totalPriceOrder);
-        return true;
+            foreach ($sqlOrderId->getResultArray() as $row) {
+                $id_order = $row['order_id'];
+            }
+
+            // Run the Query
+            $pQuery->execute($customerId, $id_order, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $totalPriceOrder, $payDate);
+            // Close out the prepared statement
+            $pQuery->close();
+            return true;
         }
         return false;
     }
@@ -362,7 +424,7 @@ class CustomerModel extends Model
         foreach($orders as $order) {
             $i++;
             $orderId = $order['order_id'];
-            $query = $db->query("SELECT order_items.order_item_id, order_items.product_id,
+            $query = $db->query("SELECT order_items.order_item_id, order_items.order_id, order_items.product_id,
             order_items.quantity, order_items.size, order_items.color, order_items.total_money,
             products.title, products.thumbnail, orders.total_price
             FROM order_items 
@@ -376,7 +438,42 @@ class CustomerModel extends Model
             $result = $query->getResultArray();
             $eachOrder[$i] = $result;
         }
+        return $eachOrder;
+    }
 
+    public function getStatusOderData($status)
+    {
+        $db = $this->db;
+        $customerId = '';
+        foreach ($_SESSION['customer_login'] as $key) {
+            $customerId = $key['customer_id'];
+        }
+        
+        $builder = $db->table('orders');
+        $builder->select('*');
+        $builder->where('customer_id', $customerId);
+        $orders = $builder->get()->getResultArray();
+
+        $eachOrder = [];
+        $i = 0;
+        foreach($orders as $order) {
+            $i++;
+            $orderId = $order['order_id'];
+            $query = $db->query("SELECT order_items.order_item_id, order_items.order_id, order_items.product_id,
+            order_items.quantity, order_items.size, order_items.color, order_items.total_money,
+            products.title, products.thumbnail, orders.total_price
+            FROM order_items 
+            JOIN orders
+            ON order_items.order_id = orders.order_id
+            JOIN products
+            ON order_items.product_id = products.product_id
+            WHERE order_items.order_id = $orderId
+            AND order_items.status = $status
+            ");
+
+            $result = $query->getResultArray();
+            $eachOrder[$i] = $result;
+        }
         return $eachOrder;
     }
 
@@ -395,4 +492,17 @@ class CustomerModel extends Model
         $result = $query->getResultArray();
         return $result;
     }
+
+    public function checkPayMethod($order_id) {
+        $db = $this->db;
+        $builder = $db->table('online_payment');
+        $builder->select('*');
+        $builder->where('order_id', $order_id);
+        $result = $builder->countAllResults();
+        if($result > 0) {
+            return "Thanh Toán bằng VNPAY";
+        } else {
+            return "Thanh toán khi nhận hàng";
+        }
+    } 
 }

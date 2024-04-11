@@ -18,10 +18,8 @@ $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($
     $routes->post('login', 'LoginAdminController::doLogin'); 
 
     $routes->group('admin', ['filter' => 'adminfilter'] ,function($routes){
-    // $routes->group('admin' , function($routes){
         // Home
         $routes->get('home', 'HomeAdminController::index');
-        // die("DIE");
 
         $routes->get('logout', 'LoginAdminController::logout');
         
@@ -83,7 +81,6 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
     $routes->group('user', function($routes){
         $routes->get('categoryPage', 'CategoriesCustomerController::category');
         // $routes->post('admin/addCategoryView', 'CategoriesAdminController::add');
-    
         $routes->get('homePage', 'HomeCustomerController::home');
         $routes->get('userLogin', 'LoginCustomerController::login');
         $routes->post('doLogin', 'LoginCustomerController::doLogin');
@@ -94,16 +91,18 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->post('doRegister', 'HomeCustomerController::doRegister');
 
         $routes->get('aboutAccount', 'HomeCustomerController::memberDetail');
-        $routes->get('purchaseOrder', 'HomeCustomerController::purchaseOrder');
-        $routes->get('detailPurchaseOrder', 'HomeCustomerController::detailPurchaseOrder');
 
-        $routes->get('myCart', 'HomeCustomerController::cart');
-        $routes->post('addToCart', 'HomeCustomerController::addToCart');
-        $routes->post('deleteItemCart', 'HomeCustomerController::deleteItemCart');
-        $routes->post('updateQuantityItemCart', 'HomeCustomerController::updateQuantityItemCart');
+        $routes->get('purchaseOrder', 'OrderCustomerController::purchaseOrder');
+        $routes->post('getStatusChecked', 'OrderCustomerController::getStatusChecked');
+        $routes->get('detailPurchaseOrder', 'OrderCustomerController::detailPurchaseOrder');
 
-        $routes->get('myOrder', 'HomeCustomerController::order');
-        $routes->post('doOrder', 'HomeCustomerController::doOrder');
+        $routes->get('myCart', 'OrderCustomerController::cart');
+        $routes->post('addToCart', 'OrderCustomerController::addToCart');
+        $routes->post('deleteItemCart', 'OrderCustomerController::deleteItemCart');
+        $routes->post('updateQuantityItemCart', 'OrderCustomerController::updateQuantityItemCart');
+
+        $routes->get('myOrder', 'OrderCustomerController::order');
+        $routes->post('doOrder', 'OrderCustomerController::doOrder');
     
         $routes->get('listProducts', 'ProductCustomerController::listProduct');
         $routes->get('detailProduct', 'ProductCustomerController::detailProduct');

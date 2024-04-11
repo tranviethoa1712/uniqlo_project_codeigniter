@@ -726,8 +726,6 @@
               <input type="text" id="phoneNumber" class="input" name="phoneNumber" required>
 
               <!-- <label for="totalPrice">Tổng tiền</label> -->
-              <input style="visibility: hidden;" type="text" class="input" name="size" value="<?= $row['size']; ?>">
-              <input style="visibility: hidden;" type="text" class="input" name="color" value="<?= $row['color']; ?>">
               <input style="visibility: hidden;" type="text" class="input" name="totalPrice" value="<?= $total; ?>">
             </div>
             <!-- <input type="text" name=""> -->
@@ -794,9 +792,7 @@
                           echo "<img src='" . $urlImage  . $key . "' class='thumb-img' alt='product'>";
                           $i++;
                         endforeach;
-
                         ?>
-
                         <span class="item-value"><?= $row['quantity']; ?></span>
                       </li>
                     <?php
