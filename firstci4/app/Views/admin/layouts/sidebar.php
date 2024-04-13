@@ -34,7 +34,7 @@
                with font-awesome or any other icon font library -->
 
           <li class="nav-item">
-            <a href="index.php?controller=AdminController&action=adminHome" class="nav-link active">
+            <a href="<?= base_url('admin/home') ?>" class="nav-link active">
               <i class="nav-icon far fa-tachometer-alt"></i>
               <p>
                 Tổng quan
@@ -87,7 +87,8 @@
                   <p>Danh sách thuộc tính</p>
                 </a>
               </li>
-              <li class="nav-item">
+*
+              <li class="nav-item">                                
                 <a href="<?= base_url('admin/addPalink') ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p> Thêm thuộc tính sản phẩm</p>

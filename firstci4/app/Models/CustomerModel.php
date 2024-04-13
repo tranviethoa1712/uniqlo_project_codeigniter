@@ -170,13 +170,13 @@ class CustomerModel extends Model
 
     public function checkLoginCusomer($submitLogin, $emaillogin)
     {
-        if(isset($submitLogin)){
+        if (isset($submitLogin)) {
             $db = $this->db;
             $builder = $db->table('customers');
             $builder->select('*');
             $builder->where('email', $emaillogin);
             $result = $builder->get()->getResultArray();
-    
+
             return $result;
         }
     }
@@ -206,7 +206,7 @@ class CustomerModel extends Model
     public function addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham)
     {
         if (isset($color_prd)  && isset($size_prd) && isset($quantity_prd)) {
-            if (isset($_SESSION['customer_login'])) { 
+            if (isset($_SESSION['customer_login'])) {
                 $db = $this->db;
                 $builder = $db->table('products');
                 $builder->select('*');
@@ -248,33 +248,22 @@ class CustomerModel extends Model
             }
 
             // Run the Query
-            $pQuery->execute($customerId, $vnpTxnRef ,$fullname, $address, $phoneNumber, $totalPrice);
+            $pQuery->execute($customerId, $vnpTxnRef, $fullname, $address, $phoneNumber, $totalPrice);
             // Close out the prepared statement
             $pQuery->close();
-            
+
             return true;
         } else {
             return false;
         }
     }
 
-    public function updateOrderTransactionStatus($orde_code, $status)
+    public function updateOrderTransactionStatus($order_code, $status)
     {
         $db = $this->db;
 
-        // Prepare the Query
-        $pQuery = $db->prepare(static function ($db) {
-            return $db->table('order_transaction')->update([
-                'status'    => 'x',
-            ]);
-        });
-
-        $db->table('order_transaction')->where('order_code', $orde_code);
-
-        // Run the Query
-        $pQuery->execute($status);
-        // Close out the prepared statement
-        $pQuery->close();
+        $sql = "UPDATE order_transaction SET status = ? WHERE order_code = ?";
+        $this->db->query($sql, array($status, $order_code));
     }
 
     public function getOrderTransaction($order_code)
@@ -290,7 +279,7 @@ class CustomerModel extends Model
 
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
-        if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice)) {
+        if (!empty($fullname) && !empty($address) && !empty($phoneNumber) && !empty($totalPrice) && strlen($fullname) > 8) {
             $db = $this->db;
             // Prepare the Query
             $pQuery = $db->prepare(static function ($db) {
@@ -364,9 +353,9 @@ class CustomerModel extends Model
         }
     }
 
-    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
+    public function submitOrderOnlinePayment($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder, $orderCode, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $payDate)
     {
-        if (!empty($order_code) && !empty($bankCode) && !empty($bankTranNo) && !empty($transactionNo) && !empty($orderInfo) && !empty($payDate)) {
+        if (strlen($fullName) > 8 && !empty($orderCode) && !empty($bankCode) && !empty($bankTranNo) && !empty($transactionNo) && !empty($orderInfo) && !empty($payDate)) {
             $db = $this->db;
 
             $this->submitOrder($fullName, $addressOrder, $phoneNumberOrder, $totalPriceOrder);
@@ -398,7 +387,7 @@ class CustomerModel extends Model
             }
 
             // Run the Query
-            $pQuery->execute($customerId, $id_order, $order_code, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $totalPriceOrder, $payDate);
+            $pQuery->execute($customerId, $id_order, $orderCode, $bankCode, $bankTranNo, $transactionNo, $orderInfo, $totalPriceOrder, $payDate);
             // Close out the prepared statement
             $pQuery->close();
             return true;
@@ -421,7 +410,7 @@ class CustomerModel extends Model
 
         $eachOrder = [];
         $i = 0;
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             $i++;
             $orderId = $order['order_id'];
             $query = $db->query("SELECT order_items.order_item_id, order_items.order_id, order_items.product_id,
@@ -448,7 +437,7 @@ class CustomerModel extends Model
         foreach ($_SESSION['customer_login'] as $key) {
             $customerId = $key['customer_id'];
         }
-        
+
         $builder = $db->table('orders');
         $builder->select('*');
         $builder->where('customer_id', $customerId);
@@ -456,7 +445,7 @@ class CustomerModel extends Model
 
         $eachOrder = [];
         $i = 0;
-        foreach($orders as $order) {
+        foreach ($orders as $order) {
             $i++;
             $orderId = $order['order_id'];
             $query = $db->query("SELECT order_items.order_item_id, order_items.order_id, order_items.product_id,
@@ -472,7 +461,11 @@ class CustomerModel extends Model
             ");
 
             $result = $query->getResultArray();
-            $eachOrder[$i] = $result;
+            if (count($result) > 0) {
+                $eachOrder[$i] = $result;
+            } else {
+                continue;
+            }
         }
         return $eachOrder;
     }
@@ -493,16 +486,17 @@ class CustomerModel extends Model
         return $result;
     }
 
-    public function checkPayMethod($order_id) {
+    public function checkPayMethod($order_id)
+    {
         $db = $this->db;
         $builder = $db->table('online_payment');
         $builder->select('*');
         $builder->where('order_id', $order_id);
         $result = $builder->countAllResults();
-        if($result > 0) {
+        if ($result > 0) {
             return "Thanh Toán bằng VNPAY";
         } else {
             return "Thanh toán khi nhận hàng";
         }
-    } 
+    }
 }

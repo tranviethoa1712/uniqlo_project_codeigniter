@@ -338,6 +338,11 @@ class AdminService extends BaseService{
     {
         return $this->adminModel->getProducts();
     } 
+
+    public function getLiveSearchProductsData($input) 
+    {
+        return $this->adminModel->getLiveSearchProductsData($input);
+    } 
     
     /**
      * Attribute Handle

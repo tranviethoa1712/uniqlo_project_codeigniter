@@ -26,7 +26,8 @@
   <!-- summernote -->
   <link rel="stylesheet"  type="text/css" href="<?php echo base_url('assets/admin/access/plugins/summernote/summernote-bs4.min.css'); ?>">
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script></head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 

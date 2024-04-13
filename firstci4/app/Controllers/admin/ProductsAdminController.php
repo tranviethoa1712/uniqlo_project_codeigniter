@@ -34,7 +34,7 @@ class ProductsAdminController extends BaseControllerAdmin
             . view($this->pathViewLayout . 'footer');
     }
 
-    public function add ()
+    public function add()
     {
         $dataProduct = $this->service->getProducts();
         $dataCategories = $this->service->getCategories();
@@ -47,14 +47,14 @@ class ProductsAdminController extends BaseControllerAdmin
             'header' => $this->request->getHeaderLine('Content-Type')
         ];
 
-        
+
         return $this->viewAdmin('products/addProduct', $data);
     }
-    
-    public function doAddProduct() 
+
+    public function doAddProduct()
     {
         $result = $this->service->addProductModel($this->request);
-        
+
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
@@ -70,11 +70,11 @@ class ProductsAdminController extends BaseControllerAdmin
             'categories' => $dataCategories,
             'product_id' => $idsanpham
         ];
-        
+
         return $this->viewAdmin('products/tools/update', $data);
     }
-     
-    public function doUpdateProduct() 
+
+    public function doUpdateProduct()
     {
         $result = $this->service->updateProductModel($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
@@ -116,11 +116,11 @@ class ProductsAdminController extends BaseControllerAdmin
             'pageTitle' => 'Quản lý thuộc tính',
             'dashboard' => 'Thêm thuộc tính',
         ];
-        
+
         return $this->viewAdmin('attributes/addAttribute', $data);
     }
-    
-    public function doAddAttribute() 
+
+    public function doAddAttribute()
     {
         $result = $this->service->addAttributeModel($this->request);
 
@@ -147,11 +147,11 @@ class ProductsAdminController extends BaseControllerAdmin
             'dashboard' => 'Cập nhật thuộc tính',
             'attribute' => $dataAttribute,
         ];
-        
+
         return $this->viewAdmin('attributes/tools/updateAttribute', $data);
     }
-    
-    public function doUpdateAttribute() 
+
+    public function doUpdateAttribute()
     {
         $result = $this->service->updateAttributeModel($this->request);
 
@@ -174,11 +174,11 @@ class ProductsAdminController extends BaseControllerAdmin
             'products' => $dataProducts,
             'attributes' => $dataAttributes,
         ];
-        
+
         return $this->viewAdmin('attributes/link_product_attribute', $data);
     }
-    
-    public function doLinkProductAttribute() 
+
+    public function doLinkProductAttribute()
     {
         $result = $this->service->addAttributeProductModel($this->request);
 
@@ -215,8 +215,8 @@ class ProductsAdminController extends BaseControllerAdmin
 
         return $this->viewAdmin('attributes/tools/updateProductAttribute', $data);
     }
-    
-    public function doUpdateProductAttribute () 
+
+    public function doUpdateProductAttribute()
     {
         $checkSubmit = $this->request->getPost('updateProductAttribute');
         $product_id = $this->request->getPost('product_id');
@@ -245,7 +245,7 @@ class ProductsAdminController extends BaseControllerAdmin
         ];
         return $this->viewAdmin('orders/listOrders', $data);
     }
-    
+
     public function showOrderDetail($order_id)
     {
         $data = [
@@ -273,8 +273,8 @@ class ProductsAdminController extends BaseControllerAdmin
         $this->service->UpdateOrderItemStatus($order_item_id, $statusUpdate);
         return redirect()->back();
     }
-    
-    public function doUpdateOrder() 
+
+    public function doUpdateOrder()
     {
         $result = $this->service->updateOrderModel($this->request);
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
@@ -296,5 +296,19 @@ class ProductsAdminController extends BaseControllerAdmin
             'detailOrder' => $dataDetailOrder
         ];
         return $this->viewAdmin('orders/detailOrder', $data);
+    }
+
+    public function liveSearchProducts()
+    {
+        if ($this->request->isAJAX()) {
+            $input = $this->request->getVar('input');
+            if($input !== '') {
+                $dataProducts = $this->service->getLiveSearchProductsData($input);
+                return json_encode($dataProducts);
+            } else {
+                $dataProducts = $this->service->getProductPaginationData();
+                return json_encode($dataProducts);
+            }
+        }
     }
 }

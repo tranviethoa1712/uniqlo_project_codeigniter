@@ -753,14 +753,14 @@
                           </div>
                         </div>
                         <div class="product-item_price">
-                          <?= ' ' . number_format($column['total_money'], 0, ',', '.') . ' VND' ?>
+                          <?= ' ' . number_format($column['total_money'], 0, ',', '.') . ' đ' ?>
                         </div>
                       </div>
                     </div>
                   </a>
                 <?php endforeach; ?>
                 <div class="endOrder">
-                  <div class="totalPrice">Tổng giá: <?= ' ' . number_format($column['total_price'], 0, ',', '.') . ' VND' ?></div>
+                  <div class="totalPrice">Tổng giá: <?= ' ' . number_format($column['total_price'], 0, ',', '.') . ' đ' ?></div>
                 </div>
               <?php endforeach; ?>
             </div>
@@ -773,141 +773,140 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script src="<?= base_url('assets/customer/js/home.js'); ?>" type="text/javascript"></script>
-<script src="<?= base_url('assets/customer/js/purchase-order-jquery.js'); ?>"></script>
-
-
-<script type="text/javascript">
+<script >
+  
   $(document).ready(function() {
+    // khi click sẽ gửi status request lên controller và nhận về data theo status đó
     $(".purchase-order_menu-item").click(function(e) {
-      //ngan hanh dong load trang
-      e.preventDefault();
-
-      let element = $(this);
-      let statusView = element.attr("data-status");
-      $.ajax({
-        type: "POST",
-        url: "<?= site_url('user/getStatusChecked') ?>",
-        dataType: 'json',
-        contentType: "application/json",
-        data: JSON.stringify({
-          statusView: statusView
-        }),
-        success: function(response) {
-
-          $(".products").text('');
-          convertReponseStatusOrders(response);
-
-        }
-      });
-    })
-  });
-
-  function convertReponseStatusOrders(response) {
-    $.each(response, function(i) {
-      let titleElement = document.createElement("div");
-      titleElement.className = "title"
-      let h1TitleElement = document.createElement("h1");
-      h1TitleElement.innerHTML = "Đơn hàng: " + i;
-      titleElement.append(h1TitleElement);
-
-      var total_price = '';
-
-      $('.products').append(titleElement);
-      $.each(response[i], function(key, val) {
-
-        // product link
-        let href = 'http://localhost/user/detailPurchaseOrder?orderItemId' + val.order_item_id + '&orderId=' + val.order_id;
-        let productLink = document.createElement("a");
-        productLink.href = href;
-
-        // product item
-        let productItem = document.createElement("div");
-        productItem.className = "product-item";
-
-        // product item detail
-        let productItemDetail = document.createElement("div");
-        productItemDetail.className = "product-item_detail";
-
-        // thumbnail
-        thumbnails = jQuery.parseJSON(val.thumbnail);
-        // let productThumbnail = document.createElement("img");
-        // productThumbnail.className = "product-thumbnail";
-        var thumbnail = '';
-        for (let j = 0; j < thumbnails.length; j++) {
-          if (j == 0) {
-            thumbnail = thumbnails[j];
-            console.log(thumbnail)
+        // ngan hanh dong load trang
+        e.preventDefault();
+  
+        let element = $(this);
+        let statusView = element.attr("data-status");
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url('user/getStatusChecked') ?>",
+          dataType: 'json',
+          contentType: "application/json",
+          data: JSON.stringify({
+            statusView: statusView
+          }),
+          success: function(response) {
+            $(".products").text('');
+            // insert data cũng như html tag vào để thay đổi order hiện tại theo response
+            convertReponseStatusOrders(response);
           }
-        }
+        });
+      })
+    });
+  
+    function convertReponseStatusOrders(response) {
+      $.each(response, function(i) {
+        let titleElement = document.createElement("div");
+        titleElement.className = "title"
+        let h1TitleElement = document.createElement("h1");
+        h1TitleElement.innerHTML = "Đơn hàng: " + i;
+        titleElement.append(h1TitleElement);
+  
+        var total_price = '';
+  
+        $('.products').append(titleElement);
+        
+        //collect and append data
+        $.each(response[i], function(key, val) {
+  
+          // product link
+          let href = 'http://localhost/user/detailPurchaseOrder?orderItemId=' + val.order_item_id + '&orderId=' + val.order_id;
+          let productLink = document.createElement("a");
+          productLink.href = href;
+  
+          // product item
+          let productItem = document.createElement("div");
+          productItem.className = "product-item";
+  
+          // product item detail
+          let productItemDetail = document.createElement("div");
+          productItemDetail.className = "product-item_detail";
+  
+          // thumbnail
+          thumbnails = jQuery.parseJSON(val.thumbnail);
+          var thumbnail = '';
+          for (let j = 0; j < thumbnails.length; j++) {
+            if (j == 0) {
+              thumbnail = thumbnails[j];
+            }
+          }
+  
+          // product item info
+          let productItemInfo = document.createElement("div");
+          productItemInfo.className = "product-item_info";
+  
+          // product item title
+          let productItemTitle = document.createElement("div");
+          productItemTitle.className = "product-item_title";
+          productItemTitle.innerHTML = val.title;
+  
+          // product item size
+          let productItemSize = document.createElement("div");
+          productItemSize.className = "product-item_size";
+          productItemSize.innerHTML = val.size.toUpperCase();
+  
+          // product item color
+          let productItemColor = document.createElement("div");
+          productItemColor.className = "product-item_color";
+          productItemColor.innerHTML = val.color.toUpperCase();
+  
+          // product item quantity
+          let productItemQuantity = document.createElement("div");
+          productItemQuantity.className = "product-item_quantity";
+          productItemQuantity.innerHTML = 'x' + val.quantity;
+  
+          // product item price
+          let productItemPrice = document.createElement("div");
+          productItemPrice.className = "product-item_price";
+          productItemPrice.innerHTML = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+          }).format(val.total_money);
+  
+          // get total_price value
+          total_price = val.total_price;
 
-        // product item info
-        let productItemInfo = document.createElement("div");
-        productItemInfo.className = "product-item_info";
-
-        // product item title
-        let productItemTitle = document.createElement("div");
-        productItemTitle.className = "product-item_title";
-        productItemTitle.innerHTML = val.title;
-
-        // product item size
-        let productItemSize = document.createElement("div");
-        productItemSize.className = "product-item_size";
-        productItemSize.innerHTML = val.size.toUpperCase();
-
-        // product item color
-        let productItemColor = document.createElement("div");
-        productItemColor.className = "product-item_color";
-        productItemColor.innerHTML = val.color.toUpperCase();
-
-        // product item quantity
-        let productItemQuantity = document.createElement("div");
-        productItemQuantity.className = "product-item_quantity";
-        productItemQuantity.innerHTML = 'x' + val.quantity;
-
-        // product item price
-        let productItemPrice = document.createElement("div");
-        productItemPrice.className = "product-item_price";
-        productItemPrice.innerHTML = new Intl.NumberFormat('vi-VN', {
+          // append here
+          $('.products').append(productLink);
+          productLink.append(productItem);
+          productItem.append(productItemDetail);
+          $('<img />', {
+            src: 'http://localhost/assets/uploads/' + thumbnail,
+            alt: 'thumbnail',
+            class: 'product-item_thumbnail',
+          }).appendTo(productItemDetail);
+          productItemDetail.append(
+            productItemInfo,
+            productItemPrice
+          )
+          productItemInfo.append(productItemTitle, productItemSize, productItemColor, productItemQuantity);
+        });
+  
+        // end an order
+        let endOrder = document.createElement("div");
+        endOrder.className = "endOrder";
+        let totalPrice = document.createElement("div");
+        totalPrice.className = "totalPrice";
+        totalPrice.innerHTML = 'Tổng giá: ' + new Intl.NumberFormat('vi-VN', {
           style: 'currency',
           currency: 'VND'
-        }).format(val.total_money);
-
-        // get total_price value
-        total_price = val.total_price;
-        // append here
-        $('.products').append(productLink);
-        productLink.append(productItem);
-        productItem.append(productItemDetail);
-        $('<img />', {
-          src: 'http://localhost/assets/uploads/' + thumbnail,
-          alt: 'thumbnail',
-          class: 'product-item_thumbnail'
-        }).appendTo(productItemDetail);
-        productItemDetail.append(
-          // $('<img/>')
-          // .addClass("product-item_thumbnail")
-          // .attr("src", 'http://localhost/assets/uploads/' + thumbnail),
-          productItemInfo,
-          productItemPrice
-        )
-        productItemInfo.append(productItemTitle, productItemSize, productItemColor, productItemQuantity);
+        }).format(total_price);
+  
+        // append end an order
+        $('.products').append(endOrder);
+        endOrder.append(totalPrice);
       });
+    }
 
-      // end an order
-      let endOrder = document.createElement("div");
-      endOrder.className = "endOrder";
-      let totalPrice = document.createElement("div");
-      totalPrice.className = "totalPrice";
-      totalPrice.innerHTML = 'Tổng giá: ' + new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND'
-      }).format(total_price);
-
-      // append end an order
-      $('.products').append(endOrder);
-      endOrder.append(totalPrice);
-    });
-  }
 </script>
+
+

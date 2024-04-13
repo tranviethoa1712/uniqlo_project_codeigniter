@@ -292,6 +292,20 @@ class AdminModel extends Model
         return $query;
     }
 
+    public function getLiveSearchProductsData($input)
+    {
+        $query = "SELECT * FROM products WHERE title LIKE '%$input%'";
+        $result = $this->db->query($query);
+        $number_of_result = $result->getNumRows();
+        $resultArray = $result->getResultArray();
+
+
+        if ($number_of_result > 0) {
+            return $resultArray;
+        }
+        return false;
+    }
+
     public function getProducts()
     {
         $db = $this->db;
@@ -311,7 +325,6 @@ class AdminModel extends Model
     public function hasAttPrdInfo($product_id, $attribute_id)
     {
         //check trùng liên kết
-
         $query = "SELECT * FROM product_attribute WHERE product_id = $product_id AND attribute_id = $attribute_id";
         $result = $this->db->query($query);
         $number_of_result = $result->getNumRows();
@@ -347,13 +360,10 @@ class AdminModel extends Model
 
     public function updateProductAttributeModel($product_id, $attribute_id, $idPrdAtt)
     {
-        if ($product_id && $attribute_id) {
+        $db = $this->db;
 
-            $db = $this->db;
-
-            $sql = "UPDATE product_attribute SET product_id = ?, attribute_id = ? WHERE id = ?";
-            $this->db->query($sql, array($product_id, $attribute_id, $idPrdAtt));
-        }
+        $sql = "UPDATE product_attribute SET product_id = ?, attribute_id = ? WHERE id = ?";
+        $this->db->query($sql, array($product_id, $attribute_id, $idPrdAtt));
     }
 
     public function deleteProductAttributeModel($idPrdAtt)

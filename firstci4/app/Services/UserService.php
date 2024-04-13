@@ -34,15 +34,15 @@ class UserService extends BaseService{
     {
         $inputData = array();
         $returnData = array();
-        
-        foreach ($requestData->getGet as $key => $value) {
-            if (substr($key, 0, 4) == "vnp") {
+        // die(var_dump($requestData->getGet));
+        foreach ($requestData->getGet() as $key => $value) {
+            if (substr($key, 0, 4) == "vnp_") {
                 $inputData[$key] = $value;
             }
         }
 
-        $vnpSecureHash = $inputData['vnpSecureHash'];
-        unset($inputData['vnpSecureHash']);
+        $vnpSecureHash = $inputData['vnp_SecureHash'];
+        unset($inputData['vnp_SecureHash']);
         ksort($inputData);
         $i = 0;
         $hashData = "";
@@ -56,15 +56,15 @@ class UserService extends BaseService{
         }
 
         $secureHash = hash_hmac('sha512', $hashData, VNPAY_HASH_SECRET);
-        $vnpTranId = $inputData['vnpTransactionNo']; // Mã giao dịch tại VNPAY
-        $vnpBankCode = $inputData['vnpBankCode']; // Ngân hàng thanh toán
+        $vnpTranId = $inputData['vnp_TransactionNo']; // Mã giao dịch tại VNPAY
+        $vnpBankCode = $inputData['vnp_BankCode']; // Ngân hàng thanh toán
         $vnpBankTranNo = $inputData['vnp_BankTranNo']; // Ngân hàng thanh toán
-        $vnpAmount = $inputData['vnpAmount']/100; // Số tiền thanh toán VNPAY phản hồi
-        $vnpCreateDate = $inputData['vnpCreateDate']; // Số tiền thanh toán VNPAY phản hồi
-        $vnpOrderInfo = $inputData['vnpOrderInfo']; // Số tiền thanh toán VNPAY phản hồi
+        $vnpAmount = $inputData['vnp_Amount']/100; // Số tiền thanh toán VNPAY phản hồi
+        $vnpCreateDate = $inputData['vnp_PayDate']; // Số tiền thanh toán VNPAY phản hồi
+        $vnpOrderInfo = $inputData['vnp_OrderInfo']; // Số tiền thanh toán VNPAY phản hồi
 
         $status = 0; // Là trạng thái thanh toán của giao dịch chưa có IPN lưu tại hệ thống của merchant chiều khởi tạo URL thanh toán.
-        $orderCode = $inputData['vnpTxnRef'];
+        $orderCode = $inputData['vnp_TxnRef'];
         
         try {
             //Check Orderid    
@@ -75,31 +75,40 @@ class UserService extends BaseService{
                 //Giả sử: $order = mysqli_fetch_assoc($result);   
         
                 $order = $this->customerModel->getOrderTransaction($orderCode);
+
+                // die(var_dump($val));                      
                 if ($order != NULL) {
-                    if($order["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
-                    {
-                        if ($order["status"] != NULL && $order["status"] == 0) {
-                            if ($inputData['vnpResponseCode'] == '00' || $inputData['vnpTransactionStatus'] == '00') {
-                                $status = 1; // Trạng thái thanh toán thành công
+                    foreach($order as $key => $val) {
+                        if($val["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
+                        {
+                            if ($val["status"] != NULL && $val["status"] == 0) {
+                                if ($inputData['vnp_ResponseCode'] == '00' || $inputData['vnp_TransactionStatus'] == '00') {
+                                    // die($inputData['vnp_TransactionStatus']);
+                                    $status = 1; // Trạng thái thanh toán thành công
+                                } else {
+                                    // die('loi khac');
+                                    $status = 2; // Trạng thái thanh toán thất bại -> lỗi
+                                }
+                                // Cập nhật kết quả thanh toán, tình trạng đơn hàng vào DB
+                                $this->customerModel->updateOrderTransactionStatus($orderCode, $status); // Update status order_transaction
+                                // insert order và online_payment nếu thành công
+                                if($status == 1) {
+                                    $this->customerModel->submitOrderOnlinePayment($val['fullname'], $val['address'], $val['phone_number'], $val['total_price'], $orderCode, $vnpBankCode, $vnpBankTranNo, $vnpTranId, $vnpOrderInfo, $vnpCreateDate);
+                                }
+                                //
+                                //Trả kết quả về cho VNPAY: Website/APP TMĐT ghi nhận yêu cầu thành công                
+                                $returnData['RspCode'] = '00';
+                                $returnData['Message'] = 'Confirm Success';
                             } else {
-                                $status = 2; // Trạng thái thanh toán thất bại -> lỗi
+                                $returnData['RspCode'] = '02';
+                                $returnData['Message'] = 'Order already confirmed';
                             }
-                            //Cài đặt Code cập nhật kết quả thanh toán, tình trạng đơn hàng vào DB
-                            $this->customerModel->updateOrderTransactionStatus($orderCode, $status);
-                            $this->customerModel->submitOrderOnlinePayment($order['fullname'], $order['address'], $order['phone_number'], $order['total_price'], $orderCode, $vnpBankCode, $vnpBankTranNo, $vnpTranId, $vnpOrderInfo, $vnpCreateDate);
-                            //
-                            //Trả kết quả về cho VNPAY: Website/APP TMĐT ghi nhận yêu cầu thành công                
-                            $returnData['RspCode'] = '00';
-                            $returnData['Message'] = 'Confirm Success';
-                        } else {
-                            $returnData['RspCode'] = '02';
-                            $returnData['Message'] = 'Order already confirmed';
                         }
-                    }
-                    else {
+                        else {
                         $returnData['RspCode'] = '04';
                         $returnData['Message'] = 'invalid amount';
-                    }
+                        }
+                    }  
                 } else {
                     $returnData['RspCode'] = '01';
                     $returnData['Message'] = 'Order not found';
@@ -114,6 +123,7 @@ class UserService extends BaseService{
         }
         //Trả lại VNPAY theo định dạng JSON
         echo json_encode($returnData);
+        return $returnData;
     }
     
     public function getProductsId($idsanpham) 
@@ -273,58 +283,48 @@ class UserService extends BaseService{
         $address = $requestData->getPost('address');
         $phoneNumber = $requestData->getPost('phoneNumber');
         $totalPrice = $requestData->getPost('totalPrice'); 
+
+        error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         
-        // vnpay config
-        $vnpTxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+        $vnpUrl = VNPAY_URL;
+        $vnpReturnurl = VNPAY_RETURN_URL;
+        $vnpTmnCode = VNPAY_TMNCODE;//Mã website tại VNPAY 
+        $vnpHashSecret = VNPAY_HASH_SECRET; //Chuỗi bí mật
+        
+        $vnpTxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này 
+    
+        $vnpOrderInfo = strtoupper($fullname . 'chuyen khoan');
+        $vnpOrderType = VNPAY_ORDER_TYPE;
         $vnpAmount = $totalPrice * 100;
+        $vnpLocale = 'vn';
+        $vnpBankCode = VNPAY_BANK_CODE;
+        $vnpIpAddr = $_SERVER['REMOTE_ADDR'];
 
-        //Billing
-        $fullname = trim((string) $fullname);
-
-        if (isset($fullname) && trim($fullname) != '') {
-        $name = explode(' ', $fullname);
-        $vnpBillFirstName = array_shift($name);
-        $vnpBillLastName = array_pop($name);
-        }
-        $vnpBillAddress = $address;
-
-        // Invoice
-        $vnpInvPhone = $phoneNumber;
-        $vnpInvAddress = $address;
-
-        
         $inputData = array(
-            "vnpVersion" => "2.1.0",
-            "vnpTmnCode" => VNPAY_TMNCODE,
-            "vnpAmount" => $vnpAmount,
-            "vnpCommand" => "pay",
-            "vnpCreateDate" => date('YmdHis'),
-            "vnpCurrCode" => "VND",
-            "vnpIpAddr" => VNPAY_IP_ADDR,
-            "vnpLocale" => VNPAY_LOCALE,
-            "vnpOrderInfo" => VNPAY_ORDER_INFO,
-            "vnpOrderType" => VNPAY_ORDER_TYPE,
-            "vnpReturnurl" => VNPAY_RETURN_URL,
-            "vnpTxnRef" => $vnpTxnRef,
-            "vnpBillFirstName"=>$vnpBillFirstName,
-            "vnpBillLastName"=>$vnpBillLastName,
-            "vnpBillAddress"=>$vnpBillAddress,
-            "vnpInvPhone"=>$vnpInvPhone,
-            "vnpInvAddress"=>$vnpInvAddress,
+            "vnp_Version" => "2.1.0",
+            "vnp_TmnCode" => $vnpTmnCode,
+            "vnp_Amount" => $vnpAmount,
+            "vnp_Command" => "pay",
+            "vnp_CreateDate" => date('YmdHis'),
+            "vnp_CurrCode" => "VND",
+            "vnp_IpAddr" => $vnpIpAddr,
+            "vnp_Locale" => $vnpLocale,
+            "vnp_OrderInfo" => $vnpOrderInfo,
+            "vnp_OrderType" => $vnpOrderType,
+            "vnp_ReturnUrl" => $vnpReturnurl,
+            "vnp_TxnRef" => $vnpTxnRef,
         );
         
-        // Check mã ngân hàng
         if (isset($vnpBankCode) && $vnpBankCode != "") {
-            $inputData['vnpBankCode'] = $vnpBankCode;
+            $inputData['vnp_BankCode'] = $vnpBankCode;
         }
-
-        // Dữ liệu checksum được thành lập dựa trên việc sắp xếp tăng dần của tên tham số
+        
+        //var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
         $hashdata = "";
-        
-        // Nối data thành dạng GET để trả về URL
         foreach ($inputData as $key => $value) {
             if ($i == 1) {
                 $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
@@ -334,25 +334,21 @@ class UserService extends BaseService{
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-
-        $vnpUrl = VNPAY_URL . "?" . $query;
-        // Mã kiểm tra (checksum) để đảm bảo dữ liệu của giao dịch không bị thay đổi trong quá trình chuyển từ VNPAY về Website TMĐT
-        if (defined(VNPAY_HASH_SECRET)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, VNPAY_HASH_SECRET);
+        
+        $vnpUrl = $vnpUrl . "?" . $query;
+        if (isset($vnpHashSecret)) {
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnpHashSecret);//  
             $vnpUrl .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        $returnData = array(
-            'code' => '00', 'message' => 'success', 'data' => $vnpUrl
-        );
-        
-        // Redirect sang trang thanh toán vnpay 
-        if ($requestData->getPost('vnpay')) {
-            //insert order lên order_transaction table để cho việc cập nhật trạng thái cũng như insert thông tin của khách hàng vào orders table chính
-            $this->submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef);
-            header('Location: ' . $vnpUrl);
-            die();
-        } else {
-            echo json_encode($returnData);
-        }
+        $returnData = array('code' => '00'
+            , 'message' => 'success'
+            , 'data' => $vnpUrl);
+            if ($requestData->getPost('vnpay')) {
+                $this->submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef);
+                header('Location: ' . $vnpUrl);
+                die();
+            } else {
+                echo json_encode($returnData);
+            }
     }
 }

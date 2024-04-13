@@ -100,6 +100,4 @@ define('VNPAY_TMNCODE', 'PYY55LE8');
 define('VNPAY_HASH_SECRET', 'JEBPLUFFDQLMZCCGNKWFJXOBIHBISEST');
 define('VNPAY_ORDER_INFO', 'Noi dung thanh toan');
 define('VNPAY_ORDER_TYPE', 'billpayment');
-define('VNPAY_LOCALE', 'vn');
 define('VNPAY_BANK_CODE', 'NCB');
-define('VNPAY_IP_ADDR', $_SERVER['REMOTE_ADDR']);

@@ -90,13 +90,13 @@ class OrderCustomerController extends BaseControllerUser
         $totalPrice = $this->request->getPost('totalPrice'); 
         if ($this->request->getPost('submitOrder')) {
             $result = $this->service->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
-            if (!$result) {
+            if ($result === false) {
                 return redirect('user/myOrder');
             }
             return redirect('user/orderSuccess');
         } elseif ($this->request->getPost('vnpay')) {
             // config giá trị và redirect đến vnpay;
-            $this->service->vnpayProcessing($this->request);
+            return $this->service->vnpayProcessing($this->request);
         }
     }
 
@@ -159,12 +159,13 @@ class OrderCustomerController extends BaseControllerUser
             'categories' => $dataCategories,
         ];
 
-        if ($this->request->getGet('vnpTxnRef')) {
+        if ($this->request->getGet('vnp_TxnRef')) {
             $result = $this->service->submitOrderOnlinePayment($this->request);
-            if ($result === false) {
+            if ($result['RspCode'] == "00") {
+                return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
+            } else {
                 return redirect('user/myOrder');
             }
-            return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
         }
 
         return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);

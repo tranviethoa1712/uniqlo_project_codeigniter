@@ -84,4 +84,8 @@ class HomeAdminController extends BaseControllerAdmin{
         $result = $this->service->deleteUser($id);
         return redirect('admin/userListManage')->with($result['massageCode'], $result['massages']);
     }
+
+    // public function fetchTime(){
+        
+    // }
 }

@@ -40,6 +40,7 @@ $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($
         $routes->get('deleteProduct/(:num)', 'ProductsAdminController::delete/$1');
         $routes->get('showProducts', 'ProductsAdminController::listProducts');
         $routes->post('showProducts', 'ProductsAdminController::listProducts');
+        $routes->post('liveSearchProducts', 'ProductsAdminController::liveSearchProducts');
     
         // Attribute
         $routes->get('addAttribute', 'ProductsAdminController::addAttributes');
@@ -85,24 +86,25 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
         $routes->get('userLogin', 'LoginCustomerController::login');
         $routes->post('doLogin', 'LoginCustomerController::doLogin');
         $routes->get('logout', 'LoginCustomerController::logOutCustomer');
-        $routes->get('orderSuccess', 'HomeCustomerController::orderSuccessView');
-
+        
         $routes->get('userRegister', 'HomeCustomerController::register');
         $routes->post('doRegister', 'HomeCustomerController::doRegister');
-
+        
         $routes->get('aboutAccount', 'HomeCustomerController::memberDetail');
-
-        $routes->get('purchaseOrder', 'OrderCustomerController::purchaseOrder');
-        $routes->post('getStatusChecked', 'OrderCustomerController::getStatusChecked');
-        $routes->get('detailPurchaseOrder', 'OrderCustomerController::detailPurchaseOrder');
-
+        
+        
         $routes->get('myCart', 'OrderCustomerController::cart');
         $routes->post('addToCart', 'OrderCustomerController::addToCart');
         $routes->post('deleteItemCart', 'OrderCustomerController::deleteItemCart');
         $routes->post('updateQuantityItemCart', 'OrderCustomerController::updateQuantityItemCart');
-
+        
         $routes->get('myOrder', 'OrderCustomerController::order');
         $routes->post('doOrder', 'OrderCustomerController::doOrder');
+        $routes->get('orderSuccess', 'OrderCustomerController::orderSuccessView');
+        
+        $routes->get('purchaseOrder', 'OrderCustomerController::purchaseOrder');
+        $routes->post('getStatusChecked', 'OrderCustomerController::getStatusChecked');
+        $routes->get('detailPurchaseOrder', 'OrderCustomerController::detailPurchaseOrder');
     
         $routes->get('listProducts', 'ProductCustomerController::listProduct');
         $routes->get('detailProduct', 'ProductCustomerController::detailProduct');
