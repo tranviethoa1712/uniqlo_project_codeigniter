@@ -10,7 +10,7 @@
 <!-- Bootstrap 4 -->
 <script src="<?= base_url('assets/admin/access/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
 <!-- ChartJS -->
-<script src="<?= base_url('assets/admin/access/plugins/chart.js') ?>"></script>
+<script src="<?= base_url('assets/admin/access/plugins/chart.js/Chart.bundle.js') ?>"></script>
 <script src="<?= base_url('assets/admin/access/plugins/flot/jquery.flot.js') ?>"></script>
 <script src="<?= base_url('assets/admin/access/plugins/flot/plugins/jquery.flot.resize.js') ?>"></script>
 <script src="<?= base_url('assets/admin/access/plugins/flot/plugins/jquery.flot.pie.js') ?>"></script>

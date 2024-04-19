@@ -925,4 +925,8 @@ class AdminService extends BaseService{
             ];
         }
     }
+
+    public function getProfitOrderByYear($year) {
+        return $this->adminModel->getProfitOrderByYear($year);
+    }
 }

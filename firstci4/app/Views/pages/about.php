@@ -1,3 +1,0 @@
-<br>
-About Hello!
-<br>

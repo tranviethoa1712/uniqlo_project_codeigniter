@@ -8,12 +8,12 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700&family=Poppins:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/reset.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/customer/css/reset.css') ?>" />
 
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/base.css') ?>" />
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/home.css') ?>" />
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/detailproduct.css') ?>">
-    <link rel="stylesheet" href="<?php echo base_url('assets/customer/css/listprd.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/customer/css/base.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/customer/css/home.css') ?>" />
+    <link rel="stylesheet" href="<?= base_url('assets/customer/css/detailproduct.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/customer/css/listprd.css') ?>">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"

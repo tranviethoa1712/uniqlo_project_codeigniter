@@ -25,6 +25,8 @@
   <link rel="stylesheet"  type="text/css" href=<?php echo base_url('assets/admin/access/plugins/daterangepicker/daterangepicker.css'); ?>">
   <!-- summernote -->
   <link rel="stylesheet"  type="text/css" href="<?php echo base_url('assets/admin/access/plugins/summernote/summernote-bs4.min.css'); ?>">
+  <!-- chart -->
+  <link rel="stylesheet"  type="text/css" href="<?php echo base_url('assets/admin/access/plugins/chart.js/Chart.css'); ?>">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>

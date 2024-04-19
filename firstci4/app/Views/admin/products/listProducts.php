@@ -291,7 +291,7 @@
         var row = document.createElement("tr");
         let stt = document.createElement("td");
         stt.innerHTML = key;
-        row.append(stt)
+        row.append(stt);
 
         var categoryId = document.createElement("td");
         categoryId.innerHTML = val.category_id;

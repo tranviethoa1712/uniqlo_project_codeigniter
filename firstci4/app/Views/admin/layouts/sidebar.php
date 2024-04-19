@@ -44,7 +44,7 @@
 
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-tree"></i>
               <p>
                 Danh mục sản phẩm
                 <i class="right fas fa-angle-left"></i>
@@ -68,7 +68,7 @@
   
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <i class="nav-icon fas fa-table"></i>
               <p>
                 Thuộc tính
                 <i class="right fas fa-angle-left"></i>
@@ -87,7 +87,6 @@
                   <p>Danh sách thuộc tính</p>
                 </a>
               </li>
-*
               <li class="nav-item">                                
                 <a href="<?= base_url('admin/addPalink') ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -104,7 +103,7 @@
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <i class="nav-icon fas fa-table"></i>
               <p>
                 Sản phẩm
                 <i class="right fas fa-angle-left"></i>
@@ -127,7 +126,7 @@
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <i class="nav-icon fas fa-table"></i>
               <p>
                 Đơn Hàng
                 <i class="right fas fa-angle-left"></i>
@@ -144,7 +143,7 @@
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+            <i class="nav-icon fas fa-table"></i>
               <p>
                 Khách hàng
                 <i class="right fas fa-angle-left"></i>

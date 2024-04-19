@@ -794,4 +794,35 @@ class AdminModel extends Model
 
         return $result;
     }
+
+    public function getProfitOrderByYear($year){
+        $db = $this->db;
+        $query = $db->query("SELECT MONTH(order_date), total_price
+        FROM orders 
+        WHERE YEAR(order_date) = '$year'
+        ORDER BY MONTH(order_date) ASC
+        ");
+        
+        $monthContainer = [];
+        $result = $query->getResultArray();
+
+        // Tính tổng doanh thu 1 tháng
+        foreach($result as $row) {
+            if(isset($monthContainer[$row["MONTH(order_date)"]])) {
+                $monthContainer[$row["MONTH(order_date)"]] = $monthContainer[$row["MONTH(order_date)"]] + $row["total_price"];
+            } else {
+                $monthContainer[$row["MONTH(order_date)"]] =  $row["total_price"];
+            }
+        }
+        // die(var_dump($monthContainer));
+        // Xuất ra output
+        $index = 0;
+        foreach($monthContainer as $key => $val) {
+            $output[] = [
+                'month' => $key,
+                'profit' => $val
+            ];            
+        }
+        return $output;
+    }
 }

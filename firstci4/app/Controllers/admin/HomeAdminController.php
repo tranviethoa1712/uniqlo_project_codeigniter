@@ -35,12 +35,28 @@ class HomeAdminController extends BaseControllerAdmin{
 
     public function index() 
     {
+        $chartData = $this->service->getProfitOrderByYear('2024');
         $data = [
             'pageTitle' => 'Tổng quan',
             'dashboard' => 'Tổng quan',
+            'chart' => $chartData
         ];
         
         return $this->viewAdmin('home', $data);
+    }
+
+    public function loadMonthwiseData()
+    {
+        if ($this->request->isAJAX()) {
+            $year = $this->request->getVar('year');
+            if($year != '') {
+                $chartData = $this->service->getProfitOrderByYear($year);
+                return json_encode($chartData);
+            } else {
+                $chartData = $this->service->getProfitOrderByYear('2024');
+                return json_encode($chartData);
+            }
+        }
     }
 
     public function userList() 
@@ -84,8 +100,4 @@ class HomeAdminController extends BaseControllerAdmin{
         $result = $this->service->deleteUser($id);
         return redirect('admin/userListManage')->with($result['massageCode'], $result['massages']);
     }
-
-    // public function fetchTime(){
-        
-    // }
 }

@@ -14,3 +14,8 @@ body {
     height: auto;
     border: 1px solid red;
 }
+
+.responsive {
+    max-width: 100%;
+    height: auto;
+}

@@ -708,7 +708,7 @@
                 foreach ($dataImages as $key) {
               ?>
                   <button class="thumnail-image ">
-                    <img class='dot cursor' src='<?= $urlImage . $key ?>' height='100px' width='100px' onclick='currentSlide(<?= $location; ?>)'>
+                    <img class='dot cursor responsive' src='<?= $urlImage . $key ?>' height='100px' width='100px' onclick='currentSlide(<?= $location; ?>)'>
                   </button>
               <?php
                     $location++;
@@ -725,7 +725,7 @@
                       $i++;
             ?>
                 <div class="mySlides">
-                  <img src="<?= $urlImage . $key ?>">
+                  <img class="responsive" src="<?= $urlImage . $key ?>">
                   <div class="numbertext"><?php echo $i; ?> / 11</div>
                 </div>
             <?php
@@ -1054,7 +1054,7 @@
             ?>
                       <div class="mySlides2">
                         <div class="img-slides">
-                          <img src="<?= $urlImage . $item ?>">
+                          <img class="responsive" src="<?= $urlImage . $item ?>">
                         </div>
                         <div class="numbertext"><?php echo $i; ?> / 11</div>
                       </div>

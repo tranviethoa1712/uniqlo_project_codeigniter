@@ -17,8 +17,9 @@
 }
 
 .layout-main-image {
-    width: 75%;
+    width: 70%;
     position: relative;
+    margin-left: auto;
 }
 
 .layout-main-image-2 {
@@ -28,9 +29,8 @@
 }
 
 .product-main-image-section {
-    height: 554px;
+    height: auto;
     margin-bottom: 40px;
-    justify-content: space-between;
 }
 
 .product-main-image-section-2 {

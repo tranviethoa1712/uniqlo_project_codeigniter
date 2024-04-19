@@ -2,7 +2,7 @@
 
 use CodeIgniter\Router\RouteCollection; 
  
-/**
+/** 
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Home::index');
@@ -20,6 +20,7 @@ $routes->group('',  ['namespace' => 'App\Controllers\Admin'], static function ($
     $routes->group('admin', ['filter' => 'adminfilter'] ,function($routes){
         // Home
         $routes->get('home', 'HomeAdminController::index');
+        $routes->post('loadMonthwiseData', 'HomeAdminController::loadMonthwiseData');
 
         $routes->get('logout', 'LoginAdminController::logout');
         
