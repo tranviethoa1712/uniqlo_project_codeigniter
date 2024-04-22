@@ -27,22 +27,24 @@ class HomeCustomerController extends BaseControllerUser
             throw new PageNotFoundException($page);
         }
 
-        return view($this->pathViewLayout . $headHtml)
-            . view($this->pathViewLayout . 'header', $data)
+        $options = [
+            'cache' => 60
+        ];
+
+        return view($this->pathViewLayout . $headHtml, $options)
+            . view($this->pathViewLayout . 'header', $data, $options)
             . view($this->pathView . $page)
-            . view($this->pathViewLayout . 'footer');
+            . view($this->pathViewLayout . 'footer', [], $options);
     }
 
     public function home()
     {
-        // unset($_SESSION['customer_login']);
         $gioitinhGet = $this->request->getGet('gioitinh');
 
         $dataCategories = $this->service->getCategories();
         $daraProductGender = $this->service->getProductGender($gioitinhGet);
         $dataProducts = $this->service->getProducts();
 
-        // $this->service->logOutCustomer();
         $data = [
             'categories' => $dataCategories,
             'productGender' => $daraProductGender,

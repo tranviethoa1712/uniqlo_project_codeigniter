@@ -5,7 +5,7 @@ $(document).ready(function () {
         nextArrow:"<button type='button' class='slick-next pull-right top50'><i class='fa-solid fa-arrow-right'></i></button>",
         responsive: [
             {
-                breakpoint: 1441,
+                breakpoint: 720,
                 settings: {
                   slidesToShow: 2,
                   slidesToScroll: 1,
@@ -21,7 +21,7 @@ $(document).ready(function () {
         nextArrow:"<button type='button' class='slick-next pull-right'><i class='fa-solid fa-arrow-right'></i></button>",
         responsive: [
             {
-                breakpoint: 2000,
+                breakpoint: 720,
                 settings: {
                   slidesToShow: 2,
                   slidesToScroll: 1,

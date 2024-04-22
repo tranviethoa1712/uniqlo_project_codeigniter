@@ -51,9 +51,7 @@ class LoginCustomerController extends BaseControllerUser
     public function doLogin()
     {
         $result = $this->service->hasLoginInfo($this->request);
-        // die(var_dump($result));
         if ($result['status'] === ResultUtils::STATUS_CODE_OK) {
-            // die('dssd');
             return redirect('user/aboutAccount');
         } elseif ($result['status'] === ResultUtils::STATUS_CODE_ERR) {
             return redirect('user/userLogin')->back()->withInput()->with($result['massageCode'], $result['massages']);

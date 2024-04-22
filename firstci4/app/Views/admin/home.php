@@ -46,51 +46,23 @@
 
 
 <script type="text/javascript">
-  // get monthwise data
-  function load_monthwise_data(year, title) {
-    var temp_title = title + ' ' + year + ' ';
-    $.ajax({
-      type: "POST",
-      url: "<?= base_url('admin/loadMonthwiseData') ?>",
-      dataType: 'json',
-      contentType: "application/json",
-      data: JSON.stringify({
-        year: year
-      }),
-      success: function(data) {
-        drawMonthwiseChart(data, temp_title);
-      }
-    })
-  }
-
   // display chart with data
-
-
-  $('#year').change(function() {
-    var year = $(this).val();
-    if (year != '') {
-      load_monthwise_data(year, 'Month Wise Profit Data For');
-    }
-  })
-</script>
-
-<script type="text/javascript">
   function drawMonthwiseChart(data, temp_title) {
     /*
      * BAR CHART
      * ---------
      */
     var dataContainer = [];
-      var bar_data = {
-        data: [],
-        bars: {
-          show: true
-        }
+    var bar_data = {
+      data: [],
+      bars: {
+        show: true
       }
+    }
     $.each(data, function(key, val) {
       bar_data.data.push([val.month, parseFloat(val.profit)])
     });
-    
+
     console.log(bar_data)
     $.plot('#bar-chart', [bar_data], {
       grid: {
@@ -120,4 +92,30 @@
     /* END BAR CHART */
 
   }
+</script>
+
+<script type="text/javascript">
+  // get monthwise data
+  function load_monthwise_data(year, title) {
+    var temp_title = title + ' ' + year + ' ';
+    $.ajax({
+      type: "POST",
+      url: "<?= base_url('admin/loadMonthwiseData') ?>",
+      dataType: 'json',
+      contentType: "application/json",
+      data: JSON.stringify({
+        year: year
+      }),
+      success: function(data) {
+        drawMonthwiseChart(data, temp_title);
+      }
+    })
+  }
+
+  $('#year').change(function() {
+    var year = $(this).val();
+    if (year != '') {
+      load_monthwise_data(year, 'Month Wise Profit Data For');
+    }
+  })
 </script>

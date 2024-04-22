@@ -26,12 +26,15 @@ class CategoriesCustomerController extends BaseControllerUser{
         }
         
         $data['title'] = ucfirst($page); // Capitalize the first letter
-        
-        
-        return view($this->pathViewLayout.'baseCategory') 
+
+        $options = [
+            'cache' => 60
+        ];
+                
+        return view($this->pathViewLayout.'baseCategory', [], $options) 
         . view($this->pathViewLayout.'header', $data)
         . view($this->pathView . $page)
-        . view($this->pathViewLayout.'footer');
+        . view($this->pathViewLayout.'footer', $options);
     }
 
     public function category() 

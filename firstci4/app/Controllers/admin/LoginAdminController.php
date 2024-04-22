@@ -10,7 +10,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 class LoginAdminController extends BaseControllerAdmin
 {
 
-    private $pageTitle = 'Quản lý sản phẩm';
+    private $pageTitle = 'Đăng nhập quản trị';
     private $pathView = 'admin/';
     private $pathViewLayout = 'admin/layouts/';
     protected $service;
@@ -21,7 +21,7 @@ class LoginAdminController extends BaseControllerAdmin
     public function index()
     {
         $data = [''];
-        $data['pageTitle'] = 'Đăng nhập quản trị'; // Capitalize the first letter
+        $data['pageTitle'] = $this->pageTitle; // Capitalize the first letter
 
         // Nếu đã đăng nhập => đẩy thẳng về home
         if(session()->has('manager_login')){

@@ -7,7 +7,7 @@
         $urlHome = base_url('user/homePage');
         $urlImage = base_url('assets/uploads/');
         ?>
-        <a href="<?php echo base_url('user/homePage?gioitinh=woman'); ?>">
+        <a href="<?= base_url('user/homePage?gioitinh=woman'); ?>">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 40" width="90" height="40" role="img" aria-label="ユニクロ｜UNIQLO">
             <title>ユニクロ｜UNIQLO</title>
             <path fill="red" d="M50 0h40v40H50zM0 0h40v40H0z"></path>
@@ -24,7 +24,7 @@
       <div class="menu-links__list">
         <ul class="menu-links__list-contents">
           <li class="menu-links__list-item-dropdown woman">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
             <div class="dropdown-wrapper dropdown-woman">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -178,7 +178,7 @@
           </li>
 
           <li class="menu-links__list-item-dropdown man">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
             <div class="dropdown-wrapper dropdown-man">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -330,7 +330,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
             <div class="dropdown-wrapper dropdown-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -482,7 +482,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown non-baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
             <div class="dropdown-wrapper dropdown-non-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -650,7 +650,7 @@
       <a class="menu-tools__fav">
         <i class="fa-regular fa-heart"></i>
       </a>
-      <a href="<?php echo base_url('user/myCart'); ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart'); ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </div>
@@ -681,7 +681,7 @@
       </a>
     </li>
     <li>
-      <a href="<?php echo base_url('user/myCart') ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart') ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </li>
@@ -756,7 +756,7 @@
             <?php foreach ($categories as $col) {
               if ($col['title'] == "Đồ mặc ngoài") {
             ?>
-                <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
             <?php
               }
             }
@@ -770,7 +770,7 @@
             <?php foreach ($categories as $col) {
               if ($col['title'] == "ÁO") {
             ?>
-                <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
             <?php
               }
             }
@@ -779,13 +779,12 @@
 
           <div class="menu-list__item" name="uni-3" onclick="DropdownMenu(this)">
             <span>quần</span>
-
           </div>
           <ul class="dropdown-styling" id="uni-3">
             <?php foreach ($categories as $col) {
               if ($col['title'] == "QUẦN") {
             ?>
-                <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
             <?php
               }
             }
@@ -793,13 +792,12 @@
           </ul>
           <div class="menu-list__item" name="uni-4" onclick="DropdownMenu(this)">
             <span>ĐỒ MẶC NHÀ</span>
-
           </div>
           <ul class="dropdown-styling" id="uni-4">
             <?php foreach ($categories as $col) {
               if ($col['title'] == "ĐỒ MẶC NHÀ") {
             ?>
-                <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
             <?php
               }
             }
@@ -814,7 +812,7 @@
             <?php foreach ($categories as $col) {
               if ($col['title'] == "SPORT UTILITY WEAR") {
             ?>
-                <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
             <?php
               }
             }
@@ -829,7 +827,7 @@
               <?php foreach ($categories as $col) {
                 if ($col['title'] == "ĐẦM & CHÂN VÁY") {
               ?>
-                  <li class="styling-item" onclick="clickLiDropdown()"><a href="<?php echo $col['category_id'] ?>&gioitinh=<?php echo $gioitinh ?>"><?php echo $col['name'] ?></a></li>
+                  <li class="styling-item"><a href="<?= base_url('user/listProducts?iddanhmuc=') . $col['category_id'] ?>&gioitinh=<?= $gioitinh ?>"><?= $col['name'] ?></a></li>
               <?php
                 }
               }
@@ -925,7 +923,7 @@
             <?php foreach ($products as $col) {
             ?>
               <div class="contents-cards__prd">
-                <a class="link-prd" href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
+                <a class="link-prd" href="<?= base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
 
                   <?php
                   $dataThumbnail = json_decode($col['thumbnail']);
@@ -948,7 +946,7 @@
                             $arrayUnit = explode(", ", $row['unit']);
                             foreach ($arrayUnit as $item) {
                       ?>
-                              <div class='prd-colors-brown' style='background-color: <?php echo $item ?>'></div>
+                              <div class='prd-colors-brown' style='background-color: <?= $item ?>'></div>
                       <?php
                             }
                           }
@@ -964,13 +962,13 @@
                     <div class="prd-size">S-L</div>
                   </div>
                   <div class="contents-cards__prd-name">
-                    <?php echo $col['title']; ?>
+                    <?= $col['title']; ?>
                   </div>
                   <div class="contents-cards__prd-original-price">
-                    <?php echo $col['price']; ?>
+                    <?= $col['price']; ?>
                   </div>
                   <div class="contents-cards__prd-sale-price">
-                    <?php echo $col['price']; ?>
+                    <?= $col['price']; ?>
                   </div>
                   <div class="contents-cards__prd-status">Sale</div>
                 </a>
@@ -988,7 +986,7 @@
         <div class="recently-viewed___products-grid">
           <div class="contents-cards__prd">
             <a href="#">
-              <img src="<?= $urlImage ?>dmn01_1_pink" class="contents-cards__prd-img" alt="" />
+              <img src="https://image.uniqlo.com/UQ/ST3/vn/imagesgoods/468503/item/vngoods_04_468503.jpg?width=320" class="contents-cards__prd-img" alt="" />
               <div class="contents-cards__prd-colors">
                 <div class="prd-colors-brown"></div>
                 <div class="prd-colors-black"></div>
@@ -1015,5 +1013,5 @@
   </div>
 </div>
 <!-- end body -->
-<script src="<?php echo base_url('assets/customer/js/home.js'); ?>"></script>
-<script src="<?php echo base_url('assets/customer/js/listprd.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/home.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/listprd.js'); ?>"></script>

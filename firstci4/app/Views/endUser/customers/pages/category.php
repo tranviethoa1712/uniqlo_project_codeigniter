@@ -7,7 +7,7 @@
         $urlHome = base_url('user/homePage');
         $urlImage = base_url('assets/uploads/');
         ?>
-        <a href="<?php echo base_url('user/homePage?gioitinh=woman'); ?>">
+        <a href="<?= base_url('user/homePage?gioitinh=woman'); ?>">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 40" width="90" height="40" role="img" aria-label="ユニクロ｜UNIQLO">
             <title>ユニクロ｜UNIQLO</title>
             <path fill="red" d="M50 0h40v40H50zM0 0h40v40H0z"></path>
@@ -24,7 +24,7 @@
       <div class="menu-links__list">
         <ul class="menu-links__list-contents">
           <li class="menu-links__list-item-dropdown woman">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
             <div class="dropdown-wrapper dropdown-woman">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -178,7 +178,7 @@
           </li>
 
           <li class="menu-links__list-item-dropdown man">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
             <div class="dropdown-wrapper dropdown-man">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -330,7 +330,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
             <div class="dropdown-wrapper dropdown-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -482,7 +482,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown non-baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
             <div class="dropdown-wrapper dropdown-non-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -650,7 +650,7 @@
       <a class="menu-tools__fav">
         <i class="fa-regular fa-heart"></i>
       </a>
-      <a href="<?php echo base_url('user/myCart'); ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart'); ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </div>
@@ -681,7 +681,7 @@
       </a>
     </li>
     <li>
-      <a href="<?php echo base_url('user/myCart') ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart') ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </li>
@@ -711,12 +711,12 @@
     ?>
     <div class="contents-cards-w">
         <div class="img-banner-top">
-            <img src="<?php echo $urlImage ?>banner_categories_1_<?= $gioitinh ?>.jpg" alt="banner">
+            <img src="<?= $urlImage ?>banner_categories_1_<?= $gioitinh ?>.jpg" alt="banner">
         </div>
     </div>
     <div class="contents-cards-w">
         <div class="img-banner-top">
-            <img src="<?php echo $urlImage ?>banner_categories_2_<?= $gioitinh ?>.jpg" alt="banner">
+            <img src="<?= $urlImage ?>banner_categories_2_<?= $gioitinh ?>.jpg" alt="banner">
         </div>
     </div>
     <div class="contents-cards-w">
@@ -725,47 +725,15 @@
             <div class="special-category__item">
                 <a href="#">
                     <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_1.jpg" alt="" class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/res24cc5b8bd33859aba2ce54b3ca820d6dfr.jpg" alt="image" class="special-category__item-img">
                     </div>
-                    <span class="title">đồ mặc ngoài</span>
+                    <span class="title">ÁO CHỐNG NẮNG</span>
                 </a>
             </div>
             <div class="special-category__item">
                 <a href="#">
                     <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_2.jpg" alt="" class="special-category__item-img">
-                    </div>
-                    <span class="title">ĐỒ NỈ</span>
-                </a>
-            </div>
-            <div class="special-category__item">
-                <a href="#">
-                    <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_3.jpg" alt="" class="special-category__item-img">
-                    </div>
-                    <span class="title">ÁO LEN</span>
-                </a>
-            </div>
-            <div class="special-category__item">
-                <a href="#">
-                    <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_4.jpg" alt="" class="special-category__item-img">
-                    </div>
-                    <span class="title">ÁO GIẢ LÔNG CỪU</span>
-                </a>
-            </div>
-            <div class="special-category__item">
-                <a href="#">
-                    <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_1.jpg" alt="" class="special-category__item-img">
-                    </div>
-                    <span class="title">ÁO SƠ MI</span>
-                </a>
-            </div>
-            <div class="special-category__item">
-                <a href="#">
-                    <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_1.jpg" alt="" class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/resd33b9136fb98d3f06dfa40c51dc11db7fr.jpg" alt="image" class="special-category__item-img">
                     </div>
                     <span class="title">ÁO THUN</span>
                 </a>
@@ -773,9 +741,49 @@
             <div class="special-category__item">
                 <a href="#">
                     <div class="special-category__item-img">
-                        <img src="<?php echo $urlImage ?>thumbCategory_1.jpg" alt="" class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/res643a66121aa1378114dabb9f06131926fr.jpg" alt="image" class="special-category__item-img">
                     </div>
-                    <span class="title">quần dài</span>
+                    <span class="title">ÁO SƠ MI VÀ ÁO KIỂU</span>
+                </a>
+            </div>
+            <div class="special-category__item">
+                <a href="#">
+                    <div class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/resf10980bebb7a2b62e416ef804a3fd335fr.jpg" alt="image" class="special-category__item-img">
+                    </div>
+                    <span class="title">ÁO THUN IN HỌA TIẾT</span>
+                </a>
+            </div>
+            <div class="special-category__item">
+                <a href="#">
+                    <div class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/res414799abf5230dd37b235bbfe6a45ecffr.jpg" alt="image" class="special-category__item-img">
+                    </div>
+                    <span class="title">QUẦN DÀI</span>
+                </a>
+            </div>
+            <div class="special-category__item">
+                <a href="#">
+                    <div class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/res6e710300fb9932d3839785c2f2058699fr.jpg" alt="image" class="special-category__item-img">
+                    </div>
+                    <span class="title">CHÂN VÁY</span>
+                </a>
+            </div>
+            <div class="special-category__item">
+                <a href="#">
+                    <div class="special-category__item-img">
+                        <img src="https://im.uniqlo.com/global-cms/spa/res994bd4dc455ea5186e5184ac9a53f213fr.jpg" alt="image" class="special-category__item-img">
+                    </div>
+                    <span class="title">quần short</span>
+                </a>
+            </div>
+            <div class="special-category__item">
+                <a href="#">
+                    <div class="special-category__item-img">
+                        <img src="	https://im.uniqlo.com/global-cms/spa/resab2b7ee60d4c4568bb2972ab3f8ea7b5fr.jpg" alt="image" class="special-category__item-img">
+                    </div>
+                    <span class="title">ĐỒ MẶC NHÀ</span>
                 </a>
             </div>
         </div>
@@ -803,7 +811,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>spetitle_1.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resc432d5231f36d2398ce8d43cbb37b7cdfr.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI ĐỘC QUYỀN CHỈ CÓ TẠI ỨNG DỤNG</div>
                         <div class="special_title__about-des">Giá đặc biệt chỉ dành cho thành viên ứng dụng. Scan Mã ID Thành Viên Ứng Dụng trước khi thanh toán tại cửa hàng để nhận giá ưu đãi.</div>
@@ -812,37 +820,28 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>spetitle_2.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resc10ae1c30d886a4870b92a6942903de8fr.jpg" alt="image">
                         </div>
-                        <div class="special_title__about-title">COUPON CHO ĐƠN HÀNG ĐẦU TIÊN</div>
-                        <div class="special_title__about-des">Tải ứng dụng UNIQLO ngay và tận hưởng coupon 150.000VND cho đơn hàng đầu tiên trên app.</div>
+                        <div class="special_title__about-title">CHƯƠNG TRÌNH TẶNG SẢN PHẨM MIỄN PHÍ</div>
+                        <div class="special_title__about-des">Tải ứng dụng UNIQLO và tham gia đánh giá sản phẩm để nhận ngay quà tặng từ UNIQLO!</div>
                     </a>
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>spetitle_1.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/res1ad75ec91a9dac8b3d3c7bb83ea64b4dfr.jpg" alt="image">
                         </div>
-                        <div class="special_title__about-title">QUÀ TẶNG DÀNH RIÊNG CHO UNIQLO ONLINE</div>
-                        <div class="special_title__about-des">Từ 6 -12/10, nhận 01 túi du lịch nhỏ đa năng khi mua đơn hàng có ít nhất 01 sản phẩm Khuyến Mãi Có Hạn trên Ứng dụng & Website UNIQLO.</div>
+                        <div class="special_title__about-title">MÃ GIẢM GIÁ CHO THÀNH VIÊN MỚI</div>
+                        <div class="special_title__about-des">Tải ứng dụng và đăng ký tài khoản ngay để nhận MÃ GIẢM GIÁ 100.000VND áp dụng cho đơn hàng đầu tiên từ 1.000.000VND.</div>
                     </a>
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>spetitle_1.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/res16ad698e55af029d08fb2399f07c797afr.jpg" alt="image">
                         </div>
-                        <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
-                        <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
-                    </a>
-                </div>
-                <div class="contents-cards__prd">
-                    <a href="#">
-                        <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>spetitle_1.jpg" alt="">
-                        </div>
-                        <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
-                        <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
+                        <div class="special_title__about-title">UNIQLO LIVE STATION</div>
+                        <div class="special_title__about-des">Khám phá các sản phẩm LifeWear chất lượng của UNIQLO và mua sắm ngay trong Livestream.</div>
                     </a>
                 </div>
             </div>
@@ -858,7 +857,7 @@
         <div class="new-prd__collection">
             <div class="w25">
                 <div class="image-wrapper">
-                    <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="">
+                    <img src="https://im.uniqlo.com/global-cms/spa/res7426eaf653d05b9dffb64e92de199931fr.jpg" alt="image">
                 </div>
                 <h3 class="h3 title">
                     <span>Uniqlo U Quần Vải Jersey Mềm</span>
@@ -871,7 +870,7 @@
             <?php foreach ($products as $col) {
             ?>
               <div class="contents-cards__prd">
-                <a class="link-prd" href="<?php echo base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
+                <a class="link-prd" href="<?= base_url('user/detailProduct') . '?idsanpham=' . $col['product_id'] ?>&sku=<?= $col['sku']; ?>&gioitinh=<?= $col['gender'] ?>&colorUnit=1">
                   <?php
                   $dataThumbnail = json_decode($col['thumbnail']);
                   foreach ((array)$dataThumbnail as $key => $value) :
@@ -893,7 +892,7 @@
                             $arrayUnit = explode(", ", $row['unit']);
                             foreach ($arrayUnit as $item) {
                       ?>
-                              <div class='prd-colors-brown' style='background-color: <?php echo $item ?>'></div>
+                              <div class='prd-colors-brown' style='background-color: <?= $item ?>'></div>
                       <?php
                             }
                           }
@@ -909,13 +908,13 @@
                     <div class="prd-size">S-L</div>
                   </div>
                   <div class="contents-cards__prd-name">
-                    <?php echo $col['title']; ?>
+                    <?= $col['title']; ?>
                   </div>
                   <div class="contents-cards__prd-original-price">
-                    <?php echo $col['price']; ?>
+                    <?= $col['price']; ?>
                   </div>
                   <div class="contents-cards__prd-sale-price">
-                    <?php echo $col['price']; ?>
+                    <?= $col['price']; ?>
                   </div>
                   <div class="contents-cards__prd-status">Sale</div>
                 </a>
@@ -937,332 +936,8 @@
 
     <div class="contents-cards-w">
         <div class="img-banner-top comming-soon-banner">
-            <img src="<?php echo $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="banner">
+            <img src="<?= $urlImage ?>thumbnail_dmn01_3_pink.jpg" alt="banner">
         </div>
-    </div>
-
-    <div class="contents-cards-w">
-        <div class="new-prd__container">
-            <h2 class="h2 title">
-                <span>must buy</span>
-            </h2>
-        </div>
-        <div class="new-prd__collection">
-            <div class="new-prd__image-plus">
-                <div class="image-wrapper">
-                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man" alt="">
-                </div>
-                <h3 class="h3 title">
-                    <span>Uniqlo U Quần Vải Jersey Mềm</span>
-                </h3>
-                <div class="description">Thiết kế quần cách điệu, ống suông và cạp co giãn thoải mái.</div>
-                <div class="price-original">784.000 VND</div>
-            </div>
-            <div class="new-prd__list three-column">
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Doraemon Nhồi Bông</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>489.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Hybrid Down Áo Khoác Phao</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>2.944.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                            <li class="color-tip bg-color-brown"></li>
-                                            <li class="color-tip bg-color-pink"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-blue"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-green"></li>
-                                            <li class="color-tip bg-color-red"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumbnail_at02_1_man.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#">
-            <div class="margin-wrapper">
-                <span class="btn-horizonal">
-                    Xem Thêm
-                </span>
-            </div>
-        </a>
     </div>
 
     <div class="contents-cards-w">
@@ -1271,7 +946,7 @@
             <div class="recently-viewed___products-grid  swipper-horizonal">
                 <div class="contents-cards__prd">
                     <a href="#">
-                        <img src="<?php echo $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="" />
+                        <img src="<?= $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="image" />
                         <div class="contents-cards__prd-colors">
                             <div class="prd-colors-brown"></div>
                             <div class="prd-colors-black"></div>
@@ -1294,7 +969,7 @@
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
-                        <img src="<?php echo $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="" />
+                        <img src="<?= $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="image" />
                         <div class="contents-cards__prd-colors">
                             <div class="prd-colors-brown"></div>
                             <div class="prd-colors-black"></div>
@@ -1317,7 +992,7 @@
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
-                        <img src="<?php echo $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="" />
+                        <img src="<?= $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="image" />
                         <div class="contents-cards__prd-colors">
                             <div class="prd-colors-brown"></div>
                             <div class="prd-colors-black"></div>
@@ -1340,7 +1015,7 @@
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
-                        <img src="<?php echo $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="" />
+                        <img src="<?= $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="image" />
                         <div class="contents-cards__prd-colors">
                             <div class="prd-colors-brown"></div>
                             <div class="prd-colors-black"></div>
@@ -1363,7 +1038,7 @@
                 </div>
                 <div class="contents-cards__prd">
                     <a href="#">
-                        <img src="<?php echo $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="" />
+                        <img src="<?= $urlImage ?>thumnail-dmn02_5.jpg" class="contents-cards__prd-img" alt="image" />
                         <div class="contents-cards__prd-colors">
                             <div class="prd-colors-brown"></div>
                             <div class="prd-colors-black"></div>
@@ -1388,329 +1063,7 @@
         </div>
     </div>
 
-    <div class="contents-cards-w">
-        <div class="new-prd__container">
-            <h2 class="h2 title">
-                <span>giá mới</span>
-            </h2>
-        </div>
-        <div class="new-prd__collection">
-            <div class="new-prd__image-plus">
-                <div class="image-wrapper">
-                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                </div>
-                <h3 class="h3 title">
-                    <span>Uniqlo U Quần Vải Jersey Mềm</span>
-                </h3>
-                <div class="description">Thiết kế quần cách điệu, ống suông và cạp co giãn thoải mái.</div>
-                <div class="price-original">784.000 VND</div>
-            </div>
-            <div class="new-prd__list three-column">
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Doraemon Nhồi Bông</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>489.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Hybrid Down Áo Khoác Phao</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>2.944.000 </span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                            <li class="color-tip bg-color-brown"></li>
-                                            <li class="color-tip bg-color-pink"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="grid-row">
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-blue"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-green"></li>
-                                            <li class="color-tip bg-color-red"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="grid-item">
-                        <a href="#">
-                            <div class="product-card">
-                                <div class="image-section">
-                                    <img src="<?php echo $urlImage ?>thumnail-dmn02_4.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <div class="color-column">
-                                        <ul class="color-tips">
-                                            <li class="color-tip bg-color-beige"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="gender-size">
-                                        <div class="gender-size__left">unisex</div>
-                                        <div class="gender-size__right">xs-xxl</div>
-                                    </div>
-                                    <h3 class="h3 description-text">Áo Khoác Giả Lông Cừu Loại Dày Kéo Khóa Dài Tay</h3>
-                                    <ul class="status-new-prd">
-                                        <div class="status-text">New</div>
-                                        <div class="status-text">Sản phẩm được làm từ chất liệu tái chế</div>
-                                    </ul>
-                                    <div class="new-prd-price">
-                                        <span>686.000</span>
-                                        <abbr title="Vietnamese dong" class="price-currency">VND</abbr>
-                                    </div>
-                                    <div class="rating">
-                                        .
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#">
-            <div class="margin-wrapper">
-                <span class="btn-horizonal">
-                    Xem Thêm
-                </span>
-            </div>
-        </a>
-    </div>
+
 
     <div class="contents-cards-w">
         <div class="special-title__wrapper">
@@ -1723,7 +1076,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>speNews_1.jpg" alt="">
+                            <img src="<?= $urlImage ?>benifit_app_uniqlo_1.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI ĐỘC QUYỀN CHỈ CÓ TẠI ỨNG DỤNG</div>
                         <div class="special_title__about-des">Giá đặc biệt chỉ dành cho thành viên ứng dụng. Scan Mã ID Thành Viên Ứng Dụng trước khi thanh toán tại cửa hàng để nhận giá ưu đãi.</div>
@@ -1732,7 +1085,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>speNews_2.jpg" alt="">
+                            <img src="<?= $urlImage ?>benifit_app_uniqlo_2.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">COUPON CHO ĐƠN HÀNG ĐẦU TIÊN</div>
                         <div class="special_title__about-des">Tải ứng dụng UNIQLO ngay và tận hưởng coupon 150.000VND cho đơn hàng đầu tiên trên app.</div>
@@ -1741,7 +1094,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>speNews_3.jpg" alt="">
+                            <img src="<?= $urlImage ?>benifit_app_uniqlo_3.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">QUÀ TẶNG DÀNH RIÊNG CHO UNIQLO ONLINE</div>
                         <div class="special_title__about-des">Từ 6 -12/10, nhận 01 túi du lịch nhỏ đa năng khi mua đơn hàng có ít nhất 01 sản phẩm Khuyến Mãi Có Hạn trên Ứng dụng & Website UNIQLO.</div>
@@ -1750,16 +1103,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>speNews_4.jpg" alt="">
-                        </div>
-                        <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
-                        <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
-                    </a>
-                </div>
-                <div class="contents-cards__prd">
-                    <a href="#">
-                        <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>speNews_2.jpg" alt="">
+                            <img src="<?= $urlImage ?>benifit_app_uniqlo_4.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
                         <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
@@ -1776,7 +1120,7 @@
             </h2>
             <div class="swipper-banner">
                 <div class="img-banner-collection-special">
-                    <img src="<?php echo $urlImage ?>speCollection_1.jpg" alt="banner">
+                    <img src="https://im.uniqlo.com/global-cms/spa/resf2dcc35277bb5fb73805483e099f30ebfr.jpg" alt="banner">
                     <div class="banner-content right-location">
                         <h2 class="h2 title">UNIQLO : C</h2>
                         <div class="description">Một bộ sưu tập mới của nhà thiết kế người Anh Clare Waight Keller.</div>
@@ -1788,7 +1132,7 @@
                     </div>
                 </div>
                 <div class="img-banner-collection-special">
-                    <img src="<?php echo $urlImage ?>speCollection_2.jpg" alt="banner">
+                    <img src="https://im.uniqlo.com/global-cms/spa/resc0a1e6cb48b82a7e83187f1371733309fr.jpg" alt="banner">
                     <div class="banner-content right-location">
                         <h2 class="h2 title">UNIQLO : C</h2>
                         <div class="description">Một bộ sưu tập mới của nhà thiết kế người Anh Clare Waight Keller.</div>
@@ -1800,7 +1144,7 @@
                     </div>
                 </div>
                 <div class="img-banner-collection-special">
-                    <img src="<?php echo $urlImage ?>speCollection_3.jpg" alt="banner">
+                    <img src="https://im.uniqlo.com/global-cms/spa/res725d31eb121770bace68cf8e0fb98295fr.jpg" alt="banner">
                     <div class="banner-content right-location">
                         <h2 class="h2 title">UNIQLO : C</h2>
                         <div class="description">Một bộ sưu tập mới của nhà thiết kế người Anh Clare Waight Keller.</div>
@@ -1812,7 +1156,7 @@
                     </div>
                 </div>
                 <div class="img-banner-collection-special">
-                    <img src="<?php echo $urlImage ?>speCollection_4.jpg" alt="banner">
+                    <img src="https://im.uniqlo.com/global-cms/spa/rese2802aff5ea11784449258dbbe20f74dfr.jpg" alt="banner">
                     <div class="banner-content right-location">
                         <h2 class="h2 title">UNIQLO : C</h2>
                         <div class="description">Một bộ sưu tập mới của nhà thiết kế người Anh Clare Waight Keller.</div>
@@ -1841,7 +1185,7 @@
             </h2>
         </div>
         <div class="img-banner-top mt-20">
-            <img src="<?php echo $urlImage ?>recommendStylingBanner.jpg" alt="banner">
+            <img src="https://im.uniqlo.com/global-cms/spa/res667e9c6fec1da21cb5a2e273bffc4531fr.jpg" alt="banner">
         </div>
         <a href="#">
             <div class="margin-wrapper">
@@ -1854,7 +1198,7 @@
 
     <div class="contents-cards-w">
         <div class="img-banner-top mt-20">
-            <img src="<?php echo $urlImage ?>vvbanner.jpg" alt="banner">
+            <img src="https://im.uniqlo.com/global-cms/spa/resf86ba9f7fb287b9ac51f0292288f54d8fr.jpg" alt="banner">
         </div>
     </div>
 
@@ -1869,7 +1213,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>lifeWear_1.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resf8342677128f04448dcd2cfd2f4b7b18fr.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI ĐỘC QUYỀN CHỈ CÓ TẠI ỨNG DỤNG</div>
                         <div class="special_title__about-des">Giá đặc biệt chỉ dành cho thành viên ứng dụng. Scan Mã ID Thành Viên Ứng Dụng trước khi thanh toán tại cửa hàng để nhận giá ưu đãi.</div>
@@ -1878,7 +1222,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>lifeWear_2.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/rescd397eb4b33d1f59b5858048eeb18dbcfr.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">COUPON CHO ĐƠN HÀNG ĐẦU TIÊN</div>
                         <div class="special_title__about-des">Tải ứng dụng UNIQLO ngay và tận hưởng coupon 150.000VND cho đơn hàng đầu tiên trên app.</div>
@@ -1887,7 +1231,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>lifeWear_3.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resf8342677128f04448dcd2cfd2f4b7b18fr.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">QUÀ TẶNG DÀNH RIÊNG CHO UNIQLO ONLINE</div>
                         <div class="special_title__about-des">Từ 6 -12/10, nhận 01 túi du lịch nhỏ đa năng khi mua đơn hàng có ít nhất 01 sản phẩm Khuyến Mãi Có Hạn trên Ứng dụng & Website UNIQLO.</div>
@@ -1896,7 +1240,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>lifeWear_4.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/res501ec137f27c9c634ca01a0399ef079ffr.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
                         <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
@@ -1905,7 +1249,7 @@
                 <div class="contents-cards__prd">
                     <a href="#">
                         <div class="special_title__about-img">
-                            <img src="<?php echo $urlImage ?>lifeWear_2.jpg" alt="">
+                            <img src="<?= $urlImage ?>lifeWear_2.jpg" alt="image">
                         </div>
                         <div class="special_title__about-title">ƯU ĐÃI KHI TẢI ỨNG DỤNG StyleHint</div>
                         <div class="special_title__about-des">Tải ngay ứng dụng StyleHint và bạn sẽ nhận được mã giảm giá 150.000 VNĐ cho đơn hàng mua sắm tiếp theo.</div>
@@ -1933,7 +1277,7 @@
                 <a href="#">
                     <div class="media-wrapper">
                         <div class="image">
-                            <img src="<?php echo $urlImage ?>liveStation3.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resa9afaddc27bb73668bf83523dbbe06c3fr.jpg" alt="image">
                         </div>
                         <div class="info">
                             <div class="title">RA MẮT BỘ SƯU TẬP KAWS UT</div>
@@ -1948,7 +1292,7 @@
                 <a href="#">
                     <div class="media-wrapper">
                         <div class="image">
-                            <img src="<?php echo $urlImage ?>liveStation2.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resf9f5dcc6b0b7b971ecafaa64bf218e65fr.jpg" alt="image">
                         </div>
                         <div class="info">
                             <div class="title">TRIỂN LÃM RA MẮT BST LifeWear THU/ĐÔNG 2023</div>
@@ -1963,7 +1307,7 @@
                 <a href="#">
                     <div class="media-wrapper">
                         <div class="image">
-                            <img src="<?php echo $urlImage ?>liveStation.jpg" alt="">
+                            <img src="https://im.uniqlo.com/global-cms/spa/resd602c034d1435e5e2b84c2cfb114527dfr.jpg" alt="image">
                         </div>
                         <div class="info">
                             <div class="title">Chào đón TUẦN LỄ CẢM ƠN</div>
@@ -1977,53 +1321,6 @@
         </div>
     </div>
 
-    <div class="contents-utility-apps">
-        <div class="utility-apps__title text-center">TIỆN ÍCH TỪ ỨNG DỤNG</div>
-        <div class="utility-apps__about">
-            <a href="#">
-                <div class="utility-apps__about-item">
-                    <div class="utility-apps__about-img">
-                        <img src="<?php echo $urlImage ?>appBenefits_1.jpg" alt="">
-                    </div>
-                    <div class="utility-apps__about-title">ƯU ĐÃI ĐỘC QUYỀN CHỈ CÓ TẠI ỨNG DỤNG</div>
-                    <div class="utility-apps__about-des">Giá đặc biệt chỉ dành cho thành viên ứng dụng. Scan Mã ID Thành Viên Ứng Dụng trước khi thanh toán tại cửa hàng để nhận giá ưu đãi.</div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="utility-apps__about-item">
-                    <div class="utility-apps__about-img">
-                        <img src="<?php echo $urlImage ?>appBenefits_2.jpg" alt="">
-                    </div>
-                    <div class="utility-apps__about-title">WELCOME COUPON</div>
-                    <div class="utility-apps__about-des">Tải ứng dụng UNIQLO ngay và trải nghiệm welcome coupon cho đơn hàng đầu tiên trên app.</div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="utility-apps__about-item">
-                    <div class="utility-apps__about-img">
-                        <img src="<?php echo $urlImage ?>appBenefits_3.jpg" alt="">
-                    </div>
-                    <div class="utility-apps__about-title">QUÉT MÃ VẠCH SẢN PHẨM</div>
-                    <div class="utility-apps__about-des">Quét mã vạch trên sản phẩm để dễ dàng kiểm tra xem sản phẩm còn hàng online hay trong cửa hàng.</div>
-                </div>
-            </a>
-            <a href="#">
-                <div class="utility-apps__about-item">
-                    <div class="utility-apps__about-img">
-                        <img src="<?php echo $urlImage ?>appBenefits_4.jpg" alt="">
-                    </div>
-                    <div class="utility-apps__about-title">NHẬN THÔNG BÁO MỚI NHẤT</div>
-                    <div class="utility-apps__about-des">Nhận các thông tin mới nhất về sản phẩm mới ra mắt, ưu đãi đặc biệt và các tin tức nổi bật.</div>
-                </div>
-            </a>
-        </div>
-        <a href="#">
-            <div class="marginWrapper space-top">
-                <span class="btn-back-horizontal">XEM THÊM VỀ ỨNG DỤNG UNIQLO</span>
-            </div>
-        </a>
-    </div>
-
     <div class="contents-cards-w">
         <div class="special-title__wrapper">
             <h2 class="h2 title">
@@ -2031,7 +1328,7 @@
             </h2>
         </div>
         <div class="img-banner-top mt-20">
-            <img src="<?php echo $urlImage ?>storeLocation.jpg" alt="banner">
+            <img src="https://im.uniqlo.com/global-cms/spa/res9215c8c763aafb2f31098d85c159348dfr.jpg" alt="banner">
         </div>
         <a href="#">
             <div class="margin-wrapper">
@@ -2045,5 +1342,5 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<script src="<?php echo base_url('assets/customer/js/home.js') ?>"></script>
-<script src="<?php echo base_url('assets/customer/js/slick.js') ?>"></script>
+<script src="<?= base_url('assets/customer/js/home.js') ?>"></script>
+<script src="<?= base_url('assets/customer/js/slick.js') ?>"></script>

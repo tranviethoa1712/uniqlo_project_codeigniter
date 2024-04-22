@@ -187,6 +187,17 @@
     width: 100%;
 }
 
+.new-prd__collection .title{
+    margin: 20px 0 8px 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.new-prd__collection .price-original{
+    margin: 10px 0 0;
+    color: red;
+}
+
 .new-prd__image-plus {
     padding-right: calc(2.25rem - .01px);
     max-width: 35%;
@@ -200,6 +211,7 @@
 
 .image-wrapper img{
     width: 100%;
+    height: auto;
 }
 
 .new-prd__image-plus .title{

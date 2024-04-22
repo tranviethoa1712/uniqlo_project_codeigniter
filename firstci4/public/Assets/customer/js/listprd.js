@@ -9,27 +9,19 @@ function DropdownArrange(element) {
     }
 }
 
-let dropdownMenuCount = 1;
-
-
-function clickLiDropdown() { 
-    dropdownMenuCount++;
-    console.log(dropdownMenuCount);
-}
 function DropdownMenu(element) {
-    dropdownMenuCount++;
     let name = element.getAttribute("name");
-
-    if(parseInt(dropdownMenuCount) % 2 == 0) {
-        let checkOpen = document.getElementById(name).style.display;
-
-        document.getElementById(name).style.display = "block";
-        element.setAttribute("class", "menu-list__item active");
-        element.style = "font-weight: 600";
-    } else {
-        document.getElementById(name).style.display = "none";
+    var displayStyleElement = document.getElementById(name); // 
+    // Nếu dropdown đang mở
+    if(element.getAttribute("class") == 'menu-list__item active') {
+        displayStyleElement.style.display = "none";
         element.setAttribute("class", "menu-list__item");
         element.style = "font-weight: normal";
+    } else {
+        console.log(displayStyleElement);
+        displayStyleElement.style.display = "block";
+        element.setAttribute("class", "menu-list__item active");
+        element.style = "font-weight: 600";
     }
 }
 
