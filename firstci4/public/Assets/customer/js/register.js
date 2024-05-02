@@ -2,7 +2,6 @@
 function validateInputEmail() {
     document.getElementById("alert-email").innerHTML = "";
     let email = document.getElementById("email").value;
-    console.log(email);
     let checkValidateEmailInput = validateEmail(email);
     if (checkValidateEmailInput.status === false) {
         document.getElementById("alert-email").innerHTML =

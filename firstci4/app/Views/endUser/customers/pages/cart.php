@@ -704,7 +704,7 @@
               $shippingCost = 50000;
               foreach ($cart as $id => $row) :
                 $i++;
-          ?>
+                ?>
                 <div class="list-cart-product">
                   <div class="panel-inner">
                     <div class="panel-contents">
@@ -761,7 +761,6 @@
                         <div class="box-bottom">
                           <div class="pulldown-wrapper">
                             <span class="label-quantity">Số lượng </span>
-
                             <div class="quantity-prd__wrapper">
                               <select class="btn-dropdown__quantity" name="quantity_product " data-id="<?= $id ?>" onchange="changeQuantity(this)">
                                 <option selected="selected"><?php echo $row['quantity'] ?></option>
@@ -897,7 +896,6 @@
     </form>
   </div>
 </div>
-
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>

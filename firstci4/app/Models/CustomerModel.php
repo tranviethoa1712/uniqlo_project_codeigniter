@@ -205,7 +205,7 @@ class CustomerModel extends Model
 
     public function addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham)
     {
-        if (isset($color_prd)  && isset($size_prd) && isset($quantity_prd)) {
+        if (!empty($color_prd) && !empty($size_prd) && !empty($quantity_prd) && !empty($idsanpham)) {
             if (isset($_SESSION['customer_login'])) {
                 $db = $this->db;
                 $builder = $db->table('products');
@@ -213,6 +213,7 @@ class CustomerModel extends Model
                 $builder->where('product_id', $idsanpham);
                 $result = $builder->get(1)->getResultArray();
 
+                // 24/4 sẽ tạo table db để chứa cart
                 foreach ($result as $row) {
                     $_SESSION['cart'][$idsanpham]['sku'] = $row['sku'];
                     $_SESSION['cart'][$idsanpham]['title'] = $row['title'];
@@ -220,11 +221,15 @@ class CustomerModel extends Model
                     $_SESSION['cart'][$idsanpham]['thumbnail'] = $row['thumbnail'];
                 }
 
-                $_SESSION['cart'][$idsanpham]['color'] = $_POST['color_prd'];
-                $_SESSION['cart'][$idsanpham]['size'] = $_POST['size_prd'];
-                $_SESSION['cart'][$idsanpham]['quantity'] = $_POST['quantity_prd'];
+                $_SESSION['cart'][$idsanpham]['color'] = $color_prd;
+                $_SESSION['cart'][$idsanpham]['size'] = $size_prd;
+                $_SESSION['cart'][$idsanpham]['quantity'] = $quantity_prd;
+                return 'Thêm giỏ hàng thành công';
+            } else {
+                return 'Bạn phải đăng nhập để thêm giỏ hàng!';
             }
         }
+        return 'Thêm giỏ hàng thất bại';
     }
 
     public function submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef)

@@ -715,7 +715,7 @@
             $total = $sum + $shippingCost;
         ?>
             <div class="leftContainer">
-
+              <?= view('massages/messageOrder') ?>
               <label for="fullname">Họ và Tên</label>
               <input type="text" id="fullname" class="input" name="fullname" required>
 

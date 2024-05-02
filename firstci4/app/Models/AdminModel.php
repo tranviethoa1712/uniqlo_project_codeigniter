@@ -605,7 +605,7 @@ class AdminModel extends Model
 
             //pagination
             //số trang muốn chia = 10
-            $results_per_page = 10;
+            $results_per_page = 5;
 
             //số hàng của filter data
             $countRow = 0;
@@ -649,7 +649,6 @@ class AdminModel extends Model
             }
 
             $data['numberOfPageFilter'] =  $number_of_page;
-
             return $data;
         }
     }

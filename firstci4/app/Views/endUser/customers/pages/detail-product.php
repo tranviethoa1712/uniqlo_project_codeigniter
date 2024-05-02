@@ -7,7 +7,7 @@
         $urlHome = base_url('user/homePage');
         $urlImage = base_url('assets/uploads/');
         ?>
-        <a href="<?php echo base_url('user/homePage?gioitinh=woman'); ?>">
+        <a href="<?= base_url('user/homePage?gioitinh=woman'); ?>">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 40" width="90" height="40" role="img" aria-label="ユニクロ｜UNIQLO">
             <title>ユニクロ｜UNIQLO</title>
             <path fill="red" d="M50 0h40v40H50zM0 0h40v40H0z"></path>
@@ -24,7 +24,7 @@
       <div class="menu-links__list">
         <ul class="menu-links__list-contents">
           <li class="menu-links__list-item-dropdown woman">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=woman') ?>">Nữ</a>
             <div class="dropdown-wrapper dropdown-woman">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -176,9 +176,8 @@
               </div>
             </div>
           </li>
-
           <li class="menu-links__list-item-dropdown man">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=man') ?>">Nam</a>
             <div class="dropdown-wrapper dropdown-man">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -330,7 +329,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=baby') ?>">Trẻ em</a>
             <div class="dropdown-wrapper dropdown-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -482,7 +481,7 @@
             </div>
           </li>
           <li class="menu-links__list-item-dropdown non-baby">
-            <a href="<?php echo base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
+            <a href="<?= base_url('user/categoryPage?gioitinh=nonbaby') ?>">Trẻ em sơ sinh</a>
             <div class="dropdown-wrapper dropdown-non-baby">
               <div class="menu-links__dropdown-item-content">
                 <div>
@@ -650,7 +649,7 @@
       <a class="menu-tools__fav">
         <i class="fa-regular fa-heart"></i>
       </a>
-      <a href="<?php echo base_url('user/myCart'); ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart'); ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </div>
@@ -681,7 +680,7 @@
       </a>
     </li>
     <li>
-      <a href="<?php echo base_url('user/myCart') ?>" class="menu-tools__cart">
+      <a href="<?= base_url('user/myCart') ?>" class="menu-tools__cart">
         <i class="fa-solid fa-cart-shopping"></i>
       </a>
     </li>
@@ -691,6 +690,13 @@
 
 <div class="contained">
   <div class="contents-cards">
+    <!-- pop up add to cart successfully -->
+    <div class="popup popup-hidden" id="popup">
+      <img src="<?= base_url('assets/uploads/cartMessage.png') ?>" alt="tick">
+      <h2>Thông báo</h2>
+      <p class="popup-content"></p>
+      <button type="button" class="closePopup">OK</button>
+    </div>
     <?php
     $product_id = $_GET['idsanpham'];
     ?>
@@ -711,9 +717,9 @@
                     <img class='dot cursor responsive' src='<?= $urlImage . $key ?>' height='100px' width='100px' onclick='currentSlide(<?= $location; ?>)'>
                   </button>
               <?php
-                    $location++;
-                  }
+                  $location++;
                 }
+              }
               ?>
             </div>
           </div>
@@ -722,15 +728,15 @@
               $i = 0;
               $dataImages = json_decode($col['thumbnail']);
               foreach ((array)$dataImages as $key) {
-                      $i++;
+                $i++;
             ?>
                 <div class="mySlides">
                   <img class="responsive" src="<?= $urlImage . $key ?>">
-                  <div class="numbertext"><?php echo $i; ?> / 11</div>
+                  <div class="numbertext"><?= $i; ?> / 11</div>
                 </div>
             <?php
-                }
               }
+            }
             ?>
             <a class="prev cursor" onclick="plusSlides(-1)">❮</a>
             <a class="next cursor" onclick="plusSlides(1)">❯</a>
@@ -751,7 +757,7 @@
           </div>
           <div class="overview-prd">
             <div class="tab-head">
-              <button name="overview" onclick="tabDes(this)">
+              <button name="overview" class="tab-head-button" onclick="tabDes(this)">
                 <div class="head-wrap">
                   <h3 class="h3"><span>Tổng quan</span></h3>
                   <span class="head-arrow">
@@ -1056,7 +1062,7 @@
                         <div class="img-slides">
                           <img class="responsive" src="<?= $urlImage . $item ?>">
                         </div>
-                        <div class="numbertext"><?php echo $i; ?> / 11</div>
+                        <div class="numbertext"><?= $i; ?> / 11</div>
                       </div>
             <?php
                     }
@@ -1069,9 +1075,9 @@
         </div>
         <div class="title-head">
           <?php
-            foreach ($products as $col) :
-              echo $col['title'];
-            endforeach;
+          foreach ($products as $col) :
+            echo $col['title'];
+          endforeach;
           ?>
         </div>
         <div class="dis-between">
@@ -1131,11 +1137,11 @@
               foreach ($unitColor as $row) :
                 foreach ($row as $item) {
               ?>
-                  <input type="radio" name="color_prd" id="color-<?php echo $item['unit'] ?>" class="radio-color acitve" value="<?php echo $item['unit'] ?>" <?php if ($item['product_id'] == $id_prd) {
-                                                                                                                                                                echo " checked";
-                                                                                                                                                              } ?> />
-                  <a href="<?php echo base_url('user/detailProduct?idsanpham=') . $item['product_id'] ?>&sku=<?php echo $_GET['sku'] ?>&gioitinh=<?= $item['gender'] ?>&colorUnit=<?php echo $item['unit'] ?>" class="color-label bg-color-<?php echo $item['unit'] ?>" name="tab-color-<?php echo $item['unit'] ?>"><?php echo " "; ?></a>
-                  <label for="color- <?php echo $item['unit'] ?>" hidden>
+                  <input type="radio" name="color_prd" id="color-<?= $item['unit'] ?>" class="radio-color acitve" value="<?= $item['unit'] ?>" <?php if ($item['product_id'] == $id_prd) {
+                                                                                                                                                  echo " checked";
+                                                                                                                                                } ?> />
+                  <a href="<?= base_url('user/detailProduct?idsanpham=') . $item['product_id'] ?>&sku=<?= $_GET['sku'] ?>&gioitinh=<?= $item['gender'] ?>&colorUnit=<?= $item['unit'] ?>" class="color-label bg-color-<?= $item['unit'] ?>" name="tab-color-<?= $item['unit'] ?>"><?= " "; ?></a>
+                  <label for="color- <?= $item['unit'] ?>" hidden>
                   </label>
               <?php
                 }
@@ -1155,9 +1161,9 @@
                   $explode = explode(", ", $row['unit']);
                   foreach ($explode as $unitInner) {
               ?>
-                    <input type="radio" name="size_prd" id="size-<?php echo $unitInner; ?>" class="radio-sizing" value="<?php echo $unitInner; ?>" />
-                    <label for="size-<?php echo $unitInner; ?>" class="radio-label" hidden>
-                      <span class="text-sizing"><?php echo strtoupper($unitInner); ?></span>
+                    <input type="radio" name="size_prd" id="size-<?= $unitInner; ?>" class="radio-sizing" value="<?= $unitInner; ?>" />
+                    <label for="size-<?= $unitInner; ?>" class="radio-label" hidden>
+                      <span class="text-sizing"><?= strtoupper($unitInner); ?></span>
                     </label>
 
             <?php
@@ -1166,11 +1172,7 @@
               endforeach;
             }
             ?>
-            <!-- <input type="radio" name="size_prd" id="size-xxl" disabled class="radio-sizing"/>
-      <label for="size-xxl" class="radio-label btn-sl-size__soldout">
-          <span class="text-sizing">XXL</span>
-      </label>
-    -->
+
           </div>
           <div class="btn-link__guide">
             Kích thước theo chiều cao
@@ -1200,12 +1202,29 @@
             <li id="downshift-item-8" class="dropdown-quantity__item" onclick="changeQuantity(this)">8</li>
             <li id="downshift-item-9" class="dropdown-quantity__item" onclick="changeQuantity(this)">9</li>
           </ul>
-          <div class="annotation">còn hàng</div>
+          <div class="annotation">
+            <?php
+            foreach ($products as $col) :
+              if ($col['status'] == '1') {
+                echo "Còn hàng";
+              } else {
+                echo 'Hết hàng';
+              }
+            endforeach;
+            ?>
+          </div>
         </div>
-        <div class="btn-add-to-cart">
-          <input class="btn-submit" type="submit" name="addtocart" value="Thêm vào giỏ hàng" />
-        </div>
-
+        <?php
+        foreach ($products as $col) :
+          if ($col['status'] == '1') {
+        ?>
+            <div class="btn-add-to-cart">
+              <button type="button" class="btn-submit add-product-to-cart" name="addtocart">Thêm vào giỏ hàng</button>
+            </div>
+        <?php
+          }
+        endforeach;
+        ?>
         </form>
         <!-- end form -->
         <div class="btns-option dis-between">
@@ -1294,10 +1313,52 @@
       </div>
     </div>
   </div>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-  <script src="<?php echo base_url('assets/customer/js/home.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/customer/js/slick-detailprd.js'); ?>"></script>
-  <script src="<?php echo base_url('assets/customer/js/slick.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/home.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/slick-detailprd.js'); ?>"></script>
+<script src="<?= base_url('assets/customer/js/slick.js'); ?>"></script>
+
+<script>
+  $(document).ready(function() {
+    $(".add-product-to-cart").click(function() {
+      var id_prd = $('input[name="id_prd"]').val();
+      var color_prd = $('input[name="color_prd"]').val();
+      var size_prd = $('input[name="size_prd"]:checked').val();
+      var quantity_prd = $('input[name="quantity_prd"]').val();
+      if (id_prd != '' && color_prd != '' && size_prd != '' && quantity_prd != '') {
+        $.ajax({
+          type: "POST",
+          url: "<?= base_url('user/addProductToCart') ?>",
+          dataType: 'json',
+          data: {
+            id_prd: id_prd,
+            size_prd: size_prd,
+            color_prd: color_prd,
+            quantity_prd: quantity_prd,
+          },
+          success: function(response) {
+            // display pop up
+            let popupSuccess = $('#popup');
+            openPopup(popupSuccess, response);
+          }
+        })
+      }
+    })
+    function openPopup(popup, response) {
+      popup.removeClass('popup-hidden');
+      popup.find('.popup-content').text(response);
+      popup.addClass('open-popup');
+    }
+
+    $(".closePopup").click(function() {
+        popup =  $(this).parent();
+        popup.addClass('popup-hidden');
+        popup.removeClass('open-popup');
+    })
+  });
+</script>

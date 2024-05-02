@@ -9,9 +9,6 @@ function currentSlide(n) {
     showSlides(slideIndex = n);
 }
 
-
-// console.log(parent);
-
 function showSlides(n) {
     let parentDots = document.querySelector("[class='product-main-image-section p-active']");
     let i;
@@ -48,9 +45,6 @@ function currentSlide2(n) {
     showSlides2(slideIndex2 = n);
 }
 
-
-// console.log(parent);
-
 function showSlides2(n) {
     let parentDots = document.querySelector("[class='product-main-image-section-2 p-active']");
     let i;
@@ -70,17 +64,21 @@ function showSlides2(n) {
     slides[slideIndex2-1].style.display = "block";
 }
 
-let tabIndex = 1;
-
 function tabDes(element) {
-    tabIndex++;
     let name = element.getAttribute("name");
-    if(parseInt(tabIndex) % 2 == 0) {
-        document.getElementById(name).style.display = "block";
+    var displayStyleElement = document.getElementById(name); // 
+    // Nếu dropdown đang mở
+    if(element.getAttribute("class") == 'tab-head-button active') {
+        displayStyleElement.style.display = "none";
+        element.setAttribute("class", "tab-head-button");
+        element.style = "font-weight: normal";
     } else {
-        document.getElementById(name).style.display = "none";
+        displayStyleElement.style.display = "block";
+        element.setAttribute("class", "tab-head-button active");
+        element.style = "font-weight: 600";
     }
 }
+
 
 let dropdownQ = 1;
 
@@ -108,7 +106,6 @@ function tabHolderClicked(paramater) {
     let activeTabHolder = tabHolderThumnail.querySelector('.p-active');
 
     let paramaterName = paramater.getAttribute('name');
-    console.log(paramaterName); 
     let displayTabHolder = tabHolderThumnail.querySelector(`#${paramaterName}`);
 
     activeTabHolder.classList.remove('p-active');

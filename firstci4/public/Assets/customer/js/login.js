@@ -2,7 +2,6 @@
 function validateInputEmail() {
     document.getElementById("tooltipText-email").innerHTML = "";
     let email = document.getElementById("email-login").value;
-    console.log(email);
     let checkValidateEmailInput = validateEmail(email);
     if (checkValidateEmailInput.status === false) {
         document.getElementById("tooltip-email").style.display = "block";

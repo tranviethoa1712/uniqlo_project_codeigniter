@@ -773,7 +773,7 @@ background-color: rgba(0, 0, 0, 0.8);
     width: 100%;
 }
 
-input[type="submit"]{
+.btn-submit {
     background-color: #ff000f;
     width: 100%;
     display: flex;
@@ -792,6 +792,14 @@ input[type="submit"]{
     text-decoration: none;
     text-transform: uppercase;
     font-size: 16px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.2s;
+}
+
+.btn-submit:active {
+    transform: scale(0.95);
 }
 
 .btns-option .btns-option__item {

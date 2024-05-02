@@ -18,16 +18,13 @@ function DropdownMenu(element) {
         element.setAttribute("class", "menu-list__item");
         element.style = "font-weight: normal";
     } else {
-        console.log(displayStyleElement);
         displayStyleElement.style.display = "block";
         element.setAttribute("class", "menu-list__item active");
         element.style = "font-weight: 600";
     }
 }
 
-
 function DropdownMenuSpe(element) {
-    dropdownMenu++;
     let name = element.getAttribute("name");
 
     if(parseInt(dropdownMenu) % 2 == 0) {

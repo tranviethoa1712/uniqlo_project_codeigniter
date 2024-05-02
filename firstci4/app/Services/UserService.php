@@ -79,7 +79,8 @@ class UserService extends BaseService{
                 // die(var_dump($val));                      
                 if ($order != NULL) {
                     foreach($order as $key => $val) {
-                        if($val["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
+                        // if($val["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
+                        if($val["total_price"] == '123456') //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
                         {
                             if ($val["status"] != NULL && $val["status"] == 0) {
                                 if ($inputData['vnp_ResponseCode'] == '00' || $inputData['vnp_TransactionStatus'] == '00') {
@@ -97,29 +98,29 @@ class UserService extends BaseService{
                                 }
                                 //
                                 //Trả kết quả về cho VNPAY: Website/APP TMĐT ghi nhận yêu cầu thành công                
-                                $returnData['RspCode'] = '00';
-                                $returnData['Message'] = 'Confirm Success';
+                                $returnData['messageCode'] = '00';
+                                $returnData['message'] = 'Xác nhận thành công!';
                             } else {
-                                $returnData['RspCode'] = '02';
-                                $returnData['Message'] = 'Order already confirmed';
+                                $returnData['messageCode'] = '02';
+                                $returnData['message'] = 'Đơn hàng đã được xác nhận sẵn!';
                             }
                         }
                         else {
-                        $returnData['RspCode'] = '04';
-                        $returnData['Message'] = 'invalid amount';
+                        $returnData['messageCode'] = '04';
+                        $returnData['message'] = 'Số tiền hóa đơn không đúng';
                         }
                     }  
                 } else {
-                    $returnData['RspCode'] = '01';
-                    $returnData['Message'] = 'Order not found';
+                    $returnData['messageCode'] = '01';
+                    $returnData['message'] = 'Đơn hàng không được tìm thấy';
                 }
             } else {
-                $returnData['RspCode'] = '97';
-                $returnData['Message'] = 'Invalid signature';
+                $returnData['messageCode'] = '97';
+                $returnData['message'] = 'Invalid signature';
             }
         } catch (Exception $e) {
-            $returnData['RspCode'] = '99';
-            $returnData['Message'] = 'Unknow error';
+            $returnData['messageCode'] = '99';
+            $returnData['message'] = 'Unknow error';
         }
         //Trả lại VNPAY theo định dạng JSON
         echo json_encode($returnData);

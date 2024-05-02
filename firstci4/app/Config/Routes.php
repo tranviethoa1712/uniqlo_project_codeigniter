@@ -109,6 +109,7 @@ $routes->group('', ['namespace' => 'App\Controllers\Enduser'], static function (
     
         $routes->get('listProducts', 'ProductCustomerController::listProduct');
         $routes->get('detailProduct', 'ProductCustomerController::detailProduct');
+        $routes->post('addProductToCart', 'ProductCustomerController::addProductToCart');
     });
 });
 

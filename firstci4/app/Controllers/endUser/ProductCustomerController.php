@@ -62,15 +62,18 @@ class ProductCustomerController extends BaseControllerUser{
     
     public function addProductToCart() 
     { 
-        $id = $this->request->getPost('id_prd');
-        $color_prd = $this->request->getPost('color_prd');
-        $size_prd = $this->request->getPost('size_prd');
-        $quantity_prd = $this->request->getPost('quantity_prd');
-        $checkLogin = $this->session->customer_login;
+        if($this->request->isAJAX()) {
+            $id = $this->request->getVar('id_prd');
+            $color_prd = $this->request->getVar('color_prd');
+            $size_prd = $this->request->getVar('size_prd');
+            $quantity_prd = $this->request->getVar('quantity_prd');
+        
+            $result = $this->service->addToCart($color_prd, $size_prd , $quantity_prd, $id);
     
-        $this->service->addToCart($color_prd, $size_prd , $quantity_prd, $checkLogin, $id);
-
-        return redirect('user/myCart');
+            return json_encode($result);
+        } else {
+            return json_encode('Yêu cầu thất bại');
+        }
     }
 
     public function listProduct() 

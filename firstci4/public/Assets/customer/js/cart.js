@@ -1,49 +1,24 @@
-
-// let dropdownQ = 1;
-
-// function DropdownQuantity(element) {
-//     dropdownQ++;
-//     let name = element.getAttribute("name");
-//     if(parseInt(dropdownQ) % 2 == 0) {
-//         document.getElementById(name).style.display = "block";
-//     } else {
-//         document.getElementById(name).style.display = "none";
-//     }
-//     console.log(dropdownQ);
-// }
-
 function changeQuantity(element) {
-    let quantity = element.value;
+  let quantity = element.value;
 
-    let parent = element.parentElement.parentElement.parentElement.parentElement;
-    let price = parent.querySelector(".priceHidden").innerHTML;
-    let sum =  parseFloat(quantity) * parseFloat(price);
-    parent.querySelector(".dotSum").innerHTML = sum;
-    parent.querySelector(".sum").innerHTML = sum.toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'VND',
-      });
-      
-    let total = 0;
-    dotSums = document.querySelectorAll(".dotSum");
-    for(let i = 0; i < dotSums.length; i++) {
-      value = dotSums[i].innerHTML;
-      total += parseFloat(value);
-    }
-    shippingCost = 50000;
-    document.querySelector(".final-sum").innerHTML = total.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'VND',
-    });
-    finalTotal = parseFloat(total) + parseFloat(shippingCost);
-    document.querySelector(".finalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'VND',
-    });
-    document.querySelector(".finalfinalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
-      style: 'currency',
-      currency: 'VND',
-    });
+  let parent = element.parentElement.parentElement.parentElement.parentElement;
+  let price = parent.querySelector(".priceHidden").innerHTML;
+  let sum =  parseFloat(quantity) * parseFloat(price);
+  parent.querySelector(".dotSum").innerHTML = sum;
+  parent.querySelector(".sum").innerHTML = parseFloat(sum) + 'VND';
+    
+  let total = 0;
+  dotSums = document.querySelectorAll(".dotSum");
+  for(let i = 0; i < dotSums.length; i++) {
+    value = dotSums[i].innerHTML;
+    total += parseFloat(value);
+  }
+  shippingCost = 50000;
+  document.querySelector(".final-sum").innerHTML = parseFloat(total) + 'VND';
+
+  finalTotal = parseFloat(total) + parseFloat(shippingCost);
+  document.querySelector(".finalTotal").innerHTML = parseFloat(finalTotal) + 'VND';
+  document.querySelector(".finalfinalTotal").innerHTML = parseFloat(finalTotal) + 'VND';
 }
 
 
@@ -56,21 +31,12 @@ function DeleteProduct(element) {
   shippingCost = 50000;
   let updatedTotal = parseFloat(dottotal) - parseFloat(dotsum);
   
-  document.querySelector(".final-sum").innerHTML = updatedTotal.toLocaleString('en-US', {
-    style: 'currency',
-  currency: 'VND',
-  });
+  document.querySelector(".final-sum").innerHTML = parseFloat(updatedTotal) + 'VND';
 
   finalTotal = parseFloat(updatedTotal) + parseFloat(shippingCost);
-  document.querySelector(".finalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'VND',
-  });
+  document.querySelector(".finalTotal").innerHTML = parseFloat(finalTotal) + 'VND';
 
-  document.querySelector(".finalfinalTotal").innerHTML = finalTotal.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'VND',
-  });
+  document.querySelector(".finalfinalTotal").innerHTML = parseFloat(finalTotal) + 'VND';
 
   ProductRemove.remove();
 }

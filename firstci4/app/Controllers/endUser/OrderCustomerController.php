@@ -161,10 +161,10 @@ class OrderCustomerController extends BaseControllerUser
 
         if ($this->request->getGet('vnp_TxnRef')) {
             $result = $this->service->submitOrderOnlinePayment($this->request);
-            if ($result['RspCode'] == "00") {
+            if ($result['messageCode'] == "00") {
                 return $this->viewCustomer('orderSuccess', 'baseOrderSuccess', $data);
             } else {
-                return redirect('user/myOrder');
+                return redirect('user/myOrder')->back()->withInput()->with($result['messageCode'], $result['message']);
             }
         }
 

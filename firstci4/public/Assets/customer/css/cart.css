@@ -431,10 +431,18 @@
     line-height: 1.222223;
     text-transform: uppercase;
     font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.2s;
 }
 
 .button-wrapper .button-payment:hover{
-    background: rgb(217, 82, 82);
+    background: rgb(214, 57, 57);
+}
+
+.button-wrapper .button-payment:active {
+    transform: scale(0.95);
 }
 
 .button-wrapper .button-shopping{
@@ -597,9 +605,7 @@
     }
 
     .button-wrapper .button-payment{
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        text-align: center;
     }
 
     .product-content-container .box-bottom .subtotal-wrapper{
