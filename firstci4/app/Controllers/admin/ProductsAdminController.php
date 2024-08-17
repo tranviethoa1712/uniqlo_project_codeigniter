@@ -58,7 +58,6 @@ class ProductsAdminController extends BaseControllerAdmin
         return redirect()->back()->withInput()->with($result['massageCode'], $result['massages']);
     }
 
-
     public function update($idsanpham)
     {
         $dataCategories = $this->service->getCategories();

@@ -813,7 +813,6 @@ class AdminModel extends Model
                 $monthContainer[$row["MONTH(order_date)"]] =  $row["total_price"];
             }
         }
-        // die(var_dump($monthContainer));
         // Xuất ra output
         $index = 0;
         foreach($monthContainer as $key => $val) {

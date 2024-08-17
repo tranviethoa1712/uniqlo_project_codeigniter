@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Models\CustomerModel;
@@ -6,7 +7,8 @@ use App\Common;
 use App\Common\ResultUtils;
 use Exception;
 
-class UserService extends BaseService{
+class UserService extends BaseService
+{
     /**
      * The main task:
      * Handle logic for the customer controller
@@ -16,21 +18,21 @@ class UserService extends BaseService{
     function __construct()
     {
         parent::__construct();
-        $this->customerModel = model(CustomerModel::class);  
-        $this->customerModel->protect(false);  
-    } 
- 
+        $this->customerModel = model(CustomerModel::class);
+        $this->customerModel->protect(false);
+    }
+
     public function submitOrder($fullname, $address, $phoneNumber, $totalPrice)
     {
         return $this->customerModel->submitOrder($fullname, $address, $phoneNumber, $totalPrice);
     }
 
-    public function submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef) 
+    public function submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef)
     {
         return $this->customerModel->submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef);
     }
-    
-    public function submitOrderOnlinePayment($requestData) 
+
+    public function submitOrderOnlinePayment($requestData)
     {
         $inputData = array();
         $returnData = array();
@@ -59,13 +61,13 @@ class UserService extends BaseService{
         $vnpTranId = $inputData['vnp_TransactionNo']; // Mã giao dịch tại VNPAY
         $vnpBankCode = $inputData['vnp_BankCode']; // Ngân hàng thanh toán
         $vnpBankTranNo = $inputData['vnp_BankTranNo']; // Ngân hàng thanh toán
-        $vnpAmount = $inputData['vnp_Amount']/100; // Số tiền thanh toán VNPAY phản hồi
+        $vnpAmount = $inputData['vnp_Amount'] / 100; // Số tiền thanh toán VNPAY phản hồi
         $vnpCreateDate = $inputData['vnp_PayDate']; // Số tiền thanh toán VNPAY phản hồi
         $vnpOrderInfo = $inputData['vnp_OrderInfo']; // Số tiền thanh toán VNPAY phản hồi
 
         $status = 0; // Là trạng thái thanh toán của giao dịch chưa có IPN lưu tại hệ thống của merchant chiều khởi tạo URL thanh toán.
         $orderCode = $inputData['vnp_TxnRef'];
-        
+
         try {
             //Check Orderid    
             //Kiểm tra checksum của dữ liệu
@@ -73,14 +75,14 @@ class UserService extends BaseService{
                 //Lấy thông tin đơn hàng lưu trong Database và kiểm tra trạng thái của đơn hàng, mã đơn hàng là: $orderId            
                 //Việc kiểm tra trạng thái của đơn hàng giúp hệ thống không xử lý trùng lặp, xử lý nhiều lần một giao dịch
                 //Giả sử: $order = mysqli_fetch_assoc($result);   
-        
+
                 $order = $this->customerModel->getOrderTransaction($orderCode);
 
                 // die(var_dump($val));                      
                 if ($order != NULL) {
-                    foreach($order as $key => $val) {
+                    foreach ($order as $key => $val) {
                         // if($val["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
-                        if($val["total_price"] == '123456') //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
+                        if ($val["total_price"] == $vnpAmount) //Kiểm tra số tiền thanh toán của giao dịch: giả sử số tiền kiểm tra là đúng. ($order["Amount"] == $vnpAmount)
                         {
                             if ($val["status"] != NULL && $val["status"] == 0) {
                                 if ($inputData['vnp_ResponseCode'] == '00' || $inputData['vnp_TransactionStatus'] == '00') {
@@ -93,7 +95,7 @@ class UserService extends BaseService{
                                 // Cập nhật kết quả thanh toán, tình trạng đơn hàng vào DB
                                 $this->customerModel->updateOrderTransactionStatus($orderCode, $status); // Update status order_transaction
                                 // insert order và online_payment nếu thành công
-                                if($status == 1) {
+                                if ($status == 1) {
                                     $this->customerModel->submitOrderOnlinePayment($val['fullname'], $val['address'], $val['phone_number'], $val['total_price'], $orderCode, $vnpBankCode, $vnpBankTranNo, $vnpTranId, $vnpOrderInfo, $vnpCreateDate);
                                 }
                                 //
@@ -104,12 +106,11 @@ class UserService extends BaseService{
                                 $returnData['messageCode'] = '02';
                                 $returnData['message'] = 'Đơn hàng đã được xác nhận sẵn!';
                             }
+                        } else {
+                            $returnData['messageCode'] = '04';
+                            $returnData['message'] = 'Số tiền hóa đơn không đúng';
                         }
-                        else {
-                        $returnData['messageCode'] = '04';
-                        $returnData['message'] = 'Số tiền hóa đơn không đúng';
-                        }
-                    }  
+                    }
                 } else {
                     $returnData['messageCode'] = '01';
                     $returnData['message'] = 'Đơn hàng không được tìm thấy';
@@ -126,77 +127,79 @@ class UserService extends BaseService{
         echo json_encode($returnData);
         return $returnData;
     }
-    
-    public function getProductsId($idsanpham) 
+
+    public function getProductsId($idsanpham)
     {
         return $this->customerModel->getProductsId($idsanpham);
-    } 
+    }
 
-    public function getUnitColorProduct($skuProduct, $gender) 
+    public function getUnitColorProduct($skuProduct, $gender)
     {
-        return $this->customerModel->getUnitColorProduct($skuProduct, $gender); 
-    } 
+        return $this->customerModel->getUnitColorProduct($skuProduct, $gender);
+    }
 
-    public function getProductAttributeId($idsanpham) 
+    public function getProductAttributeId($idsanpham)
     {
         return $this->customerModel->getProductAttributeId($idsanpham);
-    } 
+    }
 
-    public function getProductCategory($iddanhmuc, $gioitinh) 
+    public function getProductCategory($iddanhmuc, $gioitinh)
     {
         return $this->customerModel->getProductCategory($iddanhmuc, $gioitinh);
-    } 
+    }
 
-    public function getProductAttribute() 
+    public function getProductAttribute()
     {
         return $this->customerModel->getProductAttribute();
-    } 
-    
-    public function getCategories() 
+    }
+
+    public function getCategories()
     {
         return $this->customerModel->getCategories();
-    } 
-    
-    public function getProductGender($gioitinhGet) 
+    }
+
+    public function getProductGender($gioitinhGet)
     {
         return $this->customerModel->getProductGender($gioitinhGet);
-    } 
+    }
 
-    public function getProducts() 
+    public function getProducts()
     {
         return $this->customerModel->getProducts();
-    } 
+    }
 
-    public function addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham) 
+    public function addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham)
     {
-        return $this->customerModel->addToCart($color_prd, $size_prd , $quantity_prd, $idsanpham);
-    } 
+        return $this->customerModel->addToCart($color_prd, $size_prd, $quantity_prd, $idsanpham);
+    }
 
-    public function getAllOrder() 
+    public function getAllOrder()
     {
         return $this->customerModel->getAllOrder();
-    } 
+    }
 
-    public function getStatusOderData($status) 
+    public function getStatusOderData($status)
     {
         return $this->customerModel->getStatusOderData($status);
-    } 
+    }
 
-    public function getDetailOrder($orderItemId) 
+    public function getDetailOrder($orderItemId)
     {
         return $this->customerModel->getDetailOrder($orderItemId);
-    } 
+    }
 
-    public function checkPayMethod($order_id) 
+    public function checkPayMethod($order_id)
     {
         return $this->customerModel->checkPayMethod($order_id);
-    } 
+    }
 
-    public function deleteItemCart($id) {
+    public function deleteItemCart($id)
+    {
         unset($_SESSION['cart'][$id]);
     }
 
-    public function updateQuantityItemCart($id_prd, $quantity) {
+    public function updateQuantityItemCart($id_prd, $quantity)
+    {
         $_SESSION['cart'][$id_prd]['quantity'] = $quantity;
     }
 
@@ -204,37 +207,35 @@ class UserService extends BaseService{
     {
         $validate = $this->validateAddCustomer($requestData);
 
-        if($validate->getErrors()){
+        if ($validate->getErrors()) {
             return [
                 'status' => ResultUtils::STATUS_CODE_ERR,
-                'massageCode' => ResultUtils::MESSAGE_CODE_ERR, 
+                'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
                 'massages' => $validate->getErrors(),
             ];
         }
 
         $dataSave = $requestData->getPost();
-        unset($dataSave['password_confirm']); 
+        unset($dataSave['password_confirm']);
         $dataSave['password'] = password_hash($dataSave['password'], PASSWORD_BCRYPT);
-        
+
         try {
             $this->customerModel->RegisterCustomer($dataSave['name'], $dataSave['email'], $dataSave['password'], $dataSave['dob'], $dataSave['gender']);
-            return [ 
+            return [
                 'status' => ResultUtils::STATUS_CODE_OK,
                 'massageCode' => ResultUtils::MESSAGE_CODE_OK,
-                'massages' => ['success' => 'Thêm dữ liệu thành công'], 
+                'massages' => ['success' => 'Thêm dữ liệu thành công'],
             ];
-
         } catch (Exception $e) {
-            return [ 
+            return [
                 'status' => ResultUtils::STATUS_CODE_ERR,
                 'massageCode' => ResultUtils::MESSAGE_CODE_ERR,
-                'massages' => ['error' => $e->getMessage()], 
+                'massages' => ['error' => $e->getMessage()],
             ];
         }
-
     }
 
-    private function validateAddCustomer($requestData) 
+    private function validateAddCustomer($requestData)
     {
         $rules = [
             'name' => 'max_length[100]',
@@ -266,7 +267,7 @@ class UserService extends BaseService{
         $this->validation->reset();
 
         $this->validation->setRules($rules, $messages);
-        $this->validation->withRequest($requestData)->run(); 
+        $this->validation->withRequest($requestData)->run();
 
         return $this->validation;
     }
@@ -283,18 +284,18 @@ class UserService extends BaseService{
         $fullname = $requestData->getPost('fullname');
         $address = $requestData->getPost('address');
         $phoneNumber = $requestData->getPost('phoneNumber');
-        $totalPrice = $requestData->getPost('totalPrice'); 
+        $totalPrice = $requestData->getPost('totalPrice');
 
         error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
         date_default_timezone_set('Asia/Ho_Chi_Minh');
-        
+
         $vnpUrl = VNPAY_URL;
         $vnpReturnurl = VNPAY_RETURN_URL;
-        $vnpTmnCode = VNPAY_TMNCODE;//Mã website tại VNPAY 
+        $vnpTmnCode = VNPAY_TMNCODE; //Mã website tại VNPAY 
         $vnpHashSecret = VNPAY_HASH_SECRET; //Chuỗi bí mật
-        
+
         $vnpTxnRef = rand(00, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này 
-    
+
         $vnpOrderInfo = strtoupper($fullname . 'chuyen khoan');
         $vnpOrderType = VNPAY_ORDER_TYPE;
         $vnpAmount = $totalPrice * 100;
@@ -316,11 +317,11 @@ class UserService extends BaseService{
             "vnp_ReturnUrl" => $vnpReturnurl,
             "vnp_TxnRef" => $vnpTxnRef,
         );
-        
+
         if (isset($vnpBankCode) && $vnpBankCode != "") {
             $inputData['vnp_BankCode'] = $vnpBankCode;
         }
-        
+
         //var_dump($inputData);
         ksort($inputData);
         $query = "";
@@ -335,21 +336,24 @@ class UserService extends BaseService{
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
-        
+
         $vnpUrl = $vnpUrl . "?" . $query;
         if (isset($vnpHashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnpHashSecret);//  
+            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnpHashSecret); //  
             $vnpUrl .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        $returnData = array('code' => '00'
-            , 'message' => 'success'
-            , 'data' => $vnpUrl);
-            if ($requestData->getPost('vnpay')) {
-                $this->submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef);
-                header('Location: ' . $vnpUrl);
-                die();
-            } else {
-                echo json_encode($returnData);
-            }
+        $returnData = array(
+            'code' => '00',
+            'message' => 'success',
+            'data' => $vnpUrl
+        );
+        if ($requestData->getPost('vnpay')) {
+            // Target to compare info with vnpay
+            $this->submitOrderTransaction($fullname, $address, $phoneNumber, $totalPrice, $vnpTxnRef);
+            header('Location: ' . $vnpUrl);
+            die();
+        } else {
+            echo json_encode($returnData);
+        }
     }
 }
