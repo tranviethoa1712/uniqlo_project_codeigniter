@@ -11,13 +11,10 @@ class AdminService extends BaseService{
      * 1. Handle logic for admin controllers 
      * 2. Set Validation Rules
      */
-
-    protected $adminModel;
  
     function __construct()
     {
-        parent::__construct();
-        $this->adminModel = model(AdminModel::class);  
+        parent::__construct(); 
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Services\AdminService;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -41,8 +42,10 @@ abstract class BaseControllerAdmin extends Controller
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
-    // protected $session;
-
+    /**
+     * Admin service property
+     */
+    protected $service;
     /**
      * @return void
      */
@@ -52,7 +55,7 @@ abstract class BaseControllerAdmin extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-
+        $this->service = new AdminService;
         // E.g.: $this->session = \Config\Services::session();
     }
 }

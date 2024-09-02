@@ -1,22 +1,14 @@
 <?php
 namespace App\Controllers\Enduser;
 
-use App\Services\UserService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 
-class CategoriesCustomerController extends BaseControllerUser{
+class CategoriesCustomerController extends BaseControllerUser
+{
 
-    public $customerModel;
     private $pathView = 'endUser/customers/pages/';
     private $pathViewLayout = 'endUser/layouts/';
-    protected $request;
-    protected $service;
-
-    public function __construct() 
-    {
-        $this->service = new UserService;
-    }
 
     public function viewCustomer($page = '', $data)
     {

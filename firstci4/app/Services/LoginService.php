@@ -2,23 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\AdminModel;
 use App\Common\ResultUtils;
-use Exception;
 
 class LoginService extends BaseService
 {
     /**
      * The main task:
      * Handle logic for the login controller 
-     */
-
-    protected $adminModel;
+     */    
 
     function __construct()
     {
         parent::__construct();
-        $this->adminModel = model(AdminModel::class);
     }
 
     public function hasLoginInfo($requestData)

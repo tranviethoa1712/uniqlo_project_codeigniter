@@ -1,22 +1,17 @@
 <?php
 namespace App\Controllers\Admin;
 
-use App\Services\AdminService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 // include_once('./models/service.php');
 // include('controllers/BaseController.php');
 
-class HomeAdminController extends BaseControllerAdmin{
+class HomeAdminController extends BaseControllerAdmin
+{
     
     private $pageTitle = '';
     private $pathView = 'admin/';
     private $pathViewLayout = 'admin/layouts/';
-    protected $service;
-    public function __construct() {
-        $this->service = new AdminService;  
-    }
 
-    
     public function viewAdmin($page = '', $data)
     {
         if (! is_file(APPPATH . 'Views/admin/' . $page . '.php')) {

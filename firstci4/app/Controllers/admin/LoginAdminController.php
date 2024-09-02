@@ -4,18 +4,15 @@ namespace App\Controllers\Admin;
 
 use App\Services\LoginService;
 use App\Common\ResultUtils;
-use CodeIgniter\Exceptions\PageNotFoundException;
-
 
 class LoginAdminController extends BaseControllerAdmin
 {
-
     private $pageTitle = 'Đăng nhập quản trị';
     private $pathView = 'admin/';
     private $pathViewLayout = 'admin/layouts/';
-    protected $service;
+    protected $serviceLogin;
     public function __construct() {
-        $this->service = new LoginService;  
+        $this->serviceLogin = new LoginService;  
     }
     
     public function index()
@@ -35,7 +32,7 @@ class LoginAdminController extends BaseControllerAdmin
     
     public function doLogin() 
     {
-        $result = $this->service->hasLoginInfo($this->request);    
+        $result = $this->serviceLogin->hasLoginInfo($this->request);    
         if ($result['status'] === ResultUtils::STATUS_CODE_OK) {
             return redirect('admin/home');
         } elseif ($result['status'] === ResultUtils::STATUS_CODE_ERR) {
@@ -45,7 +42,7 @@ class LoginAdminController extends BaseControllerAdmin
 
     public function logout() 
     {
-        $this->service->logOutUser();
+        $this->serviceLogin->logOutUser();
         return redirect('login');
     }
 }

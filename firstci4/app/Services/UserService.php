@@ -18,7 +18,6 @@ class UserService extends BaseService
     function __construct()
     {
         parent::__construct();
-        $this->customerModel = model(CustomerModel::class);
         $this->customerModel->protect(false);
     }
 

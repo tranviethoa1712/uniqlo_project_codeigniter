@@ -1,22 +1,18 @@
 <?php
 namespace App\Controllers\Admin;
 
-use App\Services\AdminService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class CategoriesAdminController extends BaseControllerAdmin{
+class CategoriesAdminController extends BaseControllerAdmin
+ {
 
     private $pageTitle = 'Quản lý danh mục sản phẩm';   
     private $pathView = 'admin/categories/';
     private $pathViewLayout = 'admin/layouts/';
-    protected $request;
-    protected $service;
 
     public function __construct() {
         helper('form');
-        $this->service = new AdminService;
     }
-    
     
     public function view($page = '', $data)
     {

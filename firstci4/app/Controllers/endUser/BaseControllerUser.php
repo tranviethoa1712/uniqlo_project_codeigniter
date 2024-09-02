@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Enduser;
 
+use App\Services\UserService;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -41,7 +42,15 @@ abstract class BaseControllerUser extends Controller
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
-    // protected $session;
+    /**
+     * session instance
+     */
+    protected $session;
+
+    /**
+     * user service instance
+     */
+    protected $service;
 
     /**
      * @return void
@@ -50,8 +59,9 @@ abstract class BaseControllerUser extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-
         // Preload any models, libraries, etc, here.
+        $this->session = session();
+        $this->service = new UserService;
 
         // E.g.: $this->session = \Config\Services::session();
     }

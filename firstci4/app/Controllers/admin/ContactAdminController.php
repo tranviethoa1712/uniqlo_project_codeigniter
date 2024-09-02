@@ -4,7 +4,8 @@ namespace App\Controllers\Admin;
 use App\Services\ContactService;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class ContactAdminController extends BaseControllerAdmin{
+class ContactAdminController extends BaseControllerAdmin
+{
     
     private $pageTitle = '';
     private $pathView = 'admin/';

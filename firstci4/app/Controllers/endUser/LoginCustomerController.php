@@ -9,17 +9,14 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 
 class LoginCustomerController extends BaseControllerUser
 {
-
     private $pathView = 'endUser/customers/pages/';
     private $pathViewLayout = 'endUser/layouts/';
     protected $request;
-    protected $session;
-    protected $service;
+    protected $serviceLogin;
 
     public function __construct()
     {
-        $this->session = session();
-        $this->service = new LoginServiceCustomer;
+        $this->serviceLogin = new LoginServiceCustomer;
     }
 
     public function viewCustomer($page = '', $headHtml,  $data = [])
@@ -50,7 +47,7 @@ class LoginCustomerController extends BaseControllerUser
     
     public function doLogin()
     {
-        $result = $this->service->hasLoginInfo($this->request);
+        $result = $this->serviceLogin->hasLoginInfo($this->request);
         if ($result['status'] === ResultUtils::STATUS_CODE_OK) {
             return redirect('user/aboutAccount');
         } elseif ($result['status'] === ResultUtils::STATUS_CODE_ERR) {
@@ -60,7 +57,7 @@ class LoginCustomerController extends BaseControllerUser
 
     public function logOutCustomer()
     {
-        $this->service->logOutCustomer();
+        $this->serviceLogin->logOutCustomer();
         return redirect('user/userLogin');
     }
 }

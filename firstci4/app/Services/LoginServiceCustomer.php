@@ -13,12 +13,9 @@ class LoginServiceCustomer extends BaseService
      * Handle logic for the login controller 
      */
 
-    protected $customerModel;
-
     function __construct()
     {
         parent::__construct();
-        $this->customerModel = model(CustomerModel::class);
     }
 
     public function hasLoginInfo($requestData)
